@@ -9,10 +9,13 @@
   <a href="https://developer.apple.com/ios/"><img src="https://img.shields.io/badge/Platform-iOS%2015%2B-lightgrey.svg" alt="Platform iOS 15+"></a>
 </p>
 
+<h2 align="left">Build High-Performance Filter Trees Declaratively</h2>
+<h4 align="left">With SwiftyFilters, create nested filters in just a few steps—effortlessly and efficiently.</h4>
+
 ---
 
 **Never has creating complex filters in iOS apps been so effortless.**  
-SwiftyFilters is a lightweight framework that lets you build nested filter trees in a **declarative style** with just a few lines of code. Designed for performance, it leverages lazy-loading at all levels to ensure your app stays fast and responsive.
+SwiftyFilters is a lightweight framework that lets you build nested filter trees in a **declarative style** with just a few lines of code. Built with performance in mind, SwiftyFilters uses lazy-loading at every level to ensure your app stays fast and responsive. It only loads data and allocates resources when they’re actually needed.
 
 ## 🚀 Features
 
