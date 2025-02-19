@@ -1,30 +1,60 @@
 //
-//  SFFilterComponent.swift
-//  ObservationFilters
+// SwiftyFilters
 //
-//  Created by Michael Skuratau on 10/02/25.
+// Copyright (c) 2025 Michael Skuratau - https://github.com/maydibee
 //
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 
 import Foundation
 
 
-// MARK: - Filter component abstraction (API-RO)
+// MARK: - Filter component base class
 
-public protocol SFFilterComponent<FilteredItem>: AnyObject {
-
-    associatedtype FilteredItem
+open class SFFilterComponent<FilteredItem> {
     
-    var title: String { get }
-    var isItemEnabled: Bool { get set }
-    var isComposite: Bool { get }
-    var isAllActionIncluded: Bool { get }
+    open var title: String
+    open var isItemEnabled: Bool
+    open var isComposite: Bool
+    open var isAllActionIncluded: Bool
     
-    func loadNestedItems() async -> [any SFFilterComponent<FilteredItem>]
-    func updateState()
     
-    func createRelatedNode() -> SFFilterNode<FilteredItem>
-}
-
-public extension SFFilterComponent {
-    var isAllActionIncluded: Bool { false }
+    public init(title: String, isItemEnabled: Bool, isComposite: Bool, isAllActionIncluded: Bool = false) {
+        self.title = title
+        self.isItemEnabled = isItemEnabled
+        self.isComposite = isComposite
+        self.isAllActionIncluded = isAllActionIncluded
+    }
+    
+    open func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
+        fatalError("Must be overridden")
+    }
+    
+    open func updateState() {
+        fatalError("Must be overridden")
+    }
+    
+    open func createRelatedNode() -> SFFilterNode<FilteredItem> {
+        fatalError("Must be overridden")
+    }
+    
+    open func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
+        return items
+    }
 }
