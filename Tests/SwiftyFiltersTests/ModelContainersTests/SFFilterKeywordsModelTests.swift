@@ -2,6 +2,7 @@
 import XCTest
 @testable import SwiftyFilters
 
+
 final class SFFilterKeywordsModelTests: XCTestCase {
     
     // MARK: - Properties
