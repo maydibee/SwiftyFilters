@@ -47,7 +47,7 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     }
     
     
-    init(component: SFFilterComponent<FilteredItem>) {
+    public init(component: SFFilterComponent<FilteredItem>) {
         self.component = component
         self.title = component.title
         self.isComposite = component.isComposite
