@@ -1,36 +1,65 @@
 import XCTest
 @testable import SwiftyFilters
 
+
 final class SFFilterMultiSelectionContainerTests: XCTestCase {
     
-    // MARK: - Container initial state testing
+    // MARK: - Properties
     
-    func testInitialization() {
-        // Arrange
-        let resolver = SFFilterResolverStub()
-        let fetcher = SFFilterFetcherStub()
-        let container = SFFilterMultiSelectionContainer(resolver: resolver, fetcher: fetcher, isNoneIncluded: true)
-
+    private var resolver: SFFilterResolverStub!
+    private var fetcher: SFFilterFetcherStub!
+    private var container: SFFilterMultiSelectionContainer<SFFilterFilteredItemMock, SFFilterCriteriaItemMock>!
+    
+    // MARK: - Test Setup
+    
+    override func setUp() {
+        super.setUp()
+        resolver = SFFilterResolverStub()
+        fetcher = SFFilterFetcherStub()
+        container = SFFilterMultiSelectionContainer(
+            resolver: resolver,
+            fetcher: fetcher
+        )
+    }
+    
+    override func tearDown() {
+        resolver = nil
+        fetcher = nil
+        container = nil
+        super.tearDown()
+    }
+    
+    // MARK: - Initial State Tests
+    
+    func testInitialState_WhenCreatedWithDefaultParameters_ShouldHaveCorrectProperties() {
         // Assert
-        XCTAssertTrue(container.isNoneIncluded)
-        XCTAssertTrue(container.isNoneEnabled)
+        XCTAssertFalse(container.isNoneIncluded)
+        XCTAssertFalse(container.isNoneEnabled)
         XCTAssertEqual(container.isNoneEnabled, container.isNoneIncluded)
-        XCTAssertEqual(container.allItems.count, 0)
-        XCTAssertEqual(container.selectedItems.count, 0)
+        XCTAssertTrue(container.allItems.isEmpty)
+        XCTAssertTrue(container.selectedItems.isEmpty)
         XCTAssertFalse(container.isFilterActive)
     }
     
-    // MARK: - Container initialized state testing
-    
-    func testInitializeFilter() async {
+    func testInitialState_WhenNoneIsIncluded_ShouldEnableNoneByDefault() {
         // Arrange
-        let resolver = SFFilterResolverStub()
-        let fetcher = SFFilterFetcherStub()
-        let container = SFFilterMultiSelectionContainer(resolver: resolver, fetcher: fetcher)
-
+        let container = SFFilterMultiSelectionContainer(
+            resolver: resolver,
+            fetcher: fetcher,
+            isNoneIncluded: true
+        )
+        
+        // Assert
+        XCTAssertTrue(container.isNoneIncluded)
+        XCTAssertTrue(container.isNoneEnabled)
+    }
+    
+    // MARK: - Filter Initialization Tests
+    
+    func testInitializeFilter_ShouldFetchAndSetItems() async {
         // Act
         let fetchedItems = await container.initializeFilter()
-
+        
         // Assert
         XCTAssertEqual(fetchedItems.count, 3)
         XCTAssertEqual(container.allItems.count, 3)
@@ -38,64 +67,72 @@ final class SFFilterMultiSelectionContainerTests: XCTestCase {
         XCTAssertEqual(container.selectedItems.count, container.allItems.count)
     }
     
-    // MARK: - Inactive filter should't influence filtering
+    // MARK: - Filter Activity Tests
     
-    func testFilterItemsInactive() {
+    func testFilterActivity_WhenAllItemsSelected_ShouldBeInactive() async {
         // Arrange
-        let resolver = SFFilterResolverStub()
-        let fetcher = SFFilterFetcherStub()
-        let container = SFFilterMultiSelectionContainer(resolver: resolver, fetcher: fetcher)
-
-        let inputItems = [SFFilterFilteredItemMock(id: 1), SFFilterFilteredItemMock(id: 2), SFFilterFilteredItemMock(id: 3)]
-
-        // Act
-        let filteredItems = container.filterItems(inputItems: inputItems)
+        await container.initializeFilter()
         
         // Assert
         XCTAssertFalse(container.isFilterActive)
-        XCTAssertEqual(filteredItems.count, 3)
     }
     
-    // MARK: - Filtering testing
-    
-    func testFilterItemsActive() async {
+    func testFilterActivity_WhenItemDeselected_ShouldBeActive() async {
         // Arrange
-        let resolver = SFFilterResolverStub()
-        let fetcher = SFFilterFetcherStub()
-        let container = SFFilterMultiSelectionContainer(resolver: resolver, fetcher: fetcher)
-
-        let inputItems = [SFFilterFilteredItemMock(id: 1), SFFilterFilteredItemMock(id: 2), SFFilterFilteredItemMock(id: 3)]
-
+        await container.initializeFilter()
+        
         // Act
+        container.selectedItems.removeFirst()
+        
+        // Assert
+        XCTAssertTrue(container.isFilterActive)
+    }
+    
+    func testFilterActivity_WhenNoneDisabledWithInclusion_ShouldBeActive() {
+        // Arrange
+        let container = SFFilterMultiSelectionContainer(
+            resolver: resolver,
+            fetcher: fetcher,
+            isNoneIncluded: true
+        )
+        
+        // Act
+        container.isNoneEnabled = false
+        
+        // Assert
+        XCTAssertTrue(container.isFilterActive)
+    }
+    
+    // MARK: - Filtration Behavior Tests
+    
+    func testFilterItems_WhenInactive_ShouldReturnAllItems() {
+        // Arrange
+        let inputItems = Array(1...3).map(SFFilterFilteredItemMock.init)
+        
+        // Act
+        let result = container.filterItems(inputItems: inputItems)
+        
+        // Assert
+        XCTAssertEqual(result.count, 3)
+    }
+    
+    func testFilterItems_WhenActive_ShouldApplyResolverLogic() async {
+        // Arrange
+        let inputItems = Array(1...3).map(SFFilterFilteredItemMock.init)
         await container.initializeFilter()
         container.selectedItems.removeFirst()
-        let filteredItems = container.filterItems(inputItems: inputItems)
+        
+        // Act
+        let result = container.filterItems(inputItems: inputItems)
         
         // Assert
-        XCTAssertEqual(filteredItems.count, 2)
-        XCTAssertTrue(container.isFilterActive)
+        XCTAssertEqual(result.count, 2)
+        XCTAssertTrue(result.allSatisfy { $0.id != 1 })
     }
     
-    // MARK: - None should't be taken into account if it isn't included
+    // MARK: - None Inclusion Tests
     
-    func testFilterNoneIsntIncluded() async {
-        // Arrange
-        let resolver = SFFilterResolverStub()
-        let fetcher = SFFilterFetcherStub()
-        let container = SFFilterMultiSelectionContainer(resolver: resolver, fetcher: fetcher, isNoneIncluded: false)
-    
-        // Assert
-        XCTAssertFalse(container.isNoneEnabled)
-    }
-    
-    // MARK: - Filter should be inactive even if isNoneEnabled is false while isNoneIncluded is false by default
-    
-    func testFilterNoneIsntIncludedActiveState() async {
-        // Arrange
-        let resolver = SFFilterResolverStub()
-        let fetcher = SFFilterFetcherStub()
-        let container = SFFilterMultiSelectionContainer(resolver: resolver, fetcher: fetcher, isNoneIncluded: false)
-        
+    func testNoneHandling_WhenNotIncluded_ShouldIgnoreNoneState() {
         // Act
         container.isNoneEnabled = false
         
@@ -103,18 +140,30 @@ final class SFFilterMultiSelectionContainerTests: XCTestCase {
         XCTAssertFalse(container.isFilterActive)
     }
     
-    // MARK: - Filter should be active if isNoneIncluded is true but isNoneEnabled is false
-    
-    func testFilterNoneIncludedButNoneUnabled() {
+    func testNoneHandling_WhenIncludedAndDisabled_ShouldAffectFilterState() {
         // Arrange
-        let resolver = SFFilterResolverStub()
-        let fetcher = SFFilterFetcherStub()
-        let container = SFFilterMultiSelectionContainer(resolver: resolver, fetcher: fetcher, isNoneIncluded: true)
+        let container = SFFilterMultiSelectionContainer(
+            resolver: resolver,
+            fetcher: fetcher,
+            isNoneIncluded: true
+        )
         
         // Act
         container.isNoneEnabled = false
         
         // Assert
         XCTAssertTrue(container.isFilterActive)
+    }
+    
+    func testNoneHandling_WhenIncludedAndEnabled_ShouldNotAffectFilterState() {
+        // Arrange
+        let container = SFFilterMultiSelectionContainer(
+            resolver: resolver,
+            fetcher: fetcher,
+            isNoneIncluded: true
+        )
+        
+        // Assert
+        XCTAssertFalse(container.isFilterActive)
     }
 }
