@@ -15,11 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Xcode
-        uses: actions/setup-xcode@v2
-        with:
-          xcode-version: '15.0'
-
       - name: Build
         run: |
           xcodebuild build \
