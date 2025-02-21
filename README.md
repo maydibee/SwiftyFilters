@@ -3,10 +3,11 @@
 </p> <!-- Закрываем тег <p> для изображения -->
 
 <p align="center">
-  <a href="https://swift.org/"><img src="https://img.shields.io/badge/Swift-5.7+-orange.svg" alt="Swift Version"></a>
+  <a href="https://github.com/maydibee/SwiftyFilters/actions/workflows/run-tests.yml"><img src="https://github.com/maydibee/SwiftyFilters/actions/workflows/run-tests.yml/badge.svg" alt="CI"></a>
+  <a href="https://swift.org/"><img src="https://img.shields.io/badge/Swift-5.7%2B-orange?logo=swift" alt="Swift Version"></a>
   <a href="https://github.com/maydibee/SwiftyFilters/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License"></a>
   <a href="https://swift.org/package-manager/"><img src="https://img.shields.io/badge/SPM-Supported-brightgreen.svg" alt="SPM Supported"></a>
-  <a href="https://developer.apple.com/ios/"><img src="https://img.shields.io/badge/Platform-iOS%2015%2B-lightgrey.svg" alt="Platform iOS 15+"></a>
+  <a href="https://developer.apple.com/ios/"><img src="https://img.shields.io/badge/Platform-iOS 15+-lightgrey?logo=apple" alt="Platform iOS 15+"></a>
 </p>
 
 <h2 align="left">Build High-Performance Filter Trees Declaratively</h2>
