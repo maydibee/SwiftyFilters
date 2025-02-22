@@ -25,39 +25,62 @@
 import Foundation
 
 
-// MARK: - Filters hierarchy builder
-
+/// A result builder for constructing filter hierarchies.
+///
+/// This builder allows you to create complex filter trees using a declarative syntax.
+/// It is used in conjunction with `SFFiltersCore` and `SFGroupedComponent`.
+///
+/// ### Example
+/// ```swift
+/// @SFFiltersBuilder<Landmark>
+/// static func buildFilters() -> [SFFilterComponent<Landmark>] {
+///     SFGroupedComponent(title: "Category") {
+///         categoryFilterComponent
+///         subcategoryFilterComponent
+///     }
+///     distanceRangeFilterComponent
+/// }
+/// ```
+///
 @resultBuilder
 public struct SFFiltersBuilder<FilteredItem> {
     
+    /// Combines multiple arrays of filter components into a single array.
     public static func buildBlock(_ components: [SFFilterComponent<FilteredItem>]...) -> [SFFilterComponent<FilteredItem>] {
         components.flatMap { $0 }
     }
     
+    /// Converts a single filter component into an array.
     public static func buildExpression(_ expression: SFFilterComponent<FilteredItem>) -> [SFFilterComponent<FilteredItem>] {
         [expression]
     }
     
+    /// Converts an array of filter components into an array.
     public static func buildExpression(_ expression: [SFFilterComponent<FilteredItem>]) -> [SFFilterComponent<FilteredItem>] {
         expression
     }
     
+    /// Handles optional arrays of filter components.
     public static func buildOptional(_ components: [SFFilterComponent<FilteredItem>]?) -> [SFFilterComponent<FilteredItem>] {
         components ?? []
     }
     
+    /// Handles the first branch of a conditional statement.
     public static func buildEither(first components: [SFFilterComponent<FilteredItem>]) -> [SFFilterComponent<FilteredItem>] {
         components
     }
     
+    /// Handles the second branch of a conditional statement.
     public static func buildEither(second components: [SFFilterComponent<FilteredItem>]) -> [SFFilterComponent<FilteredItem>] {
         components
     }
     
+    /// Combines an array of arrays of filter components into a single array.
     public static func buildArray(_ components: [[SFFilterComponent<FilteredItem>]]) -> [SFFilterComponent<FilteredItem>] {
         components.flatMap { $0 }
     }
     
+    /// Converts a grouped component into an array of filter components.
     public static func buildExpression(_ expression: SFGroupedComponent<FilteredItem>) -> [SFFilterComponent<FilteredItem>] {
         let components = expression.content()
         return [self.createGroupedItem(title: expression.title, from: components)]

@@ -25,14 +25,45 @@
 import Foundation
 
 
-// MARK: - Filter's hierarchy grouped component
-
+/// A component that groups multiple filter components under a single title.
+///
+/// This struct is used to create hierarchical filter structures. It allows you to group related filters
+/// together and display them under a common title within separate filter branch component view.
+///
+/// ### Example
+/// ```swift
+/// @SFFiltersBuilder<Landmark>
+/// static func buildFilters() -> [SFFilterComponent<Landmark>] {
+///
+///     SFGroupedComponent(title: "Status") {
+///        statusesFilterComponent
+///
+///         SFGroupedComponent(title: "Status history") {
+///             statusChangeRemark
+///
+///             SFGroupedComponent(title: "Status dates") {
+///                 statusChangeDateFilterComponent
+///                 statusInitialSetDateFilterComponent
+///             }
+///         }
+///     }
+/// }  
+/// ```
+///
 public struct SFGroupedComponent<FilteredItem> {
     
+    /// The title of the grouped component.
     let title: String
 
+    /// A result builder that constructs the content of the grouped component.
     @SFFiltersBuilder<FilteredItem> let content: () -> [SFFilterComponent<FilteredItem>]
     
+    /// Initializes a new grouped component.
+    ///
+    /// - Parameters:
+    ///   - title: The title of the grouped component.
+    ///   - content: A result builder that constructs the content of the grouped component.
+    ///
     public init(title: String, @SFFiltersBuilder<FilteredItem> content: @escaping () -> [SFFilterComponent<FilteredItem>]) {
         self.title = title
         self.content = content
