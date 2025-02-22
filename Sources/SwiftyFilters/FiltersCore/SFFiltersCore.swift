@@ -23,16 +23,24 @@
 
 
 import Foundation
+import Combine
 
 
 public class SFFiltersCore<FilteredItem>: ObservableObject {
 
     public let title: String
-    
-    @Published public var rootNode: SFFilterNode<FilteredItem>?
     public var onFiltesUpdated: (() -> Void)?
     
+    @Published public var rootNode: SFFilterNode<FilteredItem>? {
+        didSet {
+            subscribeToIsItemEnabled()
+        }
+    }
+    @Published public var isFilterActive: Bool = false
+
+    
     private var filters: [SFFilterComponent<FilteredItem>]
+    private var cancellables = Set<AnyCancellable>()
     
     
     public init(title: String, @SFFiltersBuilder<FilteredItem> builder: () -> [SFFilterComponent<FilteredItem>]) {
@@ -49,5 +57,20 @@ public class SFFiltersCore<FilteredItem>: ObservableObject {
     public func getFilteredData(from items: [FilteredItem]) -> [FilteredItem] {
         guard let rootNode else { return items }
         return rootNode.getFilteredData(from: items)
+    }
+}
+
+
+// MARK: - Subscriptions configuration
+
+private extension SFFiltersCore {
+    
+    private func subscribeToIsItemEnabled() {
+        cancellables.removeAll()
+        
+        rootNode?.$isItemEnabled
+            .map { !$0 }
+            .assign(to: \.isFilterActive, on: self)
+            .store(in: &cancellables)
     }
 }
