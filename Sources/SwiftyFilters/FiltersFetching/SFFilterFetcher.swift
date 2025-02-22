@@ -47,7 +47,6 @@ import Foundation
 public protocol SFFilterFetcher<CriteriaItem> {
     
     /// The type of items used for filtering.
-    ///
     associatedtype CriteriaItem
     
     /// Fetches an array of `CriteriaItem` elements asynchronously.

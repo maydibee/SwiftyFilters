@@ -55,7 +55,7 @@ import Foundation
 ///     }
 /// }
 /// ```
-
+///
 public protocol SFFilterResolver<FilteredItem, CriteriaItem> {
 
     /// The type of items to be filtered.
@@ -75,5 +75,6 @@ public protocol SFFilterResolver<FilteredItem, CriteriaItem> {
     ///   - isNoneEnabled: A flag indicating whether the "None" option is enabled(`false` by default if `isNoneIncluded` isn't set or equal to `false` in component's container )
     ///
     /// - Returns: A filtered array of `FilteredItem` elements.
+    ///
     func filterItems(_ inputItems: [FilteredItem], basedOn criteriaItem: CriteriaItem, isNoneEnabled: Bool ) -> [FilteredItem]
 }
