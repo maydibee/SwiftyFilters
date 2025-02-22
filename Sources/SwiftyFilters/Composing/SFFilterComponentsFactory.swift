@@ -25,10 +25,34 @@
 import Foundation
 
 
-// MARK: - Filter's base components abstract factory
-
+/// A factory class for creating filter components of different types.
+///
+/// This class provides static methods to create filter components for:
+/// - Multi-selection filters
+/// - Range filters
+/// - Keywords filters
+/// - Single value filters
+///
+/// Each method returns a `SFFilterComponent` configured with the specified parameters.
+///
 public class SFFilterComponentsFactory {
     
+    /// Creates a multi-selection filter component.
+    ///
+    /// This component allows filtering based on multiple criteria of type `CriteriaItem`
+    /// or the absence of a value (if `isNoneIncluded` is `true`).
+    ///
+    /// - Parameters:
+    ///   - title: The title of the filter component.
+    ///   - resolver: An object conforming to `SFFilterResolver` that defines the filtering behavior
+    ///              based on an array of `CriteriaItem`.
+    ///   - fetcher: An object conforming to `SFFilterFetcher` that fetches the data source for the filter.
+    ///   - isNoneIncluded: A flag indicating whether the "None" option is included in the filter.
+    ///                     Defaults to `false`.
+    ///   - noneItemTitle: The title of the "None" option, displayed if `isNoneIncluded` is `true`.
+    ///
+    /// - Returns: A configured `SFFilterComponent` for multi-selection filtering.
+    ///
     public static func createMultiSelectionComponent<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>(title: String,
                                                                                                                     resolver: any SFFilterResolver<FilteredItem, [CriteriaItem]>,
                                                                                                                     fetcher: any SFFilterFetcher<CriteriaItem>,
@@ -39,6 +63,21 @@ public class SFFilterComponentsFactory {
         return component
     }
     
+    /// Creates a range filter component.
+    ///
+    /// This component allows filtering based on a range of values or the absence of a value
+    /// (if `isNoneIncluded` is `true`).
+    ///
+    /// - Parameters:
+    ///   - title: The title of the filter component.
+    ///   - resolver: An object conforming to `SFFilterResolver` that defines the filtering behavior
+    ///              based on a `SFFilterRange<CriteriaItem>`.
+    ///   - isNoneIncluded: A flag indicating whether the "None" option is included in the filter.
+    ///                     Defaults to `false`.
+    ///   - noneItemTitle: The title of the "None" option, displayed if `isNoneIncluded` is `true`.
+    ///
+    /// - Returns: A configured `SFFilterComponent` for range-based filtering.
+    ///
     public static func createRangeComponent<FilteredItem, CriteriaItem: Comparable>(title: String,
                                                                                     resolver: any SFFilterResolver<FilteredItem, SFFilterRange<CriteriaItem>>,
                                                                                     isNoneIncluded: Bool = false,
@@ -48,6 +87,21 @@ public class SFFilterComponentsFactory {
         return component
     }
     
+    /// Creates a keywords filter component.
+    ///
+    /// This component allows filtering based on a set of keywords or the absence of a value
+    /// (if `isNoneIncluded` is `true`).
+    ///
+    /// - Parameters:
+    ///   - title: The title of the filter component.
+    ///   - resolver: An object conforming to `SFFilterResolver` that defines the filtering behavior
+    ///              based on a `SFFilterKeywordsModel<CriteriaItem>`.
+    ///   - isNoneIncluded: A flag indicating whether the "None" option is included in the filter.
+    ///                     Defaults to `false`.
+    ///   - noneItemTitle: The title of the "None" option, displayed if `isNoneIncluded` is `true`.
+    ///
+    /// - Returns: A configured `SFFilterComponent` for keyword-based filtering.
+    ///
     public static func createKeywordsComponent<FilteredItem, CriteriaItem: StringProtocol>(title: String,
                                                                                            resolver: any SFFilterResolver<FilteredItem, SFFilterKeywordsModel<CriteriaItem>>,
                                                                                            isNoneIncluded: Bool = false,
@@ -57,6 +111,20 @@ public class SFFilterComponentsFactory {
         return component
     }
     
+    /// Creates a single value filter component.
+    ///
+    /// This component allows filtering based on a specific value or the absence of a value
+    /// (if `isNoneIncluded` is `true`).
+    ///  - Parameters:
+    ///    - title: The title of the filter component.
+    ///    - resolver: An object conforming to `SFFilterResolver` that defines the filtering behavior
+    ///              based on a single `CriteriaItem`.
+    ///    - isNoneIncluded: A flag indicating whether the "None" option is included in the filter.
+    ///                     Defaults to `false`.
+    ///    - noneItemTitle: The title of the "None" option, displayed if `isNoneIncluded` is `true`.
+    ///
+    /// - Returns: A configured `SFFilterComponent` for single value-based filtering.
+    ///
     public static func createSingleValueComponent<FilteredItem, CriteriaItem: Equatable>(title: String,
                                                                                          resolver: any SFFilterResolver<FilteredItem, CriteriaItem>,
                                                                                          isNoneIncluded: Bool = false,
