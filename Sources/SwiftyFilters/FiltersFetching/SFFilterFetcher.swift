@@ -25,12 +25,37 @@
 import Foundation
 
 
-// MARK: - Filter's fetcher abstraction (API-RO)
-// BASE
-
+/// A type responsible for fetching data required by a filter component.
+///
+/// This protocol defines a method to asynchronously fetch an array of `CriteriaItem` elements,
+/// which are used for filtering in components like `SFFilterMultiSelectionComponent`.
+///
+/// - Note: Currently, only the multi-selection filter component created via the factory method
+/// `createMultiSelectionComponent` requires this type to load data into the filter container.
+///
+/// ### Example
+/// ```swift
+/// class ParticipantsFilterFetcher: SFFilterFetcher {
+///
+///     func fetchFilterItems() async -> [String] {
+///         // Fetch and return the items
+///         return ["Mike", "Bob", "Romain"]
+///     }
+/// }
+/// ```
+///
 public protocol SFFilterFetcher<CriteriaItem> {
     
+    /// The type of items used for filtering.
+    ///
     associatedtype CriteriaItem
     
+    /// Fetches an array of `CriteriaItem` elements asynchronously.
+    ///
+    /// This method is responsible for loading the data into the filter container.
+    /// The returned array will be used for filtering operations.
+    ///
+    /// - Returns: An array of `CriteriaItem` elements.
+    ///
     func fetchFilterItems() async -> [CriteriaItem]
 }
