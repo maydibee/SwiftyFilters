@@ -60,6 +60,6 @@ public struct SFFilterRootView<FilteredItem>: View {
                 filtersCore.compose()
             }
         }
-        .onDisappear { filtersCore.onFiltesUpdated?() }
+        
     }
 }
