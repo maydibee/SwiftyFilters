@@ -88,6 +88,12 @@ public class SFFiltersCore<FilteredItem>: ObservableObject {
         return rootNode.getFilteredData(from: items)
     }
     
+    /// Resets all filters in filter tree.
+    ///
+    public func resetFilters() {
+        rootNode?.resetAllFilters()
+    }
+    
     func compose() {
         let filterComponents: [SFFilterComponent<FilteredItem>] = filters
         let master = SFFilterMasterComponent(title: self.title, nestedFilterItems: filterComponents)
