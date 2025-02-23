@@ -25,6 +25,19 @@
 import Foundation
 
 
+/// A container for managing keywords used in keyword-based filters.
+///
+/// This struct stores a collection of keywords and provides utility methods for working with them.
+/// It also includes a method to check if a value satisfies all the keywords in the container.
+///
+/// ### Example of internal usage
+/// ```swift
+/// var model = SFFilterKeywordsModel<String>()
+/// model.addKeyword("apple")
+/// model.addKeyword("banana")
+/// print(model.isSafisfy("I like apples and bananas")) // true
+/// ```
+///
 public struct SFFilterKeywordsModel<T: StringProtocol> {
     
     var keywordsContainer: SFFilterKeywords<T> = .init()
@@ -38,6 +51,14 @@ public struct SFFilterKeywordsModel<T: StringProtocol> {
         keywordsContainer.words
     }
 
+    /// Checks if a value satisfies all the keywords in the container.
+    ///
+    /// This method determines whether the provided value contains all the keywords stored in the container.
+    /// The comparison can be case-sensitive or case-insensitive, depending on the `isCaseSensitive` internal property.
+    ///
+    /// - Parameter value: The value to check against the keywords.
+    /// - Returns: `true` if the value contains all the keywords, otherwise `false`.
+    ///
     public func isSafisfy(_ value: T) -> Bool {
         keywordsContainer.isSafisfy(value, isCaseSensitive: self.isCaseSensitive)
     }

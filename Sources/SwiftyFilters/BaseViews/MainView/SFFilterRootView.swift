@@ -25,13 +25,24 @@
 import SwiftUI
 
 
-// MARK: - Filters root view
-
+/// A view that displays the root of the filter hierarchy.
+///
+/// This view is responsible for rendering the entire filter tree and managing its appearance and behavior.
+///
+/// ### Example
+/// ```swift
+/// SFFilterRootView(filtersCore: filtersCore)
+/// ```
+///
 public struct SFFilterRootView<FilteredItem>: View {
     
+    /// The core filter object that manages the filter hierarchy.
     @StateObject public var filtersCore: SFFiltersCore<FilteredItem>
 
-    
+    /// Initializes a new `SFFilterRootView`.
+    ///
+    /// - Parameter filtersCore: The core filter object.
+    ///
     public init(filtersCore: SFFiltersCore<FilteredItem>) {
         _filtersCore = StateObject(wrappedValue: filtersCore)
     }
@@ -49,6 +60,6 @@ public struct SFFilterRootView<FilteredItem>: View {
                 filtersCore.compose()
             }
         }
-        .onDisappear { filtersCore.onFiltesUpdated?() }
+        
     }
 }

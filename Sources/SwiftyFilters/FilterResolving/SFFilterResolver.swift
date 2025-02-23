@@ -25,13 +25,56 @@
 import Foundation
 
 
-// MARK: - Filter's resolver abstraction (API-RO)
-// BASE
-
+/// A type responsible for defining the filtering behavior of a filter component.
+///
+/// This protocol defines a method to filter an array of `FilteredItem` elements based on
+/// the provided `CriteriaItem` and additional parameters like `isNoneEnabled`.
+///
+/// ### Example
+/// ```swift
+/// struct Participant {
+///     var name: String
+///     var age: Int?
+/// }
+///
+///
+/// class ParticipantsFilterResolver: SFFilterResolver {
+///     
+///     func filterItems(
+///         _ inputItems: [Participant],
+///         basedOn criteriaItem: Int,
+///         isNoneEnabled: Bool
+///     ) -> [Participant] {
+///         return inputItems.filter { participant in
+///             if let age = participant.age {
+///                 return participant.age == criteriaItem
+///             } else {
+///                 return isNoneEnabled
+///             }
+///         }
+///     }
+/// }
+/// ```
+///
 public protocol SFFilterResolver<FilteredItem, CriteriaItem> {
 
+    /// The type of items to be filtered.
     associatedtype FilteredItem
+    
+    /// The type of criteria used for filtering.
     associatedtype CriteriaItem
 
+    /// Filters an array of `FilteredItem` elements based on the provided criteria.
+    ///
+    /// This method defines the filtering behavior. Implementations should return a filtered
+    /// array of `FilteredItem` elements based on the `criteriaItem` and `isNoneEnabled` flag.
+    ///
+    /// - Parameters:
+    ///   - inputItems: The array of items to be filtered.
+    ///   - criteriaItem: The criteria used for filtering.
+    ///   - isNoneEnabled: A flag indicating whether the "None" option is enabled(`false` by default if `isNoneIncluded` isn't set or equal to `false` in component's container )
+    ///
+    /// - Returns: A filtered array of `FilteredItem` elements.
+    ///
     func filterItems(_ inputItems: [FilteredItem], basedOn criteriaItem: CriteriaItem, isNoneEnabled: Bool ) -> [FilteredItem]
 }

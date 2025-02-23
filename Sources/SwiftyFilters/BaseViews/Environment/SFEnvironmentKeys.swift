@@ -82,7 +82,3 @@ struct SFEndDateStringKey: EnvironmentKey {
 struct SFDateStringKey: EnvironmentKey {
     static let defaultValue: String = SFFilterConfig.default.dateString
 }
-
-struct SFNoneStringKey: EnvironmentKey {
-    static let defaultValue: String = SFFilterConfig.default.noneString
-}

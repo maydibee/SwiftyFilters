@@ -25,8 +25,13 @@
 import Foundation
 
 
-// MARK: - Abstraction for filterable elements (API-RO)
-
+/// A protocol that defines a title for filter criteria items.
+///
+/// Types conforming to this protocol can be used as `CriteriaItem` in multi-select filter components.
+/// The `title` property is used to display the item in the filter's selection list.
+///
 public protocol SFFiltersTitleable {
+    
+    /// The title of the filter criteria item.
     var title: String { get }
 }

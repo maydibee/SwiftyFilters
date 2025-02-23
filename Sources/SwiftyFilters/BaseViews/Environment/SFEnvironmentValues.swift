@@ -98,9 +98,4 @@ extension EnvironmentValues {
         get { self[SFDateStringKey.self] }
         set { self[SFDateStringKey.self] = newValue }
     }
-    
-    var noneString: String {
-        get { self[SFNoneStringKey.self] }
-        set { self[SFNoneStringKey.self] = newValue }
-    }
 }
