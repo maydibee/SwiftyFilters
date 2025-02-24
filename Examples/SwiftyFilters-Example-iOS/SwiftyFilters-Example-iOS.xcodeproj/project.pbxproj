@@ -8,18 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		35E779882D6B6B25007D73C7 /* SwiftyFilters_Example_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E779872D6B6B25007D73C7 /* SwiftyFilters_Example_iOSApp.swift */; };
-		35E7798A2D6B6B25007D73C7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E779892D6B6B25007D73C7 /* ContentView.swift */; };
 		35E7798C2D6B6B27007D73C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35E7798B2D6B6B27007D73C7 /* Assets.xcassets */; };
 		35E7798F2D6B6B27007D73C7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35E7798E2D6B6B27007D73C7 /* Preview Assets.xcassets */; };
-		35E779972D6C02F0007D73C7 /* SwiftyFilters in Frameworks */ = {isa = PBXBuildFile; productRef = 35E779962D6C02F0007D73C7 /* SwiftyFilters */; };
+		35E7799A2D6C1119007D73C7 /* SwiftyFilters in Frameworks */ = {isa = PBXBuildFile; productRef = 35E779992D6C1119007D73C7 /* SwiftyFilters */; };
+		35E7799D2D6C2012007D73C7 /* Aircraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E7799C2D6C2012007D73C7 /* Aircraft.swift */; };
+		35E779A12D6C46E9007D73C7 /* AircraftExploiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E779A02D6C46E9007D73C7 /* AircraftExploiter.swift */; };
+		35E779A32D6C4723007D73C7 /* AircraftType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E779A22D6C4723007D73C7 /* AircraftType.swift */; };
+		35E779A52D6C47C1007D73C7 /* AircraftListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E779A42D6C47C1007D73C7 /* AircraftListView.swift */; };
+		35E779A72D6C4814007D73C7 /* AircraftRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E779A62D6C4814007D73C7 /* AircraftRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		35E779842D6B6B25007D73C7 /* SwiftyFilters-Example-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftyFilters-Example-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		35E779872D6B6B25007D73C7 /* SwiftyFilters_Example_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyFilters_Example_iOSApp.swift; sourceTree = "<group>"; };
-		35E779892D6B6B25007D73C7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		35E7798B2D6B6B27007D73C7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		35E7798E2D6B6B27007D73C7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		35E7799C2D6C2012007D73C7 /* Aircraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aircraft.swift; sourceTree = "<group>"; };
+		35E779A02D6C46E9007D73C7 /* AircraftExploiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftExploiter.swift; sourceTree = "<group>"; };
+		35E779A22D6C4723007D73C7 /* AircraftType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftType.swift; sourceTree = "<group>"; };
+		35E779A42D6C47C1007D73C7 /* AircraftListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftListView.swift; sourceTree = "<group>"; };
+		35E779A62D6C4814007D73C7 /* AircraftRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,7 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35E779972D6C02F0007D73C7 /* SwiftyFilters in Frameworks */,
+				35E7799A2D6C1119007D73C7 /* SwiftyFilters in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -39,6 +47,7 @@
 			children = (
 				35E779862D6B6B25007D73C7 /* SwiftyFilters-Example-iOS */,
 				35E779852D6B6B25007D73C7 /* Products */,
+				35E779982D6C10F1007D73C7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -53,8 +62,9 @@
 		35E779862D6B6B25007D73C7 /* SwiftyFilters-Example-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				35E7799E2D6C269E007D73C7 /* AircraftListScene */,
+				35E7799B2D6C1168007D73C7 /* Models */,
 				35E779872D6B6B25007D73C7 /* SwiftyFilters_Example_iOSApp.swift */,
-				35E779892D6B6B25007D73C7 /* ContentView.swift */,
 				35E7798B2D6B6B27007D73C7 /* Assets.xcassets */,
 				35E7798D2D6B6B27007D73C7 /* Preview Content */,
 			);
@@ -67,6 +77,32 @@
 				35E7798E2D6B6B27007D73C7 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		35E779982D6C10F1007D73C7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		35E7799B2D6C1168007D73C7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				35E7799C2D6C2012007D73C7 /* Aircraft.swift */,
+				35E779A02D6C46E9007D73C7 /* AircraftExploiter.swift */,
+				35E779A22D6C4723007D73C7 /* AircraftType.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		35E7799E2D6C269E007D73C7 /* AircraftListScene */ = {
+			isa = PBXGroup;
+			children = (
+				35E779A42D6C47C1007D73C7 /* AircraftListView.swift */,
+				35E779A62D6C4814007D73C7 /* AircraftRow.swift */,
+			);
+			path = AircraftListScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,7 +122,7 @@
 			);
 			name = "SwiftyFilters-Example-iOS";
 			packageProductDependencies = (
-				35E779962D6C02F0007D73C7 /* SwiftyFilters */,
+				35E779992D6C1119007D73C7 /* SwiftyFilters */,
 			);
 			productName = "SwiftyFilters-Example-iOS";
 			productReference = 35E779842D6B6B25007D73C7 /* SwiftyFilters-Example-iOS.app */;
@@ -145,8 +181,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35E7798A2D6B6B25007D73C7 /* ContentView.swift in Sources */,
+				35E779A52D6C47C1007D73C7 /* AircraftListView.swift in Sources */,
 				35E779882D6B6B25007D73C7 /* SwiftyFilters_Example_iOSApp.swift in Sources */,
+				35E779A72D6C4814007D73C7 /* AircraftRow.swift in Sources */,
+				35E779A12D6C46E9007D73C7 /* AircraftExploiter.swift in Sources */,
+				35E7799D2D6C2012007D73C7 /* Aircraft.swift in Sources */,
+				35E779A32D6C4723007D73C7 /* AircraftType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,9 +405,8 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		35E779962D6C02F0007D73C7 /* SwiftyFilters */ = {
+		35E779992D6C1119007D73C7 /* SwiftyFilters */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 35E779952D6C02F0007D73C7 /* XCRemoteSwiftPackageReference "SwiftyFilters" */;
 			productName = SwiftyFilters;
 		};
 /* End XCSwiftPackageProductDependency section */
