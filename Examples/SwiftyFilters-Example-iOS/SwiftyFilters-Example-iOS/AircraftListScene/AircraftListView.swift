@@ -27,7 +27,6 @@ struct AircraftListView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .opacity(0.6)
-                        
                     Spacer()
                 }
                 .ignoresSafeArea()
@@ -42,6 +41,7 @@ struct AircraftListView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .foregroundColor(.black)
+                            .frame(width: 30)
                     }
                 }
             }
