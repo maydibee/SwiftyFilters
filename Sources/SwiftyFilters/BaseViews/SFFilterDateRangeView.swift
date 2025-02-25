@@ -98,6 +98,7 @@ private extension SFFilterDateRangeView {
             Button(resetString, action: onReset)
                 .disabled(!isActive)
         }
+        .padding(.horizontal, 5)
     }
     
     func datePickerView(date: Binding<Date>, range: ClosedRange<Date>) -> some View {
