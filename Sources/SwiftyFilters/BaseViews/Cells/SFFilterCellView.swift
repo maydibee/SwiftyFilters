@@ -44,8 +44,10 @@ struct SFFilterCellView<FilteredItem>: View {
             Group {
                 if node.isItemEnabled {
                     enabledCheckboxImage
+                        .renderingMode(.template)
                 } else {
                     disabledCheckboxImage
+                        .renderingMode(.template)
                 }
             }
             .foregroundColor(node.isItemEnabled ? enabledCheckboxColor : disabledCheckboxColor)
