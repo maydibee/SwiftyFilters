@@ -13,6 +13,13 @@ import SwiftUI
 struct AircraftRow: View {
     let aircraft: Aircraft
     
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter
+    }
+    
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
             
@@ -42,6 +49,14 @@ struct AircraftRow: View {
                         .font(.caption)
                         .foregroundColor(.green)
                 }
+                
+                Text("First flight: \(dateFormatter.string(from: aircraft.firstFlightDate))")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                
+                Text("Manufacture date: \(dateFormatter.string(from: aircraft.manufactureDate))")
+                    .font(.caption)
+                    .foregroundColor(.gray)
                 
                 Text(aircraft.remarks)
                     .font(.caption)
