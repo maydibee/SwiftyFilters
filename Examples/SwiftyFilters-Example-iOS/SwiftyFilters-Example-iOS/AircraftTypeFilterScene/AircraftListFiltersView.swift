@@ -22,7 +22,7 @@ struct AircraftListFiltersView: View {
                     filtersCore.resetFilters()
                 } label: {
                     Text("Reset")
-                        .foregroundStyle(.red)
+                        .foregroundStyle(.white)
                 }
                 Spacer()
                 Button {

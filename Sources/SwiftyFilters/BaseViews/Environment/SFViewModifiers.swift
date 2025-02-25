@@ -154,4 +154,15 @@ public extension View {
     func endDateString(_ value: String) -> some View {
         environment(\.endDateString, value)
     }
+    
+    
+    /// Sets the the title display mode for the for navigation bar displayed in all filter components.
+    ///
+    /// - Parameter value: The style to use for displaying the title.
+    /// - Returns: A view with the updated environment value.
+    ///
+    func titleDisplayMode(_ value: NavigationBarItem.TitleDisplayMode) -> some View {
+        environment(\.titleDisplayMode, value)
+    }
+    
 }

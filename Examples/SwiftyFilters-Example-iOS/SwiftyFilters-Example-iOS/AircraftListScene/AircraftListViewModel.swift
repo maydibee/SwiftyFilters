@@ -21,14 +21,67 @@ class AircraftListViewModel: ObservableObject {
     
     init() {
         let aircraftTypeFilterComponent = SFFilterComponentsFactory.createMultiSelectionComponent(
-            title: "Aircraft type",
+            title: "Type",
             resolver: AircraftTypeFilterResolver(),
             fetcher: AircraftTypeFilterFetcher(),
             noneItemTitle: "None"
         )
         
+        let aircraftExploiterFilterComponent = SFFilterComponentsFactory.createMultiSelectionComponent(
+            title: "Last exploiter",
+            resolver: AircraftExploiterFilterResolver(),
+            fetcher: AircraftExploiterFilterFetcher(),
+            isNoneIncluded: true,
+            noneItemTitle: "None"
+        )
+        
+        let aircraftRemarksFilterComponent = SFFilterComponentsFactory.createKeywordsComponent(
+            title: "Remarks",
+            resolver: AircraftRemarksFilterResolver(),
+            isNoneIncluded: true,
+            noneItemTitle: "None"
+        )
+        
+        let aircraftFirstFlightDateFilterComponent = SFFilterComponentsFactory.createRangeComponent(
+            title: "First flight date",
+            resolver: AircraftFirstFlightDateFilterResolver(),
+            noneItemTitle: "None"
+        )
+        
+        let aircraftManufactureDateFilterComponent = SFFilterComponentsFactory.createRangeComponent(
+            title: "Manufacture date",
+            resolver: AircraftManufactureDateFilterResolver(),
+            noneItemTitle: "None"
+        )
+        
+        // Unsupported
+        
+        let aircraftCapacityFilterComponent = SFFilterComponentsFactory.createRangeComponent(
+            title: "Capacity",
+            resolver: AircraftCapacityFilterResolver(),
+            noneItemTitle: "None"
+        )
+        
+        let aircraftNewnessFilterComponent = SFFilterComponentsFactory.createSingleValueComponent(
+            title: "Newness",
+            resolver: AircraftNewnessFilterResolver(),
+            noneItemTitle: "None"
+        )
+        
+        
+        
         self.filtersCore = SFFiltersCore<Aircraft>(title: "Filters") {
             aircraftTypeFilterComponent
+            aircraftExploiterFilterComponent
+            aircraftRemarksFilterComponent
+            
+            SFGroupedComponent(title: "Dates") {
+                aircraftFirstFlightDateFilterComponent
+                aircraftManufactureDateFilterComponent
+            }
+            
+            aircraftCapacityFilterComponent
+            aircraftNewnessFilterComponent
         }
     }
     

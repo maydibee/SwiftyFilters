@@ -38,6 +38,8 @@ public struct SFFilterRootView<FilteredItem>: View {
     
     /// The core filter object that manages the filter hierarchy.
     @StateObject public var filtersCore: SFFiltersCore<FilteredItem>
+    @Environment(\.titleDisplayMode) var titleDisplayMode
+    
 
     /// Initializes a new `SFFilterRootView`.
     ///
@@ -51,6 +53,7 @@ public struct SFFilterRootView<FilteredItem>: View {
         NavigationView {
             if let rootNode = filtersCore.rootNode {
                 SFFilterComponentView(node: rootNode)
+                    .navigationBarTitleDisplayMode(titleDisplayMode)
             } else {
                 ProgressView()
             }

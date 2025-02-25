@@ -9,9 +9,16 @@
 /* Begin PBXBuildFile section */
 		351BE3602D6CBB870049E47F /* AircraftTypeFilterFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE35F2D6CBB870049E47F /* AircraftTypeFilterFetcher.swift */; };
 		351BE3622D6CD2460049E47F /* AircraftTypeFilterResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE3612D6CD2460049E47F /* AircraftTypeFilterResolver.swift */; };
-		351BE3642D6CD7D20049E47F /* Aircraft+SFFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE3632D6CD7D20049E47F /* Aircraft+SFFilter.swift */; };
+		351BE3642D6CD7D20049E47F /* Models+SFFiltersTitleable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE3632D6CD7D20049E47F /* Models+SFFiltersTitleable.swift */; };
 		351BE36C2D6D67C20049E47F /* AircraftListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE36B2D6D67C20049E47F /* AircraftListViewModel.swift */; };
 		351BE36E2D6D68220049E47F /* AircraftListFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE36D2D6D68220049E47F /* AircraftListFiltersView.swift */; };
+		351BE3742D6D77100049E47F /* AircraftExploiterFilterFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE3732D6D77100049E47F /* AircraftExploiterFilterFetcher.swift */; };
+		351BE3762D6D77D20049E47F /* AircraftExploiterFilterResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE3752D6D77D20049E47F /* AircraftExploiterFilterResolver.swift */; };
+		351BE3792D6D7B350049E47F /* AircraftRemarksFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE3782D6D7B350049E47F /* AircraftRemarksFilter.swift */; };
+		351BE37C2D6D7F600049E47F /* AircraftFirstFlightDateFilterResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE37B2D6D7F600049E47F /* AircraftFirstFlightDateFilterResolver.swift */; };
+		351BE37F2D6D806D0049E47F /* AircraftManufactureDateFilterResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE37E2D6D806D0049E47F /* AircraftManufactureDateFilterResolver.swift */; };
+		351BE3822D6D81F60049E47F /* AircraftCapacityFilterResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE3812D6D81F60049E47F /* AircraftCapacityFilterResolver.swift */; };
+		351BE3842D6D856F0049E47F /* AircraftNewnessFilterResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE3832D6D856F0049E47F /* AircraftNewnessFilterResolver.swift */; };
 		35E779882D6B6B25007D73C7 /* SwiftyFilters_Example_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E779872D6B6B25007D73C7 /* SwiftyFilters_Example_iOSApp.swift */; };
 		35E7798C2D6B6B27007D73C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35E7798B2D6B6B27007D73C7 /* Assets.xcassets */; };
 		35E7798F2D6B6B27007D73C7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35E7798E2D6B6B27007D73C7 /* Preview Assets.xcassets */; };
@@ -26,9 +33,16 @@
 /* Begin PBXFileReference section */
 		351BE35F2D6CBB870049E47F /* AircraftTypeFilterFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftTypeFilterFetcher.swift; sourceTree = "<group>"; };
 		351BE3612D6CD2460049E47F /* AircraftTypeFilterResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftTypeFilterResolver.swift; sourceTree = "<group>"; };
-		351BE3632D6CD7D20049E47F /* Aircraft+SFFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Aircraft+SFFilter.swift"; sourceTree = "<group>"; };
+		351BE3632D6CD7D20049E47F /* Models+SFFiltersTitleable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models+SFFiltersTitleable.swift"; sourceTree = "<group>"; };
 		351BE36B2D6D67C20049E47F /* AircraftListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftListViewModel.swift; sourceTree = "<group>"; };
 		351BE36D2D6D68220049E47F /* AircraftListFiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftListFiltersView.swift; sourceTree = "<group>"; };
+		351BE3732D6D77100049E47F /* AircraftExploiterFilterFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftExploiterFilterFetcher.swift; sourceTree = "<group>"; };
+		351BE3752D6D77D20049E47F /* AircraftExploiterFilterResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftExploiterFilterResolver.swift; sourceTree = "<group>"; };
+		351BE3782D6D7B350049E47F /* AircraftRemarksFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftRemarksFilter.swift; sourceTree = "<group>"; };
+		351BE37B2D6D7F600049E47F /* AircraftFirstFlightDateFilterResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftFirstFlightDateFilterResolver.swift; sourceTree = "<group>"; };
+		351BE37E2D6D806D0049E47F /* AircraftManufactureDateFilterResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftManufactureDateFilterResolver.swift; sourceTree = "<group>"; };
+		351BE3812D6D81F60049E47F /* AircraftCapacityFilterResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftCapacityFilterResolver.swift; sourceTree = "<group>"; };
+		351BE3832D6D856F0049E47F /* AircraftNewnessFilterResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftNewnessFilterResolver.swift; sourceTree = "<group>"; };
 		35E779842D6B6B25007D73C7 /* SwiftyFilters-Example-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftyFilters-Example-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		35E779872D6B6B25007D73C7 /* SwiftyFilters_Example_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyFilters_Example_iOSApp.swift; sourceTree = "<group>"; };
 		35E7798B2D6B6B27007D73C7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -65,8 +79,13 @@
 		351BE36F2D6D75AC0049E47F /* Filters */ = {
 			isa = PBXGroup;
 			children = (
-				351BE35F2D6CBB870049E47F /* AircraftTypeFilterFetcher.swift */,
-				351BE3612D6CD2460049E47F /* AircraftTypeFilterResolver.swift */,
+				351BE3802D6D81BF0049E47F /* AircraftCapacityFilter */,
+				351BE37D2D6D80530049E47F /* AircraftManufactureDateFilter */,
+				351BE37A2D6D7F3B0049E47F /* AircraftFirstFlightDateFilter */,
+				351BE3772D6D7B100049E47F /* AircraftRemarksFilter */,
+				351BE3722D6D76E30049E47F /* AircraftExploiterFilter */,
+				351BE3712D6D76950049E47F /* AircraftTypeFilter */,
+				351BE3852D6D857A0049E47F /* AircraftNewnessFilter */,
 			);
 			path = Filters;
 			sourceTree = "<group>";
@@ -74,9 +93,67 @@
 		351BE3702D6D75F10049E47F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				351BE3632D6CD7D20049E47F /* Aircraft+SFFilter.swift */,
+				351BE3632D6CD7D20049E47F /* Models+SFFiltersTitleable.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		351BE3712D6D76950049E47F /* AircraftTypeFilter */ = {
+			isa = PBXGroup;
+			children = (
+				351BE35F2D6CBB870049E47F /* AircraftTypeFilterFetcher.swift */,
+				351BE3612D6CD2460049E47F /* AircraftTypeFilterResolver.swift */,
+			);
+			path = AircraftTypeFilter;
+			sourceTree = "<group>";
+		};
+		351BE3722D6D76E30049E47F /* AircraftExploiterFilter */ = {
+			isa = PBXGroup;
+			children = (
+				351BE3732D6D77100049E47F /* AircraftExploiterFilterFetcher.swift */,
+				351BE3752D6D77D20049E47F /* AircraftExploiterFilterResolver.swift */,
+			);
+			path = AircraftExploiterFilter;
+			sourceTree = "<group>";
+		};
+		351BE3772D6D7B100049E47F /* AircraftRemarksFilter */ = {
+			isa = PBXGroup;
+			children = (
+				351BE3782D6D7B350049E47F /* AircraftRemarksFilter.swift */,
+			);
+			path = AircraftRemarksFilter;
+			sourceTree = "<group>";
+		};
+		351BE37A2D6D7F3B0049E47F /* AircraftFirstFlightDateFilter */ = {
+			isa = PBXGroup;
+			children = (
+				351BE37B2D6D7F600049E47F /* AircraftFirstFlightDateFilterResolver.swift */,
+			);
+			path = AircraftFirstFlightDateFilter;
+			sourceTree = "<group>";
+		};
+		351BE37D2D6D80530049E47F /* AircraftManufactureDateFilter */ = {
+			isa = PBXGroup;
+			children = (
+				351BE37E2D6D806D0049E47F /* AircraftManufactureDateFilterResolver.swift */,
+			);
+			path = AircraftManufactureDateFilter;
+			sourceTree = "<group>";
+		};
+		351BE3802D6D81BF0049E47F /* AircraftCapacityFilter */ = {
+			isa = PBXGroup;
+			children = (
+				351BE3812D6D81F60049E47F /* AircraftCapacityFilterResolver.swift */,
+			);
+			path = AircraftCapacityFilter;
+			sourceTree = "<group>";
+		};
+		351BE3852D6D857A0049E47F /* AircraftNewnessFilter */ = {
+			isa = PBXGroup;
+			children = (
+				351BE3832D6D856F0049E47F /* AircraftNewnessFilterResolver.swift */,
+			);
+			path = AircraftNewnessFilter;
 			sourceTree = "<group>";
 		};
 		35E7797B2D6B6B25007D73C7 = {
@@ -222,15 +299,22 @@
 			files = (
 				35E779A52D6C47C1007D73C7 /* AircraftListView.swift in Sources */,
 				35E779882D6B6B25007D73C7 /* SwiftyFilters_Example_iOSApp.swift in Sources */,
+				351BE3822D6D81F60049E47F /* AircraftCapacityFilterResolver.swift in Sources */,
 				351BE36E2D6D68220049E47F /* AircraftListFiltersView.swift in Sources */,
+				351BE37F2D6D806D0049E47F /* AircraftManufactureDateFilterResolver.swift in Sources */,
 				351BE36C2D6D67C20049E47F /* AircraftListViewModel.swift in Sources */,
-				351BE3642D6CD7D20049E47F /* Aircraft+SFFilter.swift in Sources */,
+				351BE3642D6CD7D20049E47F /* Models+SFFiltersTitleable.swift in Sources */,
+				351BE3792D6D7B350049E47F /* AircraftRemarksFilter.swift in Sources */,
+				351BE3762D6D77D20049E47F /* AircraftExploiterFilterResolver.swift in Sources */,
 				351BE3622D6CD2460049E47F /* AircraftTypeFilterResolver.swift in Sources */,
 				35E779A72D6C4814007D73C7 /* AircraftRow.swift in Sources */,
+				351BE37C2D6D7F600049E47F /* AircraftFirstFlightDateFilterResolver.swift in Sources */,
 				351BE3602D6CBB870049E47F /* AircraftTypeFilterFetcher.swift in Sources */,
 				35E779A12D6C46E9007D73C7 /* AircraftExploiter.swift in Sources */,
 				35E7799D2D6C2012007D73C7 /* Aircraft.swift in Sources */,
+				351BE3742D6D77100049E47F /* AircraftExploiterFilterFetcher.swift in Sources */,
 				35E779A32D6C4723007D73C7 /* AircraftType.swift in Sources */,
+				351BE3842D6D856F0049E47F /* AircraftNewnessFilterResolver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

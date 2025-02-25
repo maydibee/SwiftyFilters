@@ -82,3 +82,7 @@ struct SFEndDateStringKey: EnvironmentKey {
 struct SFDateStringKey: EnvironmentKey {
     static let defaultValue: String = SFFilterConfig.default.dateString
 }
+
+struct SFTitleDisplayMode: EnvironmentKey {
+    static let defaultValue: NavigationBarItem.TitleDisplayMode = NavigationBarItem.TitleDisplayMode.automatic
+}

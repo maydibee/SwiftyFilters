@@ -34,6 +34,7 @@ struct SFFilterDateRangeView<FilteredItem>: View {
     @Environment(\.startDateString) private var startDateString
     @Environment(\.endDateString) private var endDateString
     @Environment(\.resetString) private var resetString
+    @Environment(\.colorScheme) private var colorScheme
     
     
     var body: some View {
@@ -92,12 +93,11 @@ private extension SFFilterDateRangeView {
         HStack {
             Text(title)
                 .bold()
-                .foregroundStyle(isActive ? .blue : .black)
+                .foregroundStyle(isActive ? .blue : colorScheme == .dark ? .white : .black)
             Spacer()
             Button(resetString, action: onReset)
                 .disabled(!isActive)
         }
-        .padding(.horizontal)
     }
     
     func datePickerView(date: Binding<Date>, range: ClosedRange<Date>) -> some View {

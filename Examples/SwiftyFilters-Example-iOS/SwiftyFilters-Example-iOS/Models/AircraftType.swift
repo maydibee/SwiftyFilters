@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - AircraftType model
 
-struct AircraftType {
+struct AircraftType: Identifiable {
     
     var id: UUID
     var name: String

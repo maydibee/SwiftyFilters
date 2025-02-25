@@ -98,4 +98,9 @@ extension EnvironmentValues {
         get { self[SFDateStringKey.self] }
         set { self[SFDateStringKey.self] = newValue }
     }
+    
+    var titleDisplayMode: NavigationBarItem.TitleDisplayMode {
+        get { self[SFTitleDisplayMode.self] }
+        set { self[SFTitleDisplayMode.self] = newValue }
+    }
 }
