@@ -9,111 +9,55 @@ import SwiftUI
 import SwiftyFilters
 
 
-
 // MARK: - AircraftListView
 
 struct AircraftListView: View {
-    let aircrafts: [Aircraft] = Aircraft.mockAircrafts
-    
-    @State var filteredAircrafts: [Aircraft] = []
-    
-    static private var aircraftTypeFilterComponent: SFFilterComponent = {
-        let fetcher = AircraftTypeFilterFetcher()
-        let resolver = AircraftTypeFilterResolver()
-        
-        return SFFilterComponentsFactory.createMultiSelectionComponent(title: "Aircraft type",
-                                                                       resolver: resolver,
-                                                                       fetcher: fetcher,
-                                                                       noneItemTitle: "None")
-    }()
-    
-    private var filtersCore = SFFiltersCore<Aircraft>(title: "Filters") {
-        Self.aircraftTypeFilterComponent
-    }
-    
-    @State private var isFiltersViewPresented = false
+    @StateObject private var viewModel = AircraftListViewModel()
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationView {
-            List(filteredAircrafts, id: \.id) { aircraft in
+            List(viewModel.filteredAircrafts, id: \.id) { aircraft in
                 AircraftRow(aircraft: aircraft)
                     .padding(.vertical, 8)
                     .transition(.slide)
             }
             .navigationTitle("Aircraft List")
             .listStyle(PlainListStyle())
-            .animation(.smooth, value: filteredAircrafts.count)
+            .animation(.smooth, value: viewModel.filteredAircrafts.count)
             .background {
-                VStack {
-                    Image("background")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .opacity(0.6)
-                        .ignoresSafeArea()
-                    Spacer()
-                }
-                .ignoresSafeArea()
+                Image("background")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .opacity(0.6)
+                    .ignoresSafeArea()
             }
             .task {
-                self.filteredAircrafts = aircrafts
+                viewModel.loadAircrafts()
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        isFiltersViewPresented = true
+                        viewModel.isFiltersViewPresented = true
                     } label: {
                         Image("filter-icon")
                             .renderingMode(.template)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .foregroundColor(.black)
+                            .foregroundColor(colorScheme == .dark ? .white : .black )
                             .frame(width: 30)
                     }
                 }
             }
-            .sheet(isPresented: $isFiltersViewPresented) {
-                AircraftListFiltersView(filtersCore: filtersCore)
+            .sheet(isPresented: $viewModel.isFiltersViewPresented) {
+                AircraftListFiltersView(filtersCore: viewModel.filtersCore)
                     .onDisappear {
-                        self.filteredAircrafts = filtersCore.getFilteredData(from: aircrafts)
+                        viewModel.applyFilters()
                     }
             }
         }
     }
 }
-
-import SwiftyFilters
-
-struct AircraftListFiltersView: View {
-    
-    @StateObject var filtersCore: SFFiltersCore<Aircraft>
-    @Environment(\.dismiss) var dismiss
-    
-    var body: some View {
-        VStack(spacing: 0) {
-                HStack {
-                    Button {
-                        filtersCore.resetFilters()
-                    } label: {
-                        Text("Reset")
-                            .foregroundStyle(.red)
-                    }
-                    Spacer()
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("Apply")
-                            .foregroundStyle(.white)
-                    }
-                }
-                .padding()
-                .background(.blue.opacity(0.7))
-            
-                SFFilterRootView(filtersCore: filtersCore)
-            }
-
-    }
-}
-
 
 
 // MARK: - AircraftListView preview
