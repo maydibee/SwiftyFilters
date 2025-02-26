@@ -63,7 +63,7 @@ class AircraftListViewModel: ObservableObject {
         )
         
         let aircraftTestCapacityFilterComponent = SFFilterComponentsFactory.createRangeComponent1(title: "Test provider",
-                                                                                                  resolver: AircraftCapacityFilterResolver(), viewProvider: TestViewProvider<Aircraft>(), noneItemTitle: "None")
+                                                                                                  resolver: AircraftCapacityFilterResolver(), viewProvider: TestViewProvider(), noneItemTitle: "None")
         
         let aircraftNewnessFilterComponent = SFFilterComponentsFactory.createSingleValueComponent(
             title: "Newness",

@@ -81,19 +81,12 @@ struct IntegerRangeFilterView: View {
     }
 }
 
-class TestViewProvider<FilteredItem>: SFFilterViewProvider<FilteredItem> {
+class TestViewProvider: SFFilterViewProvider {
+    typealias FilteredItem = Aircraft
     
     
-    lazy private var intRangeNode: SFFilterRangeNode<Aircraft, Double>? = {
-        node as? SFFilterRangeNode<Aircraft, Double>
-    }()
-    
-    override func makeView() -> any View
-    {
-        if let intRangeNode {
-            IntegerRangeFilterView(node: intRangeNode)
-        } else {
-            Text("int range nodwe")
-        }
+    func makeComponentView<Node>(with node: Node) -> any View where Node : SwiftyFilters.SFFilterNode<Aircraft> {
+        IntegerRangeFilterView(node: node as! SFFilterRangeNode<Aircraft, Double>)
     }
+    
 }

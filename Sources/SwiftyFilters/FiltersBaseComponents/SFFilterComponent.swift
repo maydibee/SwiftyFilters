@@ -35,7 +35,7 @@ open class SFFilterComponent<FilteredItem> {
     open var isComposite: Bool
     open var isAllActionIncluded: Bool
     
-    open var viewProvider: SFFilterViewProvider<FilteredItem>?
+    open var viewProvider: (any SFFilterViewProvider<FilteredItem>)?
     
     
     public init(title: String, isItemEnabled: Bool, isComposite: Bool, isAllActionIncluded: Bool = false) {
@@ -61,24 +61,7 @@ open class SFFilterComponent<FilteredItem> {
         return items
     }
     
-    open func assignViewProvider(_ viewProvider: SFFilterViewProvider<FilteredItem>) {
+    open func assignViewProvider(_ viewProvider: any SFFilterViewProvider<FilteredItem>) {
         self.viewProvider = viewProvider
-    }
-}
-
-import SwiftUI
-
-
-open class SFFilterViewProvider<FilteredItem> {
-    
-    open var node: SFFilterNode<FilteredItem>?
-    
-    public init(node: SFFilterNode<FilteredItem>? = nil) {
-        self.node = node
-    }
-
-    
-    open func makeView() -> any View {
-        EmptyView()
     }
 }

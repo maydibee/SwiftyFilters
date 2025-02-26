@@ -37,7 +37,7 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     weak var parent: SFFilterNode?
     
     let component: SFFilterComponent<FilteredItem>
-    var viewProvider: SFFilterViewProvider<FilteredItem>?
+    var viewProvider: (any SFFilterViewProvider<FilteredItem>)?
     
     @Published public var isLoading: Bool = false
     @Published public var nestedNodes: [SFFilterNode<FilteredItem>] = []
@@ -55,7 +55,6 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
         self.isComposite = component.isComposite
         self.isItemEnabled = component.isItemEnabled
         self.viewProvider = component.viewProvider
-        self.viewProvider?.node = self
     }
     
     open func resetAllFilters() {
@@ -106,10 +105,11 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     open func createRelatedView() -> some View {
         if let viewProvider {
             AnyView(
-            viewProvider.makeView()
+            viewProvider.makeComponentView(with: self)
             )
         } else {
-            Text("No view")
+            Text("No view provided")
         }
+        
     }
 }

@@ -136,12 +136,11 @@ public class SFFilterComponentsFactory {
     }
     
     public static func createRangeComponent1<FilteredItem, CriteriaItem: Comparable>(title: String,
-                                                                                    resolver: any SFFilterResolver<FilteredItem,
-                                                                                    SFFilterRange<CriteriaItem>>,
-                                                                                    
-                                                                                    viewProvider: SFFilterViewProvider<FilteredItem>,
-                                                                                    isNoneIncluded: Bool = false,
-                                                                                    noneItemTitle: String) -> SFFilterComponent<FilteredItem> {
+                                                                                     resolver: any SFFilterResolver<FilteredItem,
+                                                                                     SFFilterRange<CriteriaItem>>,
+                                                                                     viewProvider: any SFFilterViewProvider<FilteredItem>,
+                                                                                     isNoneIncluded: Bool = false,
+                                                                                     noneItemTitle: String) -> SFFilterComponent<FilteredItem> {
         let container = SFFilterRangeContainer(resolver: resolver, isNoneIncluded: isNoneIncluded)
         let component = SFFilterRangeComponent(title: title, noneItemTitle: noneItemTitle, filter: container)
         component.assignViewProvider(viewProvider)
