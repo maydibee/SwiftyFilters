@@ -81,12 +81,24 @@ struct IntegerRangeFilterView: View {
     }
 }
 
-class TestViewProvider: SFFilterViewProvider {
-    typealias FilteredItem = Aircraft
+
+class TestViewProvider: SFFilterRangeViewProvider {
     
-    
-    func makeComponentView<Node>(with node: Node) -> any View where Node : SwiftyFilters.SFFilterNode<Aircraft> {
-        IntegerRangeFilterView(node: node as! SFFilterRangeNode<Aircraft, Double>)
+    func makeView(with node: SFFilterRangeNode<Aircraft, Double>) -> any View {
+        IntegerRangeFilterView(node: node)
     }
-    
 }
+
+
+
+
+
+
+class KeywordsFilterViewProvider: SFFilterKeywordsViewProvider {
+    
+    func makeView(with node: SFFilterKeywordsNode<Aircraft, String>) -> any View {
+        SFFilterKeywordsView<Aircraft>(node: node)
+    }
+}
+
+

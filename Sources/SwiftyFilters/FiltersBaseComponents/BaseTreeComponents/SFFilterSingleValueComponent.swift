@@ -32,10 +32,17 @@ public class SFFilterSingleValueComponent<FilteredItem, CriteriaItem: Equatable>
     private let filter: SFFilterSingleValueContainer<FilteredItem, CriteriaItem>
     private let noneItemTitle: String
     
+    public let singleValueViewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>
     
-    public init(title: String, noneItemTitle: String, filter: SFFilterSingleValueContainer<FilteredItem, CriteriaItem>) {
+    
+    public init(title: String,
+                noneItemTitle: String,
+                filter: SFFilterSingleValueContainer<FilteredItem, CriteriaItem>,
+                viewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>
+    ) {
         self.noneItemTitle = noneItemTitle
         self.filter = filter
+        self.singleValueViewProvider = viewProvider
         super.init(title: title,
                    isItemEnabled: !filter.isFilterActive,
                    isComposite: false)
@@ -61,7 +68,7 @@ public class SFFilterSingleValueComponent<FilteredItem, CriteriaItem: Equatable>
     }
     
     public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
-        SFFilterSingleValueNode<FilteredItem, CriteriaItem>(component: self)
+        SFFilterSingleValueNode<FilteredItem, CriteriaItem>(component: self, viewProvider: singleValueViewProvider)
     }
     
     public override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {

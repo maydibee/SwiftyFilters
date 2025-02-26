@@ -29,6 +29,8 @@ import Foundation
 
 public class SFFilterSingleValueNode<FilteredItem, CriteriaItem: Equatable>: SFFilterNode<FilteredItem> {
     
+    public var singleValueViewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>
+    
     lazy private var singleValueFilterComponent: SFFilterSingleValueComponent<FilteredItem, CriteriaItem>? = {
         component as? SFFilterSingleValueComponent<FilteredItem, CriteriaItem>
     }()
@@ -39,6 +41,12 @@ public class SFFilterSingleValueNode<FilteredItem, CriteriaItem: Equatable>: SFF
             self.updateState()
             parent?.updateState()
         }
+    }
+    
+    
+    init(component: SFFilterComponent<FilteredItem>, viewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>) {
+        self.singleValueViewProvider = viewProvider
+        super.init(component: component)
     }
 
     public override func resetAllFilters() {

@@ -23,11 +23,14 @@
 
 
 import Foundation
+import SwiftUI
 
 
 // MARK: - Keywords container filter node (API-RO)
 
 public class SFFilterKeywordsNode<FilteredItem, CriteriaItem: StringProtocol>: SFFilterNode<FilteredItem> {
+    
+    public var keywordsViewProvider: any SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem>
     
     lazy private var keywordsFilterComponent: SFFilterKeyWordsComponent<FilteredItem, CriteriaItem>? = {
         component as? SFFilterKeyWordsComponent<FilteredItem, CriteriaItem>
@@ -41,10 +44,20 @@ public class SFFilterKeywordsNode<FilteredItem, CriteriaItem: StringProtocol>: S
         }
     }
     
+    
+    init(component: SFFilterComponent<FilteredItem>, viewProvider: any SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem>) {
+        self.keywordsViewProvider = viewProvider
+        super.init(component: component)
+    }
+    
     public override func resetAllFilters() {
         keywordsModel.reset()
         nestedNodes.forEach { node in
             node.resetAllFilters()
         }
+    }
+    
+    override public func makeView() -> any View {
+        keywordsViewProvider.makeView(with: self)
     }
 }

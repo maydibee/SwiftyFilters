@@ -32,10 +32,18 @@ public class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Identif
     private let filter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>
     private let noneItemTitle: String
     
+    public var multiSelectionViewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>
     
-    public init(title: String, noneItemTitle: String, filter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>) {
+    
+    public init(title: String,
+                noneItemTitle: String,
+                filter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>,
+                viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>
+                
+    ) {
         self.noneItemTitle = noneItemTitle
         self.filter = filter
+        self.multiSelectionViewProvider = viewProvider
         super.init(title: title,
                    isItemEnabled: !filter.isFilterActive,
                    isComposite: true,

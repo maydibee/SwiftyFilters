@@ -33,11 +33,21 @@ public class SFFilterRangeComponent<FilteredItem, CriteriaItem: Comparable>: SFF
     private let filter: SFFilterRangeContainer<FilteredItem, CriteriaItem>
     private let noneItemTitle: String
     
+    public var rangeViewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>
     
-    public init(title: String, noneItemTitle: String, filter: SFFilterRangeContainer<FilteredItem, CriteriaItem>) {
+    
+    public init(title: String,
+                noneItemTitle: String,
+                filter: SFFilterRangeContainer<FilteredItem, CriteriaItem>,
+                viewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>
+    ) {
         self.noneItemTitle = noneItemTitle
         self.filter = filter
-        super.init(title: title, isItemEnabled: !filter.isFilterActive, isComposite: false)
+        self.rangeViewProvider = viewProvider
+        super.init(title: title,
+                   isItemEnabled: !filter.isFilterActive,
+                   isComposite: false
+        )
     }
     
     public override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
@@ -60,7 +70,9 @@ public class SFFilterRangeComponent<FilteredItem, CriteriaItem: Comparable>: SFF
     }
     
     public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
-        SFFilterRangeNode<FilteredItem, CriteriaItem>(component: self)
+        let node = SFFilterRangeNode<FilteredItem, CriteriaItem>(component: self, viewProvider: rangeViewProvider)
+        node.assignViewProvider(rangeViewProvider)
+        return node
     }
     
     public override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {

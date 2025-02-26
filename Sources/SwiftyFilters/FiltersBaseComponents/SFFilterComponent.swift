@@ -35,8 +35,6 @@ open class SFFilterComponent<FilteredItem> {
     open var isComposite: Bool
     open var isAllActionIncluded: Bool
     
-    open var viewProvider: (any SFFilterViewProvider<FilteredItem>)?
-    
     
     public init(title: String, isItemEnabled: Bool, isComposite: Bool, isAllActionIncluded: Bool = false) {
         self.title = title
@@ -61,7 +59,7 @@ open class SFFilterComponent<FilteredItem> {
         return items
     }
     
-    open func assignViewProvider(_ viewProvider: any SFFilterViewProvider<FilteredItem>) {
-        self.viewProvider = viewProvider
+    public func makeView() -> any View {
+        Text("View not defined")
     }
 }

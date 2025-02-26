@@ -32,11 +32,21 @@ public class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtoco
     private let filter: SFFilterKeyWordsContainer<FilteredItem, CriteriaItem>
     private let noneItemTitle: String
     
+    public var keywordsViewProvider: any SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem>
     
-    public init(title: String, noneItemTitle: String, filter: SFFilterKeyWordsContainer<FilteredItem, CriteriaItem>) {
+    
+    public init(title: String,
+                noneItemTitle: String,
+                filter: SFFilterKeyWordsContainer<FilteredItem, CriteriaItem>,
+                viewProvider: any SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem>
+    ) {
         self.noneItemTitle = noneItemTitle
         self.filter = filter
-        super.init(title: title, isItemEnabled: !filter.isFilterActive, isComposite: false)
+        self.keywordsViewProvider = viewProvider
+        super.init(title: title,
+                   isItemEnabled: !filter.isFilterActive,
+                   isComposite: false
+        )
     }
     
     public override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
@@ -59,7 +69,7 @@ public class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtoco
     }
     
     public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
-        SFFilterKeywordsNode<FilteredItem, CriteriaItem>(component: self)
+        SFFilterKeywordsNode<FilteredItem, CriteriaItem>(component: self, viewProvider: keywordsViewProvider)
     }
     
     public override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {

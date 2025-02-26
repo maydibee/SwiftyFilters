@@ -23,11 +23,14 @@
 
 
 import Foundation
+import SwiftUI
 
 
 // MARK: - Range filter node (API-RO)
 
 public class SFFilterRangeNode<FilteredItem, CriteriaItem: Comparable>: SFFilterNode<FilteredItem> {
+    
+    public var rangeViewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>
     
     lazy private var rangeFilterComponent: SFFilterRangeComponent<FilteredItem, CriteriaItem>? = {
         component as? SFFilterRangeComponent<FilteredItem, CriteriaItem>
@@ -41,11 +44,24 @@ public class SFFilterRangeNode<FilteredItem, CriteriaItem: Comparable>: SFFilter
         }
     }
     
+
+    init(component: SFFilterComponent<FilteredItem>, viewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>) {
+        self.rangeViewProvider = viewProvider
+        super.init(component: component)
+    }
+    
     override public func resetAllFilters() {
         range = .init(lowerBound: nil, upperBound: nil)
         nestedNodes.forEach { node in
             node.resetAllFilters()
         }
     }
+    
+    override public func makeView() -> any View {
+        rangeViewProvider.makeView(with: self)
+    }
+    
+    public func assignViewProvider(_ viewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>) {
+        self.rangeViewProvider = viewProvider
+    }
 }
-

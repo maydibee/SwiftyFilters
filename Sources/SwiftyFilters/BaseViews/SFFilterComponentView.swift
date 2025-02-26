@@ -49,7 +49,7 @@ struct SFFilterComponentView<FilteredItem>: View {
                         } else {
                             
                             NavigationLink {
-                                child.createRelatedView()
+                                AnyView(child.makeView())
                             } label: {
                                 SFFilterCellView(node: child)
                             }

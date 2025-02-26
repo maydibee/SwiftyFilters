@@ -27,9 +27,9 @@ import SwiftUI
 
 // MARK: - Keywords filter view
 
-struct SFFilterKeywordsView<FilteredItem>: View {
+public struct SFFilterKeywordsView<FilteredItem>: View {
     
-    @StateObject var node: SFFilterKeywordsNode<FilteredItem, String>
+    @StateObject public var node: SFFilterKeywordsNode<FilteredItem, String>
     @State private var enteredText: String = ""
     
     @Environment(\.enterKeywordString) private var enterKeywordString
@@ -43,7 +43,11 @@ struct SFFilterKeywordsView<FilteredItem>: View {
     }
     
     
-    var body: some View {
+    public init(node: SFFilterKeywordsNode<FilteredItem, String>) {
+        _node = StateObject(wrappedValue: node)
+    }
+    
+    public var body: some View {
         VStack(spacing: 12) {
             List {
                 if !node.nestedNodes.isEmpty {
