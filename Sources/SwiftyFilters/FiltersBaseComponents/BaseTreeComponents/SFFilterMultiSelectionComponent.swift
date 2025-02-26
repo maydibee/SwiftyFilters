@@ -46,7 +46,7 @@ public class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Identif
         self.multiSelectionViewProvider = viewProvider
         super.init(title: title,
                    isItemEnabled: !filter.isFilterActive,
-                   isComposite: true,
+                   isComposite: false,
                    isAllActionIncluded: true)
     }
     
@@ -73,7 +73,7 @@ public class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Identif
     }
     
     public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
-        SFFilterNode<FilteredItem>(component: self)
+        SFFilterMultiSelectionNode<FilteredItem>(component: self, viewProvider: multiSelectionViewProvider)
     }
     
     public override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {

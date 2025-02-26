@@ -60,8 +60,4 @@ public class SFFilterRangeNode<FilteredItem, CriteriaItem: Comparable>: SFFilter
     override public func makeView() -> any View {
         rangeViewProvider.makeView(with: self)
     }
-    
-    public func assignViewProvider(_ viewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>) {
-        self.rangeViewProvider = viewProvider
-    }
 }

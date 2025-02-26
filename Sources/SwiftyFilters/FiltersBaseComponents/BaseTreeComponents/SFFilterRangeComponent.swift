@@ -70,9 +70,7 @@ public class SFFilterRangeComponent<FilteredItem, CriteriaItem: Comparable>: SFF
     }
     
     public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
-        let node = SFFilterRangeNode<FilteredItem, CriteriaItem>(component: self, viewProvider: rangeViewProvider)
-        node.assignViewProvider(rangeViewProvider)
-        return node
+        SFFilterRangeNode<FilteredItem, CriteriaItem>(component: self, viewProvider: rangeViewProvider)
     }
     
     public override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {

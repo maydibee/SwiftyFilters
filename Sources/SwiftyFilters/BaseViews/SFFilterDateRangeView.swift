@@ -27,7 +27,7 @@ import SwiftUI
 
 // MARK: - Date range filter view
 
-struct SFFilterDateRangeView<FilteredItem>: View {
+public struct SFFilterDateRangeView<FilteredItem>: View {
     
     @StateObject var node: SFFilterRangeNode<FilteredItem, Date>
     
@@ -37,7 +37,11 @@ struct SFFilterDateRangeView<FilteredItem>: View {
     @Environment(\.colorScheme) private var colorScheme
     
     
-    var body: some View {
+    public init(node: SFFilterRangeNode<FilteredItem, Date>) {
+        _node = StateObject(wrappedValue: node)
+    }
+    
+    public var body: some View {
         List {
             if !node.nestedNodes.isEmpty {
                 ForEach(node.nestedNodes) { child in

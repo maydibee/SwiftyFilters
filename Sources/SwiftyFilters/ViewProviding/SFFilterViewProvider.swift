@@ -24,7 +24,7 @@ public protocol SFFilterMultiSelectionViewProvider<FilteredItem> {
     
     associatedtype FilteredItem
     
-    func makeView(with node: SFFilterNode<FilteredItem>) -> any View
+    func makeView(with node: SFFilterMultiSelectionNode<FilteredItem>) -> any View
 }
 
 

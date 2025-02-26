@@ -106,3 +106,23 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
         //rangeViewProvider!.makeView(with: self)
     }
 }
+
+
+public class SFFilterMultiSelectionNode<FilteredItem>: SFFilterNode<FilteredItem> {
+    
+    public var multiSelectionViewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>
+    
+//    lazy private var multiSelectionFilterComponent: SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem>? = {
+//        component as? SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem>
+//    }()
+    
+    
+    init(component: SFFilterComponent<FilteredItem>, viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>) {
+        self.multiSelectionViewProvider = viewProvider
+        super.init(component: component)
+    }
+    
+    override public func makeView() -> any View {
+        multiSelectionViewProvider.makeView(with: self)
+    }
+}

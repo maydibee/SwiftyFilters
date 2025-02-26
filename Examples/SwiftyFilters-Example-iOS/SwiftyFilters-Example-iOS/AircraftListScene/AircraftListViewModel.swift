@@ -20,12 +20,13 @@ class AircraftListViewModel: ObservableObject {
     let filtersCore: SFFiltersCore<Aircraft>
     
     init() {
-//        let aircraftTypeFilterComponent = SFFilterComponentsFactory.createMultiSelectionComponent(
-//            title: "Type",
-//            resolver: AircraftTypeFilterResolver(),
-//            fetcher: AircraftTypeFilterFetcher(),
-//            noneItemTitle: "None"
-//        )
+        let aircraftTypeFilterComponent = SFFilterComponentsFactory.createMultiSelectionComponent(
+            title: "Type",
+            resolver: AircraftTypeFilterResolver(),
+            fetcher: AircraftTypeFilterFetcher(),
+            viewProvider: MultiSelectionViewProvider(),
+            noneItemTitle: "None"
+        )
 //        
 //        let aircraftExploiterFilterComponent = SFFilterComponentsFactory.createMultiSelectionComponent(
 //            title: "Last exploiter",
@@ -43,17 +44,20 @@ class AircraftListViewModel: ObservableObject {
             noneItemTitle: "None"
         )
         
-//        let aircraftFirstFlightDateFilterComponent = SFFilterComponentsFactory.createRangeComponent(
-//            title: "First flight date",
-//            resolver: AircraftFirstFlightDateFilterResolver(),
-//            noneItemTitle: "None"
-//        )
-//        
-//        let aircraftManufactureDateFilterComponent = SFFilterComponentsFactory.createRangeComponent(
-//            title: "Manufacture date",
-//            resolver: AircraftManufactureDateFilterResolver(),
-//            noneItemTitle: "None"
-//        )
+        let aircraftFirstFlightDateFilterComponent = SFFilterComponentsFactory.createRangeComponent(
+            title: "First flight date",
+            resolver: AircraftFirstFlightDateFilterResolver(),
+            viewProvider: DatesRangeFilterViewProvider(),
+            isNoneIncluded: true,
+            noneItemTitle: "None"
+        )
+        
+        let aircraftManufactureDateFilterComponent = SFFilterComponentsFactory.createRangeComponent(
+            title: "Manufacture date",
+            resolver: AircraftManufactureDateFilterResolver(),
+            viewProvider: DatesRangeFilterViewProvider(),
+            noneItemTitle: "None"
+        )
 //        
 //        // Unsupported
 //        
@@ -75,14 +79,14 @@ class AircraftListViewModel: ObservableObject {
         
         
         self.filtersCore = SFFiltersCore<Aircraft>(title: "Filters") {
-//            aircraftTypeFilterComponent
+            aircraftTypeFilterComponent
 //            aircraftExploiterFilterComponent
             aircraftRemarksFilterComponent
             
-//            SFGroupedComponent(title: "Dates") {
-//                aircraftFirstFlightDateFilterComponent
-//                aircraftManufactureDateFilterComponent
-//            }
+            SFGroupedComponent(title: "Dates") {
+                aircraftFirstFlightDateFilterComponent
+                aircraftManufactureDateFilterComponent
+            }
             
 //            aircraftCapacityFilterComponent
 //            aircraftNewnessFilterComponent

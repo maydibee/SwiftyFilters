@@ -47,9 +47,15 @@ struct SFFilterComponentView<FilteredItem>: View {
                                 SFFilterCellView(node: child)
                             }
                         } else {
-                            
                             NavigationLink {
-                                AnyView(child.makeView())
+                                AnyView(
+                                        child.makeView()
+                                )
+                                .navigationTitle(child.title)
+                                .task {
+                                    await child.loadFilterIfNeeded()
+                                }
+                                
                             } label: {
                                 SFFilterCellView(node: child)
                             }
@@ -86,4 +92,42 @@ struct SFFilterComponentView<FilteredItem>: View {
         }
         
     }
+}
+
+
+public struct SFFilterMultiSelectionView<FilteredItem>: View {
+    
+    @StateObject var node: SFFilterMultiSelectionNode<FilteredItem>
+    
+    public init(node: SFFilterMultiSelectionNode<FilteredItem>) {
+        _node = StateObject(wrappedValue: node)
+    }
+    
+    public var body: some View {
+        Group {
+            if node.isLoading {
+                ProgressView()
+            } else {
+                List {
+                    ForEach(node.nestedNodes) { child in
+                        SFFilterCellView(node: child)
+                            .onTapGesture {
+                                child.isItemEnabled.toggle()
+                            }
+                    }
+                }
+            }
+        }
+    }
+}
+
+public class SFFilterDefaultMultiSelectionViewProvider<FilteredItem>: SFFilterMultiSelectionViewProvider {
+    
+    public init() {}
+    
+    
+    public func makeView(with node: SFFilterMultiSelectionNode<FilteredItem>) -> any View {
+        SFFilterMultiSelectionView(node: node)
+    }
+   
 }

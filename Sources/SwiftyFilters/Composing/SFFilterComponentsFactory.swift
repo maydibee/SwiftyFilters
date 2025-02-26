@@ -57,7 +57,7 @@ public class SFFilterComponentsFactory {
     public static func createMultiSelectionComponent<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>(title: String,
                                                                                                                     resolver: any SFFilterResolver<FilteredItem, [CriteriaItem]>,
                                                                                                                     fetcher: any SFFilterFetcher<CriteriaItem>,
-                                                                                                                    viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>,
+                                                                                                                    viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem> = SFFilterDefaultMultiSelectionViewProvider(),
                                                                                                                     isNoneIncluded: Bool = false,
                                                                                                                     noneItemTitle: String) -> SFFilterComponent<FilteredItem> {
         let container = SFFilterMultiSelectionContainer(resolver: resolver, fetcher: fetcher, isNoneIncluded: isNoneIncluded)
