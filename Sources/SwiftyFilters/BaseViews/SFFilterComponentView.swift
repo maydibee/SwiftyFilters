@@ -47,25 +47,33 @@ struct SFFilterComponentView<FilteredItem>: View {
                                 SFFilterCellView(node: child)
                             }
                         } else {
-                            if let dateRangeNode = child as? SFFilterRangeNode<FilteredItem, Date> {
-                                NavigationLink(destination: SFFilterDateRangeView(node: dateRangeNode)) {
-                                    SFFilterCellView(node: child)
-                                }
-                            } else if let singleDateNode = child as? SFFilterSingleValueNode<FilteredItem, Date> {
-                                NavigationLink(destination: SFFilterSingleDateView(node: singleDateNode)) {
-                                    SFFilterCellView(node: child)
-                                }
-                            } else if let keywordsNode = child as? SFFilterKeywordsNode<FilteredItem, String> {
-                                NavigationLink(destination: SFFilterKeywordsView(node: keywordsNode)) {
-                                    SFFilterCellView(node: child)
-                                }
-                            } else {
-                                
+                            
+                            NavigationLink {
+                                child.createRelatedView()
+                            } label: {
                                 SFFilterCellView(node: child)
-                                    .onTapGesture {
-                                        child.isItemEnabled.toggle()
-                                    }
                             }
+
+                            
+//                            if let dateRangeNode = child as? SFFilterRangeNode<FilteredItem, Date> {
+//                                NavigationLink(destination: SFFilterDateRangeView(node: dateRangeNode)) {
+//                                    SFFilterCellView(node: child)
+//                                }
+//                            } else if let singleDateNode = child as? SFFilterSingleValueNode<FilteredItem, Date> {
+//                                NavigationLink(destination: SFFilterSingleDateView(node: singleDateNode)) {
+//                                    SFFilterCellView(node: child)
+//                                }
+//                            } else if let keywordsNode = child as? SFFilterKeywordsNode<FilteredItem, String> {
+//                                NavigationLink(destination: SFFilterKeywordsView(node: keywordsNode)) {
+//                                    SFFilterCellView(node: child)
+//                                }
+//                            } else {
+//                                
+//                                SFFilterCellView(node: child)
+//                                    .onTapGesture {
+//                                        child.isItemEnabled.toggle()
+//                                    }
+//                            }
                             
                         }
                     }

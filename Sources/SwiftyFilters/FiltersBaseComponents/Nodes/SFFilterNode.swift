@@ -23,6 +23,7 @@
 
 
 import Foundation
+import SwiftUI
 
 
 // MARK: Filter node (API-RW)
@@ -36,6 +37,7 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     weak var parent: SFFilterNode?
     
     let component: SFFilterComponent<FilteredItem>
+    var viewProvider: SFFilterViewProvider<FilteredItem>?
     
     @Published public var isLoading: Bool = false
     @Published public var nestedNodes: [SFFilterNode<FilteredItem>] = []
@@ -52,6 +54,8 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
         self.title = component.title
         self.isComposite = component.isComposite
         self.isItemEnabled = component.isItemEnabled
+        self.viewProvider = component.viewProvider
+        self.viewProvider?.node = self
     }
     
     open func resetAllFilters() {
@@ -96,5 +100,16 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     open func updateState() {
         self.component.updateState()
         self.isItemEnabled = component.isItemEnabled
+    }
+    
+    @ViewBuilder
+    open func createRelatedView() -> some View {
+        if let viewProvider {
+            AnyView(
+            viewProvider.makeView()
+            )
+        } else {
+            Text("No view")
+        }
     }
 }

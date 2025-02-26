@@ -13,11 +13,11 @@ import SwiftyFilters
 
 class AircraftCapacityFilterResolver: SFFilterResolver {
     
-    func filterItems(_ inputItems: [Aircraft], basedOn criteriaItem: SFFilterRange<Int>, isNoneEnabled: Bool) -> [Aircraft] {
+    func filterItems(_ inputItems: [Aircraft], basedOn criteriaItem: SFFilterRange<Double>, isNoneEnabled: Bool) -> [Aircraft] {
         
         return inputItems
             .filter({ inputItem in
-                criteriaItem.contains(inputItem.capacity)
+                criteriaItem.contains(Double(inputItem.capacity))
             })
     }
 }

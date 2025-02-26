@@ -23,6 +23,7 @@
 
 
 import Foundation
+import SwiftUI
 
 
 /// A factory class for creating filter components of different types.
@@ -133,4 +134,19 @@ public class SFFilterComponentsFactory {
         let component = SFFilterSingleValueComponent(title: title, noneItemTitle: noneItemTitle, filter: container)
         return component
     }
+    
+    public static func createRangeComponent1<FilteredItem, CriteriaItem: Comparable>(title: String,
+                                                                                    resolver: any SFFilterResolver<FilteredItem,
+                                                                                    SFFilterRange<CriteriaItem>>,
+                                                                                    
+                                                                                    viewProvider: SFFilterViewProvider<FilteredItem>,
+                                                                                    isNoneIncluded: Bool = false,
+                                                                                    noneItemTitle: String) -> SFFilterComponent<FilteredItem> {
+        let container = SFFilterRangeContainer(resolver: resolver, isNoneIncluded: isNoneIncluded)
+        let component = SFFilterRangeComponent(title: title, noneItemTitle: noneItemTitle, filter: container)
+        component.assignViewProvider(viewProvider)
+        return component
+    }
 }
+
+

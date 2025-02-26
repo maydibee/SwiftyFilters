@@ -23,6 +23,7 @@
 
 
 import Foundation
+import SwiftUI
 
 
 // MARK: - Range filter component (API-RO)

@@ -41,3 +41,59 @@ struct AircraftListFiltersView: View {
 }
 
 
+struct IntegerRangeFilterView: View {
+    
+    
+    @StateObject var node: SFFilterRangeNode<Aircraft, Double>
+    
+    @State private var lowerBound: Double = 0
+        @State private var upperBound: Double = 100
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Фильтр по диапазону")
+                .font(.headline)
+            
+            Slider(value: $lowerBound, in: 0...upperBound, step: 1) {
+                Text("Нижняя граница")
+            }
+            
+            Slider(value: $upperBound, in: lowerBound...400, step: 1) {
+                Text("Верхняя граница")
+            }
+            
+            Text("Диапазон: \(Int(lowerBound)) - \(Int(upperBound))")
+                .font(.subheadline)
+            
+            Button(action: {
+                //node.range = SFFilterRange(lowerBound: lowerBound, upperBound: upperBound)
+                node.range = SFFilterRange(lowerBound: self.lowerBound, upperBound: self.upperBound)
+            }, label: {
+                Text("Применить фильтр")
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+            })
+            .padding()
+        }
+    }
+}
+
+class TestViewProvider<FilteredItem>: SFFilterViewProvider<FilteredItem> {
+    
+    
+    lazy private var intRangeNode: SFFilterRangeNode<Aircraft, Double>? = {
+        node as? SFFilterRangeNode<Aircraft, Double>
+    }()
+    
+    override func makeView() -> any View
+    {
+        if let intRangeNode {
+            IntegerRangeFilterView(node: intRangeNode)
+        } else {
+            Text("int range nodwe")
+        }
+    }
+}
