@@ -26,10 +26,13 @@ import Foundation
 
 
 // MARK: - Single value filter node (API-RO)
+// TODO: add accessors
+// TODO: - Add doc
+
 
 public class SFFilterSingleValueNode<FilteredItem, CriteriaItem: Equatable>: SFFilterNode<FilteredItem> {
     
-    public var singleValueViewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>
+    private let singleValueViewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>
     
     lazy private var singleValueFilterComponent: SFFilterSingleValueComponent<FilteredItem, CriteriaItem>? = {
         component as? SFFilterSingleValueComponent<FilteredItem, CriteriaItem>

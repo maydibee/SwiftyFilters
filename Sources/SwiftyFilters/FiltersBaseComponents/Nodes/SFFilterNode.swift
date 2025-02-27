@@ -26,9 +26,10 @@ import Foundation
 import SwiftUI
 
 
-// MARK: Filter node (API-RW)
+// MARK: Filter node
+// TODO: - Add doc
 
-open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
+public class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     
     public let id = UUID()
     let title: String
@@ -37,7 +38,6 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     weak var parent: SFFilterNode?
     
     let component: SFFilterComponent<FilteredItem>
-    var viewProvider: (any SFFilterViewProvider<FilteredItem>)?
     
     @Published public var isLoading: Bool = false
     @Published public var nestedNodes: [SFFilterNode<FilteredItem>] = []
@@ -49,28 +49,28 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     }
     
     
-    public init(component: SFFilterComponent<FilteredItem>) {
+    init(component: SFFilterComponent<FilteredItem>) {
         self.component = component
         self.title = component.title
         self.isComposite = component.isComposite
         self.isItemEnabled = component.isItemEnabled
     }
     
-    open func resetAllFilters() {
+    public func resetAllFilters() {
         isItemEnabled = true
         nestedNodes.forEach { node in
             node.resetAllFilters()
         }
     }
     
-    open func deselectAll() {
+    public func deselectAll() {
         isItemEnabled = false
         nestedNodes.forEach { node in
             node.deselectAll()
         }
     }
     
-    open func getFilteredData(from items: [FilteredItem]) -> [FilteredItem] {
+    func getFilteredData(from items: [FilteredItem]) -> [FilteredItem] {
         var filteredArray = component.getFilteredItems(for: items)
         nestedNodes.forEach { nestedNode in
             filteredArray = nestedNode.getFilteredData(from: filteredArray)
@@ -78,7 +78,7 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
         return filteredArray
     }
     
-    open func loadFilterIfNeeded() async {
+    public func loadFilterIfNeeded() async {
         guard nestedNodes.isEmpty else { return }
 
         await MainActor.run { isLoading = true }
@@ -95,12 +95,12 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
         }
     }
 
-    open func updateState() {
+    func updateState() {
         self.component.updateState()
         self.isItemEnabled = component.isItemEnabled
     }
     
-    public func makeView() -> any View {
+    func makeView() -> any View {
         Text("No view provided")
     }
 }

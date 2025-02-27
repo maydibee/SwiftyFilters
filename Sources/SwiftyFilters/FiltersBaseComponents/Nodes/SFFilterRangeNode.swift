@@ -27,10 +27,11 @@ import SwiftUI
 
 
 // MARK: - Range filter node (API-RO)
+// TODO: - Add doc
 
 public class SFFilterRangeNode<FilteredItem, CriteriaItem: Comparable>: SFFilterNode<FilteredItem> {
     
-    public var rangeViewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>
+    private let rangeViewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>
     
     lazy private var rangeFilterComponent: SFFilterRangeComponent<FilteredItem, CriteriaItem>? = {
         component as? SFFilterRangeComponent<FilteredItem, CriteriaItem>

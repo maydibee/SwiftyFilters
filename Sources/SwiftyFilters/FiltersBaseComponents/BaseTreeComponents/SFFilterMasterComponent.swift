@@ -25,29 +25,29 @@
 import Foundation
 
 
-// MARK: - Master filter component (API-RO)
+// MARK: - Master filter component
 
-public class SFFilterMasterComponent<FilteredItem>: SFFilterComponent<FilteredItem> {
+class SFFilterMasterComponent<FilteredItem>: SFFilterComponent<FilteredItem> {
     
     private let nestedFilterComponents: [SFFilterComponent<FilteredItem>]
     
     
-    public init(title: String, nestedFilterItems: [SFFilterComponent<FilteredItem>]) {
+    init(title: String, nestedFilterItems: [SFFilterComponent<FilteredItem>]) {
         self.nestedFilterComponents = nestedFilterItems
         super.init(title: title,
                    isItemEnabled: !nestedFilterComponents.contains(where: { !$0.isItemEnabled }),
                    isComposite: true)
     }
     
-    public override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
+    override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
         return self.nestedFilterComponents
     }
     
-    public override func updateState() {
+    override func updateState() {
         self.isItemEnabled = !nestedFilterComponents.contains(where: { !$0.isItemEnabled })
     }
     
-    public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
+    override func createRelatedNode() -> SFFilterNode<FilteredItem> {
         SFFilterNode<FilteredItem>(component: self)
     }
 }

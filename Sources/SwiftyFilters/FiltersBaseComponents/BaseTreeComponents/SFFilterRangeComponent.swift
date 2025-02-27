@@ -26,17 +26,16 @@ import Foundation
 import SwiftUI
 
 
-// MARK: - Range filter component (API-RO)
+// MARK: - Range filter component
 
-public class SFFilterRangeComponent<FilteredItem, CriteriaItem: Comparable>: SFFilterComponent<FilteredItem> {
+class SFFilterRangeComponent<FilteredItem, CriteriaItem: Comparable>: SFFilterComponent<FilteredItem> {
     
     private let filter: SFFilterRangeContainer<FilteredItem, CriteriaItem>
+    private let rangeViewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>
     private let noneItemTitle: String
     
-    public var rangeViewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>
     
-    
-    public init(title: String,
+    init(title: String,
                 noneItemTitle: String,
                 filter: SFFilterRangeContainer<FilteredItem, CriteriaItem>,
                 viewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>
@@ -50,7 +49,7 @@ public class SFFilterRangeComponent<FilteredItem, CriteriaItem: Comparable>: SFF
         )
     }
     
-    public override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
+    override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
         var nestedItems: [SFFilterComponent<FilteredItem>] = []
         
         if self.filter.isNoneIncluded {
@@ -61,19 +60,19 @@ public class SFFilterRangeComponent<FilteredItem, CriteriaItem: Comparable>: SFF
         return nestedItems
     }
     
-    public override func updateState() {
+    override func updateState() {
         self.isItemEnabled = !filter.isFilterActive
     }
     
-    public func updateRange(_ range: SFFilterRange<CriteriaItem>) {
+    func updateRange(_ range: SFFilterRange<CriteriaItem>) {
         filter.range = range
     }
     
-    public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
+    override func createRelatedNode() -> SFFilterNode<FilteredItem> {
         SFFilterRangeNode<FilteredItem, CriteriaItem>(component: self, viewProvider: rangeViewProvider)
     }
     
-    public override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
+    override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
         return filter.filterItems(inputItems: items)
     }
 }

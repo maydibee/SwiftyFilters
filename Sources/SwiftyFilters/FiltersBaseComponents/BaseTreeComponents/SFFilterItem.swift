@@ -25,11 +25,11 @@
 import Foundation
 
 
-// MARK: - Selectable filter sub-component (API-RO)
+// MARK: - Selectable filter sub-component
 
-public class SFFilterItem<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>: SFFilterComponent<FilteredItem> {
+class SFFilterItem<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>: SFFilterComponent<FilteredItem> {
     
-    public override var isItemEnabled: Bool {
+    override var isItemEnabled: Bool {
         didSet {
             if isItemEnabled {
                 if !self.relatedFilter.selectedItems.contains(where: {$0.id == item.id }) {
@@ -51,11 +51,11 @@ public class SFFilterItem<FilteredItem, CriteriaItem: Identifiable & SFFiltersTi
         super.init(title: title, isItemEnabled: relatedFilter.isItemSelected(self.item), isComposite: false)
     }
     
-    public override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] { [] }
+    override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] { [] }
     
-    public override func updateState() {}
+    override func updateState() {}
     
-    public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
+    override func createRelatedNode() -> SFFilterNode<FilteredItem> {
         SFFilterNode<FilteredItem>(component: self)
     }
 }

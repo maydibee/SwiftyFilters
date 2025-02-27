@@ -25,17 +25,17 @@
 import Foundation
 
 
-// MARK: - Multi-select filter container (API-RO)
+// MARK: - Multi-select filter container
 
-public class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>: SFFilterNullableContainer {
+class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>: SFFilterNullableContainer {
     
-    public var allItems = Array<CriteriaItem>()
-    public var selectedItems = Array<CriteriaItem>()
+    var allItems = Array<CriteriaItem>()
+    var selectedItems = Array<CriteriaItem>()
     
-    public var isNoneEnabled: Bool
-    public let isNoneIncluded: Bool
+    var isNoneEnabled: Bool
+    let isNoneIncluded: Bool
     
-    public var isFilterActive: Bool {
+    var isFilterActive: Bool {
         let isAllSelected: Bool = allItems.count == selectedItems.count
         if isNoneIncluded {
             return !isAllSelected || !isNoneEnabled
@@ -47,7 +47,7 @@ public class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Identif
     private let fetcher: any SFFilterFetcher<CriteriaItem>
     
     
-    public init(resolver: any SFFilterResolver<FilteredItem, [CriteriaItem]>,
+    init(resolver: any SFFilterResolver<FilteredItem, [CriteriaItem]>,
                 fetcher: any SFFilterFetcher<CriteriaItem>,
                 isNoneIncluded: Bool = false) {
         self.resolver = resolver
@@ -57,19 +57,19 @@ public class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Identif
     }
     
     @discardableResult
-    public func initializeFilter() async -> [CriteriaItem] {
+    func initializeFilter() async -> [CriteriaItem] {
         let fetchedItems = await self.fetcher.fetchFilterItems()
         self.allItems = fetchedItems
         self.selectedItems = fetchedItems
         return fetchedItems
     }
     
-    public func filterItems(inputItems: [FilteredItem]) -> [FilteredItem] {
+    func filterItems(inputItems: [FilteredItem]) -> [FilteredItem] {
         guard isFilterActive else { return inputItems }
         return self.resolver.filterItems(inputItems, basedOn: self.selectedItems, isNoneEnabled: isNoneEnabled)
     }
     
-    public func isItemSelected(_ item: CriteriaItem) -> Bool {
+    func isItemSelected(_ item: CriteriaItem) -> Bool {
         self.selectedItems.contains { $0.id == item.id }
     }
 }

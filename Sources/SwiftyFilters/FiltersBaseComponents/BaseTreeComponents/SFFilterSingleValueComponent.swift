@@ -25,17 +25,16 @@
 import Foundation
 
 
-// MARK: - Single value filter component (API-RO)
+// MARK: - Single value filter component
 
-public class SFFilterSingleValueComponent<FilteredItem, CriteriaItem: Equatable>: SFFilterComponent<FilteredItem> {
+class SFFilterSingleValueComponent<FilteredItem, CriteriaItem: Equatable>: SFFilterComponent<FilteredItem> {
     
     private let filter: SFFilterSingleValueContainer<FilteredItem, CriteriaItem>
+    private let singleValueViewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>
     private let noneItemTitle: String
     
-    public let singleValueViewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>
     
-    
-    public init(title: String,
+    init(title: String,
                 noneItemTitle: String,
                 filter: SFFilterSingleValueContainer<FilteredItem, CriteriaItem>,
                 viewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>
@@ -48,7 +47,7 @@ public class SFFilterSingleValueComponent<FilteredItem, CriteriaItem: Equatable>
                    isComposite: false)
     }
     
-    public override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
+    override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
         var nestedItems: [SFFilterComponent<FilteredItem>] = []
         
         if self.filter.isNoneIncluded {
@@ -59,19 +58,19 @@ public class SFFilterSingleValueComponent<FilteredItem, CriteriaItem: Equatable>
         return nestedItems
     }
     
-    public override func updateState() {
+    override func updateState() {
         self.isItemEnabled = !filter.isFilterActive
     }
     
-    public func updateValue(_ value: CriteriaItem?) {
+    func updateValue(_ value: CriteriaItem?) {
         filter.value = value
     }
     
-    public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
+    override func createRelatedNode() -> SFFilterNode<FilteredItem> {
         SFFilterSingleValueNode<FilteredItem, CriteriaItem>(component: self, viewProvider: singleValueViewProvider)
     }
     
-    public override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
+    override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
         return filter.filterItems(inputItems: items)
     }
 }

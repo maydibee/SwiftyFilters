@@ -22,38 +22,13 @@
 // SOFTWARE.
 
 
-import Foundation
+import SwiftUI
 
 
-// MARK: - Keywords filter container
-
-class SFFilterKeyWordsContainer<FilteredItem, CriteriaItem: StringProtocol>: SFFilterNullableContainer {
+public protocol SFFilterRangeViewProvider<FilteredItem, CriteriaItem> where CriteriaItem: Comparable {
     
-    var keywordsModel = SFFilterKeywordsModel<CriteriaItem>()
+    associatedtype FilteredItem
+    associatedtype CriteriaItem
     
-    var isNoneEnabled: Bool
-    var isNoneIncluded: Bool
-    
-    var isFilterActive: Bool {
-        let isKeywordsEmpty = keywordsModel.isEmpty
-        if isNoneIncluded {
-            return !isKeywordsEmpty || !isNoneEnabled
-        }
-        return !isKeywordsEmpty
-    }
-    
-    private let resolver: any SFFilterResolver<FilteredItem, SFFilterKeywordsModel<CriteriaItem>>
-    
-    
-    init(resolver: any SFFilterResolver<FilteredItem, SFFilterKeywordsModel<CriteriaItem>>,
-                isNoneIncluded: Bool = false) {
-        self.resolver = resolver
-        self.isNoneIncluded = isNoneIncluded
-        self.isNoneEnabled = isNoneIncluded
-    }
-    
-    func filterItems(inputItems: [FilteredItem]) -> [FilteredItem] {
-        guard isFilterActive else { return inputItems }
-        return self.resolver.filterItems(inputItems, basedOn: keywordsModel, isNoneEnabled: isNoneEnabled)
-    }
+    func makeView(with node: SFFilterRangeNode<FilteredItem, CriteriaItem>) -> any View
 }

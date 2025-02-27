@@ -25,17 +25,16 @@
 import Foundation
 
 
-// MARK: - Multi-select filter component (API-RO)
+// MARK: - Multi-select filter component
 
-public class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>: SFFilterComponent<FilteredItem> {
+class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>: SFFilterComponent<FilteredItem> {
     
     private let filter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>
+    private let multiSelectionViewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>
     private let noneItemTitle: String
     
-    public var multiSelectionViewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>
     
-    
-    public init(title: String,
+    init(title: String,
                 noneItemTitle: String,
                 filter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>,
                 viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>
@@ -50,7 +49,7 @@ public class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Identif
                    isAllActionIncluded: true)
     }
     
-    public override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
+    override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
         var nestedItems: [SFFilterComponent<FilteredItem>] = []
         
         let fetchedItems = await self.filter.initializeFilter()
@@ -68,15 +67,15 @@ public class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Identif
         return nestedItems
     }
     
-    public override func updateState() {
+    override func updateState() {
         self.isItemEnabled = !filter.isFilterActive
     }
     
-    public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
+    override func createRelatedNode() -> SFFilterNode<FilteredItem> {
         SFFilterMultiSelectionNode<FilteredItem>(component: self, viewProvider: multiSelectionViewProvider)
     }
     
-    public override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
+    override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
         return filter.filterItems(inputItems: items)
     }
 }

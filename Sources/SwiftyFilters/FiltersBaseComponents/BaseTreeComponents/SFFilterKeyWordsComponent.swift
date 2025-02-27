@@ -25,17 +25,16 @@
 import Foundation
 
 
-// MARK: - Keywords filter component (API-RO)
+// MARK: - Keywords filter component
 
-public class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtocol>: SFFilterComponent<FilteredItem> {
+class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtocol>: SFFilterComponent<FilteredItem> {
     
     private let filter: SFFilterKeyWordsContainer<FilteredItem, CriteriaItem>
+    private let keywordsViewProvider: any SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem>
     private let noneItemTitle: String
     
-    public var keywordsViewProvider: any SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem>
     
-    
-    public init(title: String,
+    init(title: String,
                 noneItemTitle: String,
                 filter: SFFilterKeyWordsContainer<FilteredItem, CriteriaItem>,
                 viewProvider: any SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem>
@@ -49,7 +48,7 @@ public class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtoco
         )
     }
     
-    public override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
+    override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
         var nestedItems: [SFFilterComponent<FilteredItem>] = []
         
         if self.filter.isNoneIncluded {
@@ -60,19 +59,19 @@ public class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtoco
         return nestedItems
     }
     
-    public override func updateState() {
+    override func updateState() {
         self.isItemEnabled = !filter.isFilterActive
     }
     
-    public func updateKeywords(_ keywords: SFFilterKeywordsModel<CriteriaItem>) {
+    func updateKeywords(_ keywords: SFFilterKeywordsModel<CriteriaItem>) {
         filter.keywordsModel = keywords
     }
     
-    public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
+    override func createRelatedNode() -> SFFilterNode<FilteredItem> {
         SFFilterKeywordsNode<FilteredItem, CriteriaItem>(component: self, viewProvider: keywordsViewProvider)
     }
     
-    public override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
+    override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
         return filter.filterItems(inputItems: items)
     }
 }

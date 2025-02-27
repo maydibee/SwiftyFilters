@@ -27,10 +27,11 @@ import SwiftUI
 
 
 // MARK: - Keywords container filter node (API-RO)
+// TODO: - Add doc
 
 public class SFFilterKeywordsNode<FilteredItem, CriteriaItem: StringProtocol>: SFFilterNode<FilteredItem> {
     
-    public var keywordsViewProvider: any SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem>
+    private let keywordsViewProvider: any SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem>
     
     lazy private var keywordsFilterComponent: SFFilterKeyWordsComponent<FilteredItem, CriteriaItem>? = {
         component as? SFFilterKeyWordsComponent<FilteredItem, CriteriaItem>
@@ -57,7 +58,7 @@ public class SFFilterKeywordsNode<FilteredItem, CriteriaItem: StringProtocol>: S
         }
     }
     
-    override public func makeView() -> any View {
+    override func makeView() -> any View {
         keywordsViewProvider.makeView(with: self)
     }
 }

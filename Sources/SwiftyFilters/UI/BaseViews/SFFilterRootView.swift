@@ -63,6 +63,5 @@ public struct SFFilterRootView<FilteredItem>: View {
                 filtersCore.compose()
             }
         }
-        
     }
 }
