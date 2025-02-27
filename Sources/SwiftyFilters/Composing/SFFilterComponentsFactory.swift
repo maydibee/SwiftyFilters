@@ -26,9 +26,6 @@ import Foundation
 import SwiftUI
 
 
-// TODO: update doc
-
-
 /// A factory class for creating filter components of different types.
 ///
 /// This class provides static methods to create filter components for:
@@ -51,6 +48,9 @@ public class SFFilterComponentsFactory {
     ///   - resolver: An object conforming to `SFFilterResolver` that defines the filtering behavior
     ///              based on an array of `CriteriaItem`.
     ///   - fetcher: An object conforming to `SFFilterFetcher` that fetches the data source for the filter.
+    ///   - viewProvider: An object conforming to  `SFFilterMultiSelectionViewProvider` that defines filter component UI representation.
+    ///                   Defaults to `SFFilterMultiSelectionDefaultViewProvider()`
+    ///                   that provides default view provider with defined multi-selection filter component view.
     ///   - isNoneIncluded: A flag indicating whether the "None" option is included in the filter.
     ///                     Defaults to `false`.
     ///   - noneItemTitle: The title of the "None" option, displayed if `isNoneIncluded` is `true`.
@@ -77,6 +77,7 @@ public class SFFilterComponentsFactory {
     ///   - title: The title of the filter component.
     ///   - resolver: An object conforming to `SFFilterResolver` that defines the filtering behavior
     ///              based on a `SFFilterRange<CriteriaItem>`.
+    ///   - viewProvider: An object conforming to  `SFFilterRangeViewProvider` that defines filter component UI representation.
     ///   - isNoneIncluded: A flag indicating whether the "None" option is included in the filter.
     ///                     Defaults to `false`.
     ///   - noneItemTitle: The title of the "None" option, displayed if `isNoneIncluded` is `true`.
@@ -102,6 +103,9 @@ public class SFFilterComponentsFactory {
     ///   - title: The title of the filter component.
     ///   - resolver: An object conforming to `SFFilterResolver` that defines the filtering behavior
     ///              based on a `SFFilterKeywordsModel<CriteriaItem>`.
+    ///   - viewProvider: An object conforming to  `SFFilterKeywordsViewProvider` that defines filter component UI representation.
+    ///                   Defaults to `SFFilterKeywordsDefaultViewProvider()`
+    ///                   that provides default view provider with defined multi-selection filter component view.
     ///   - isNoneIncluded: A flag indicating whether the "None" option is included in the filter.
     ///                     Defaults to `false`.
     ///   - noneItemTitle: The title of the "None" option, displayed if `isNoneIncluded` is `true`.
@@ -126,6 +130,7 @@ public class SFFilterComponentsFactory {
     ///    - title: The title of the filter component.
     ///    - resolver: An object conforming to `SFFilterResolver` that defines the filtering behavior
     ///              based on a single `CriteriaItem`.
+    ///    - viewProvider: An object conforming to  `SFFilterSingleValueViewProvider` that defines filter component UI representation.
     ///    - isNoneIncluded: A flag indicating whether the "None" option is included in the filter.
     ///                     Defaults to `false`.
     ///    - noneItemTitle: The title of the "None" option, displayed if `isNoneIncluded` is `true`.
