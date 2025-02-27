@@ -59,28 +59,6 @@ struct SFFilterComponentView<FilteredItem>: View {
                             } label: {
                                 SFFilterCellView(node: child)
                             }
-
-                            
-//                            if let dateRangeNode = child as? SFFilterRangeNode<FilteredItem, Date> {
-//                                NavigationLink(destination: SFFilterDateRangeView(node: dateRangeNode)) {
-//                                    SFFilterCellView(node: child)
-//                                }
-//                            } else if let singleDateNode = child as? SFFilterSingleValueNode<FilteredItem, Date> {
-//                                NavigationLink(destination: SFFilterSingleDateView(node: singleDateNode)) {
-//                                    SFFilterCellView(node: child)
-//                                }
-//                            } else if let keywordsNode = child as? SFFilterKeywordsNode<FilteredItem, String> {
-//                                NavigationLink(destination: SFFilterKeywordsView(node: keywordsNode)) {
-//                                    SFFilterCellView(node: child)
-//                                }
-//                            } else {
-//                                
-//                                SFFilterCellView(node: child)
-//                                    .onTapGesture {
-//                                        child.isItemEnabled.toggle()
-//                                    }
-//                            }
-                            
                         }
                     }
                 }
@@ -92,42 +70,4 @@ struct SFFilterComponentView<FilteredItem>: View {
         }
         
     }
-}
-
-
-public struct SFFilterMultiSelectionView<FilteredItem>: View {
-    
-    @StateObject var node: SFFilterMultiSelectionNode<FilteredItem>
-    
-    public init(node: SFFilterMultiSelectionNode<FilteredItem>) {
-        _node = StateObject(wrappedValue: node)
-    }
-    
-    public var body: some View {
-        Group {
-            if node.isLoading {
-                ProgressView()
-            } else {
-                List {
-                    ForEach(node.nestedNodes) { child in
-                        SFFilterCellView(node: child)
-                            .onTapGesture {
-                                child.isItemEnabled.toggle()
-                            }
-                    }
-                }
-            }
-        }
-    }
-}
-
-public class SFFilterDefaultMultiSelectionViewProvider<FilteredItem>: SFFilterMultiSelectionViewProvider {
-    
-    public init() {}
-    
-    
-    public func makeView(with node: SFFilterMultiSelectionNode<FilteredItem>) -> any View {
-        SFFilterMultiSelectionView(node: node)
-    }
-   
 }

@@ -27,7 +27,7 @@ import SwiftUI
 
 // MARK: - Keywords filter view
 
-public struct SFFilterKeywordsView<FilteredItem>: View {
+public struct SFFilterKeywordsDefaultView<FilteredItem>: View {
     
     @StateObject public var node: SFFilterKeywordsNode<FilteredItem, String>
     @State private var enteredText: String = ""
@@ -77,7 +77,7 @@ public struct SFFilterKeywordsView<FilteredItem>: View {
 
 // MARK: - UI Components
 
-private extension SFFilterKeywordsView {
+private extension SFFilterKeywordsDefaultView {
     
     @ViewBuilder
     var keywordInputSection: some View {
@@ -139,7 +139,7 @@ private extension SFFilterKeywordsView {
 
 // MARK: - Utility methods
 
-private extension SFFilterKeywordsView {
+private extension SFFilterKeywordsDefaultView {
     
     func addKeyword() {
         guard !isEnteredTextEmpty else { return }

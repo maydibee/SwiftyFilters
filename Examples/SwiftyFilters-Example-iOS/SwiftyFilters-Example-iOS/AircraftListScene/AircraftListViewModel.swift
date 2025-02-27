@@ -24,7 +24,6 @@ class AircraftListViewModel: ObservableObject {
             title: "Type",
             resolver: AircraftTypeFilterResolver(),
             fetcher: AircraftTypeFilterFetcher(),
-            viewProvider: MultiSelectionViewProvider(),
             noneItemTitle: "None"
         )
 //        

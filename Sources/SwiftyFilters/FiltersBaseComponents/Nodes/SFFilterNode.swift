@@ -54,7 +54,6 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
         self.title = component.title
         self.isComposite = component.isComposite
         self.isItemEnabled = component.isItemEnabled
-        //self.viewProvider = component.viewProvider
     }
     
     open func resetAllFilters() {
@@ -102,8 +101,7 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     }
     
     public func makeView() -> any View {
-        Text("No view")
-        //rangeViewProvider!.makeView(with: self)
+        Text("No view provided")
     }
 }
 
@@ -111,11 +109,7 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
 public class SFFilterMultiSelectionNode<FilteredItem>: SFFilterNode<FilteredItem> {
     
     public var multiSelectionViewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>
-    
-//    lazy private var multiSelectionFilterComponent: SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem>? = {
-//        component as? SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem>
-//    }()
-    
+
     
     init(component: SFFilterComponent<FilteredItem>, viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>) {
         self.multiSelectionViewProvider = viewProvider

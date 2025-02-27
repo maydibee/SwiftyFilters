@@ -97,7 +97,7 @@ class TestViewProvider: SFFilterRangeViewProvider {
 class KeywordsFilterViewProvider: SFFilterKeywordsViewProvider {
     
     func makeView(with node: SFFilterKeywordsNode<Aircraft, String>) -> any View {
-        SFFilterKeywordsView<Aircraft>(node: node)
+        SFFilterKeywordsDefaultView<Aircraft>(node: node)
     }
 }
 
@@ -107,10 +107,3 @@ class DatesRangeFilterViewProvider: SFFilterRangeViewProvider {
         SFFilterDateRangeView<Aircraft>(node: node)
     }
 }
-
-class MultiSelectionViewProvider: SFFilterMultiSelectionViewProvider {
-    func makeView(with node: SFFilterMultiSelectionNode<Aircraft>) -> any View {
-        SFFilterMultiSelectionView<Aircraft>(node: node)
-    }
-}
-

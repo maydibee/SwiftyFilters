@@ -57,7 +57,7 @@ public class SFFilterComponentsFactory {
     public static func createMultiSelectionComponent<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>(title: String,
                                                                                                                     resolver: any SFFilterResolver<FilteredItem, [CriteriaItem]>,
                                                                                                                     fetcher: any SFFilterFetcher<CriteriaItem>,
-                                                                                                                    viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem> = SFFilterDefaultMultiSelectionViewProvider(),
+                                                                                                                    viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem> = SFFilterMultiSelectionDefaultViewProvider(),
                                                                                                                     isNoneIncluded: Bool = false,
                                                                                                                     noneItemTitle: String) -> SFFilterComponent<FilteredItem> {
         let container = SFFilterMultiSelectionContainer(resolver: resolver, fetcher: fetcher, isNoneIncluded: isNoneIncluded)
@@ -105,9 +105,9 @@ public class SFFilterComponentsFactory {
     ///
     /// - Returns: A configured `SFFilterComponent` for keyword-based filtering.
     ///
-    public static func createKeywordsComponent<FilteredItem, CriteriaItem: StringProtocol>(title: String,
-                                                                                           resolver: any SFFilterResolver<FilteredItem, SFFilterKeywordsModel<CriteriaItem>>,
-                                                                                           viewProvider: any SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem>,
+    public static func createKeywordsComponent<FilteredItem>(title: String,
+                                                                                           resolver: any SFFilterResolver<FilteredItem, SFFilterKeywordsModel<String>>,
+                                                                                           viewProvider: any SFFilterKeywordsViewProvider<FilteredItem, String> = SFFilterKeywordsDefaultViewProvider(),
                                                                                            isNoneIncluded: Bool = false,
                                                                                            noneItemTitle: String) -> SFFilterComponent<FilteredItem> {
         let container = SFFilterKeyWordsContainer(resolver: resolver, isNoneIncluded: isNoneIncluded)
@@ -139,35 +139,3 @@ public class SFFilterComponentsFactory {
         return component
     }
 }
-    
-// V 1.1
-    
-//    public static func createMultiSelectionComponent1<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>(title: String,
-//                                                                                                                    resolver: any SFFilterResolver<FilteredItem, [CriteriaItem]>,
-//                                                                                                                    fetcher: any SFFilterFetcher<CriteriaItem>,
-//                                                                                                                    viewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>,
-//                                                                                                                    isNoneIncluded: Bool = false,
-//                                                                                                                    noneItemTitle: String) -> SFFilterComponent<FilteredItem> {
-//        let container = SFFilterMultiSelectionContainer(resolver: resolver, fetcher: fetcher, isNoneIncluded: isNoneIncluded)
-//        let component = SFFilterMultiSelectionComponent(title: title, noneItemTitle: noneItemTitle, filter: container, viewProvider: view)
-//
-//        return component
-//    }
-//    
-//    
-//    
-//    
-//    public static func createRangeComponent1<FilteredItem, CriteriaItem: Comparable>(title: String,
-//                                                                                     resolver: any SFFilterResolver<FilteredItem,
-//                                                                                     SFFilterRange<CriteriaItem>>,
-//                                                                                     viewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>,
-//                                                                                     isNoneIncluded: Bool = false,
-//                                                                                     noneItemTitle: String) -> SFFilterComponent<FilteredItem> {
-//        let container = SFFilterRangeContainer(resolver: resolver, isNoneIncluded: isNoneIncluded)
-//        let component = SFFilterRangeComponent(title: title, noneItemTitle: noneItemTitle, filter: container)
-//        component.assignViewProvider(viewProvider)
-//        return component
-//    }
-//}
-//
-//
