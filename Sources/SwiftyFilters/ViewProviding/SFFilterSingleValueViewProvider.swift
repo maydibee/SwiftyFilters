@@ -25,12 +25,49 @@
 import SwiftUI
 
 
-// TODO: Add doc
-
+/// A protocol for providing a view that displays a single-value filter component.
+///
+/// Types conforming to this protocol must provide a view that works with an `SFFilterSingleValueNode<FilteredItem, CriteriaItem>`
+/// as its view model. The view model is used to manage the state of the single-value filter component.
+///
+/// ### Generic Parameters
+/// - `FilteredItem`: The type of data being filtered.
+/// - `CriteriaItem`: The type used for filtering criteria. Must conform to `Equatable`.
+///
+/// ### Example
+/// ```swift
+/// import SwiftUI
+/// import SwiftyFilters
+///
+///
+/// struct ParticipantStatusFilterView: View {
+///     @StateObject var node: SFFilterSingleValueNode<Participant, ParticipantStatus>
+///
+///     var body: some View {
+///         // View implementation for single-value filter
+///     }
+/// }
+///
+/// class ParticipantStatusViewProvider: SFFilterSingleValueViewProvider {
+///     func makeView(with node: SFFilterSingleValueNode<Participant, ParticipantStatus>) -> any View {
+///         ParticipantStatusFilterView(node: node)
+///     }
+/// }
+/// ```
+///
 public protocol SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem> where CriteriaItem: Equatable {
     
     associatedtype FilteredItem
     associatedtype CriteriaItem
     
+    /// Creates a view for the single-value filter component.
+    ///
+    /// The view should embed the provided `SFFilterSingleValueNode<FilteredItem, CriteriaItem>` as a `@StateObject`,
+    /// which acts as the view model. The view model is used for operations such as selecting a value
+    /// or resetting the filter state.
+    ///
+    /// - Parameter node: The filter node to use as the view model.
+    /// - Returns: A view representing the single-value filter component.
+    ///
     func makeView(with node: SFFilterSingleValueNode<FilteredItem, CriteriaItem>) -> any View
 }

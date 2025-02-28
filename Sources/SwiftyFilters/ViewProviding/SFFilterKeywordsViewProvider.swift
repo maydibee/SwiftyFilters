@@ -25,10 +25,49 @@
 import SwiftUI
 
 
+/// A protocol for providing a view that displays a keyword-based filter component.
+///
+/// Types conforming to this protocol must provide a view that works with an `SFFilterKeywordsNode<FilteredItem, CriteriaItem>`
+/// as its view model. The view model is an `ObservableObject` and is used to manage the state of the filter component.
+///
+/// ### Generic Parameters
+/// - `FilteredItem`: The type of data being filtered.
+/// - `CriteriaItem`: The type used for filtering criteria. Must conform to `StringProtocol`.
+///
+/// ### Example
+/// ```swift
+/// import SwiftUI
+/// import SwiftyFilters
+///
+///
+/// struct ParticipantRemarksKeywordFilterView: View {
+///     @StateObject var node: SFFilterKeywordsNode<Participant, String>
+///
+///     var body: some View {
+///         // View implementation for keyword-based filter component
+///     }
+/// }
+///
+/// class ParticipantRemarksKeywordFilterViewProvider: SFFilterKeywordsViewProvider {
+///     func makeView(with node: SFFilterKeywordsNode<Participant, String>) -> any View {
+///         ParticipantRemarksKeywordFilterView(node: node)
+///     }
+/// }
+/// ```
+///
 public protocol SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem> where CriteriaItem: StringProtocol {
     
     associatedtype FilteredItem
     associatedtype CriteriaItem
     
+    /// Creates a view for the keyword-based filter component.
+    ///
+    /// The view should embed the provided `SFFilterKeywordsNode<FilteredItem, CriteriaItem>` as a `@StateObject`,
+    /// which acts as the view model. The view model is used for operations such as resetting filters or updating
+    /// the `keywordsModel` through the UI.
+    ///
+    /// - Parameter node: The filter node to use as the view model.
+    /// - Returns: A view representing the keyword-based filter component.
+    ///
     func makeView(with node: SFFilterKeywordsNode<FilteredItem, CriteriaItem>) -> any View
 }

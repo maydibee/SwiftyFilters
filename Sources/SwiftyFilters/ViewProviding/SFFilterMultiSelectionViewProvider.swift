@@ -25,9 +25,47 @@
 import SwiftUI
 
 
+/// A protocol for providing a view that displays a multi-selection filter component.
+///
+/// Types conforming to this protocol must provide a view that works with an `SFFilterMultiSelectionNode<FilteredItem>`
+/// as its view model. The view model is used to manage the state of the multi-selection filter component.
+///
+/// ### Generic Parameters
+/// - `FilteredItem`: The type of data being filtered.
+///
+/// ### Example
+/// ```swift
+/// import SwiftUI
+/// import SwiftyFilters
+///
+///
+/// struct ParticipantRolesMultiSelectionFilterView: View {
+///     @StateObject var node: SFFilterMultiSelectionNode<Participant>
+///
+///     var body: some View {
+///         // View implementation for multi-selection filter
+///     }
+/// }
+///
+/// class ParticipantRolesMultiSelectionViewProvider: SFFilterMultiSelectionViewProvider {
+///     func makeView(with node: SFFilterMultiSelectionNode<Participant>) -> any View {
+///         ParticipantRolesMultiSelectionFilterView(node: node)
+///     }
+/// }
+/// ```
+///
 public protocol SFFilterMultiSelectionViewProvider<FilteredItem> {
     
     associatedtype FilteredItem
     
+    /// Creates a view for the multi-selection filter component.
+    ///
+    /// The view should embed the provided `SFFilterMultiSelectionNode<FilteredItem>` as a `@StateObject`,
+    /// which acts as the view model. The view model is used for operations such as managing selected items
+    /// or resetting the filter state.
+    ///
+    /// - Parameter node: The filter node to use as the view model.
+    /// - Returns: A view representing the multi-selection filter component.
+    /// 
     func makeView(with node: SFFilterMultiSelectionNode<FilteredItem>) -> any View
 }

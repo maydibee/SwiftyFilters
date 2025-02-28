@@ -28,6 +28,11 @@ import SwiftUI
 
 // MARK: - Filter component base class
 
+/// A base class representing a filter component.
+///
+/// Instances of this class (or its subclasses) are created by the client code using the `SFFilterComponentsFactory`
+/// and are used to build the filter tree.
+///
 public class SFFilterComponent<FilteredItem> {
     
     var title: String

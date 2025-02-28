@@ -76,5 +76,5 @@ public protocol SFFilterResolver<FilteredItem, CriteriaItem> {
     ///
     /// - Returns: A filtered array of `FilteredItem` elements.
     ///
-    func filterItems(_ inputItems: [FilteredItem], basedOn criteriaItem: CriteriaItem, isNoneEnabled: Bool ) -> [FilteredItem]
+    func filterItems(_ inputItems: [FilteredItem], basedOn criteriaItem: CriteriaItem, isNoneEnabled: Bool) -> [FilteredItem]
 }

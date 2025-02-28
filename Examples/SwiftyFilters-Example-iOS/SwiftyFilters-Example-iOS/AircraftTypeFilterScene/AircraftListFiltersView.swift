@@ -107,3 +107,23 @@ class DatesRangeFilterViewProvider: SFFilterRangeViewProvider {
         SFFilterDateRangeView<Aircraft>(node: node)
     }
 }
+
+struct Participant {
+    
+}
+
+struct ParticipantRemarksKeywordFilterView: View {
+    
+    @StateObject var node: SFFilterKeywordsNode<Participant, String>
+    
+    var body: some View {
+        // view implementation
+    }
+}
+
+class ParticipantRemarksKeywordFilterViewProvider: SFFilterKeywordsViewProvider {
+    
+    func makeView(with node: SFFilterKeywordsNode<Participant, String>) -> any View {
+        ParticipantRemarksKeywordFilterView(node: node)
+    }
+}
