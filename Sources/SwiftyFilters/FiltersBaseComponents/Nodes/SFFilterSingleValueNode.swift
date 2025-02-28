@@ -25,11 +25,11 @@
 import Foundation
 
 
-// MARK: - Single value filter node (API-RO)
-// TODO: add accessors
-// TODO: - Add doc
-
-
+/// A specialized node for single-value filters.
+///
+/// This node can be used as a view model for custom UI components. It manages the state of a single-value filter
+/// and provides a `value` property for UI updates.
+/// 
 public class SFFilterSingleValueNode<FilteredItem, CriteriaItem: Equatable>: SFFilterNode<FilteredItem> {
     
     private let singleValueViewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>
@@ -38,6 +38,11 @@ public class SFFilterSingleValueNode<FilteredItem, CriteriaItem: Equatable>: SFF
         component as? SFFilterSingleValueComponent<FilteredItem, CriteriaItem>
     }()
     
+    
+    /// A model representing the value for UI updates.
+    ///
+    /// When set, it updates the associated filter component and propagates the change to the parent node.
+    ///
     @Published public var value: CriteriaItem? {
         didSet {
             singleValueFilterComponent?.updateValue(value)
@@ -52,6 +57,9 @@ public class SFFilterSingleValueNode<FilteredItem, CriteriaItem: Equatable>: SFF
         super.init(component: component)
     }
 
+    /// Resets the filter tree starting from the current node.
+    ///
+    /// All nested nodes are also reset.
     public override func resetAllFilters() {
         value = nil
         nestedNodes.forEach { node in

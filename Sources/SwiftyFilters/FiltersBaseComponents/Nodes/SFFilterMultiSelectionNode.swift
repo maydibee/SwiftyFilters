@@ -22,11 +22,25 @@
 // SOFTWARE.
 
 
-import Foundation
+import SwiftUI
 
 
-// MARK: - Abstraction for containers that can tackle none-containing elements
+/// A specialized node for multi-selection filters.
+///
+/// This node can be used as a view model for custom UI components. It manages the state of a multi-selection filter
+/// and provides a view provider for creating custom views.
+///
+public class SFFilterMultiSelectionNode<FilteredItem>: SFFilterNode<FilteredItem> {
+    
+    private let multiSelectionViewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>
 
-protocol SFFilterNullableContainer: AnyObject {
-    var isNoneEnabled: Bool { get set }
+    
+    init(component: SFFilterComponent<FilteredItem>, viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>) {
+        self.multiSelectionViewProvider = viewProvider
+        super.init(component: component)
+    }
+    
+    override func makeView() -> any View {
+        multiSelectionViewProvider.makeView(with: self)
+    }
 }

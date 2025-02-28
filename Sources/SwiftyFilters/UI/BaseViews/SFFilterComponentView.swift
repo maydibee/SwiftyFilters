@@ -49,7 +49,7 @@ struct SFFilterComponentView<FilteredItem>: View {
                         } else {
                             NavigationLink {
                                 AnyView(
-                                        child.makeView()
+                                    child.makeView()
                                 )
                                 .navigationTitle(child.title)
                                 .task {

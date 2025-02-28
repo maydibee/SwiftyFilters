@@ -26,21 +26,34 @@ import Foundation
 import SwiftUI
 
 
-// MARK: Filter node
-// TODO: - Add doc
-
+/// A node in the filter tree that manages the state of the current filter component and its child nodes.
+///
+/// This class is responsible for maintaining the state of a filter component, including its selection status,
+/// loading state, and nested child nodes.
+///
 public class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     
+    /// A unique identifier for the node.
     public let id = UUID()
-    let title: String
+    
+    /// The title of the filter node, which matches the title of the associated filter component.
+    public let title: String
     let isComposite: Bool
     
     weak var parent: SFFilterNode?
     
     let component: SFFilterComponent<FilteredItem>
     
+    /// A flag indicating whether the node is currently loading data.
     @Published public var isLoading: Bool = false
+    
+    /// The child nodes of the current node.
     @Published public var nestedNodes: [SFFilterNode<FilteredItem>] = []
+    
+    /// A flag indicating whether the current node is selected.
+    ///
+    /// When set, it updates the state of the associated component and propagates the change to the parent node.
+    ///
     @Published public var isItemEnabled: Bool {
         didSet {
             component.isItemEnabled = isItemEnabled
@@ -56,6 +69,10 @@ public class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
         self.isItemEnabled = component.isItemEnabled
     }
     
+    /// Resets the filter tree starting from the current node.
+    ///
+    /// All nested nodes are also reset.
+    ///
     public func resetAllFilters() {
         isItemEnabled = true
         nestedNodes.forEach { node in
@@ -63,21 +80,18 @@ public class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
         }
     }
     
+    /// Deselects all nodes in the filter tree starting from the current node.
+    ///
     public func deselectAll() {
         isItemEnabled = false
         nestedNodes.forEach { node in
             node.deselectAll()
         }
     }
-    
-    func getFilteredData(from items: [FilteredItem]) -> [FilteredItem] {
-        var filteredArray = component.getFilteredItems(for: items)
-        nestedNodes.forEach { nestedNode in
-            filteredArray = nestedNode.getFilteredData(from: filteredArray)
-        }
-        return filteredArray
-    }
-    
+
+    /// Loads filter items or child nodes if they are not already loaded.
+    ///
+    /// Sets `isLoading` to `true` during the loading process.
     public func loadFilterIfNeeded() async {
         guard nestedNodes.isEmpty else { return }
 
@@ -94,6 +108,14 @@ public class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
             isLoading = false
         }
     }
+    
+    func getFilteredData(from items: [FilteredItem]) -> [FilteredItem] {
+        var filteredArray = component.getFilteredItems(for: items)
+        nestedNodes.forEach { nestedNode in
+            filteredArray = nestedNode.getFilteredData(from: filteredArray)
+        }
+        return filteredArray
+    }
 
     func updateState() {
         self.component.updateState()
@@ -102,21 +124,5 @@ public class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     
     func makeView() -> any View {
         Text("No view provided")
-    }
-}
-
-
-public class SFFilterMultiSelectionNode<FilteredItem>: SFFilterNode<FilteredItem> {
-    
-    public var multiSelectionViewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>
-
-    
-    init(component: SFFilterComponent<FilteredItem>, viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>) {
-        self.multiSelectionViewProvider = viewProvider
-        super.init(component: component)
-    }
-    
-    override public func makeView() -> any View {
-        multiSelectionViewProvider.makeView(with: self)
     }
 }
