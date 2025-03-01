@@ -27,7 +27,7 @@ import SwiftUI
 
 // MARK: - Filters All/Reset action view
 
-struct SFFilterAllCellView<FilteredItem>: View {
+public struct SFFilterAllCellView<FilteredItem>: View {
     
     @StateObject var node: SFFilterNode<FilteredItem>
     
@@ -36,7 +36,7 @@ struct SFFilterAllCellView<FilteredItem>: View {
     @Environment(\.enabledCheckboxColor) private var enabledCheckboxColor
     
     
-    var body: some View {
+    public var body: some View {
         HStack {
             Text(" ")
             Spacer()

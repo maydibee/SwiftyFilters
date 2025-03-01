@@ -108,22 +108,103 @@ class DatesRangeFilterViewProvider: SFFilterRangeViewProvider {
     }
 }
 
-struct Participant {
+struct AircraftTypeFilterView: View {
     
-}
-
-struct ParticipantRemarksKeywordFilterView: View {
-    
-    @StateObject var node: SFFilterKeywordsNode<Participant, String>
+    @StateObject var node: SFFilterMultiSelectionNode<Aircraft>
     
     var body: some View {
-        // view implementation
+        Group {
+            if node.isLoading {
+                ProgressView()
+            } else {
+                List {
+                    Group {
+                        AircraftFilterAllResetActionCell(node: node)
+                        ForEach(node.nestedNodes) { child in
+                            AircraftTypeFilterCellView(node: child)
+                                .onTapGesture {
+                                    child.isItemEnabled.toggle()
+                                }
+                        }
+                    }
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+                }
+                .listStyle(PlainListStyle())
+            }
+        }
+        .animation(.easeIn(duration: 0.1), value: node.isItemEnabled)
     }
 }
 
-class ParticipantRemarksKeywordFilterViewProvider: SFFilterKeywordsViewProvider {
+struct AircraftTypeFilterCellView: View {
     
-    func makeView(with node: SFFilterKeywordsNode<Participant, String>) -> any View {
-        ParticipantRemarksKeywordFilterView(node: node)
+    @StateObject var node: SFFilterNode<Aircraft>
+    
+    var body: some View {
+        HStack {
+            Text(node.title)
+                .fontWeight(.semibold)
+                .foregroundStyle(node.isItemEnabled ? .blue : .gray)
+                .padding()
+            Spacer()
+        }
+        .capsuled(borderColor: node.isItemEnabled ? .blue : .gray.opacity(0.7))
+        .contentShape(Rectangle())
+        .frame(height: 50)
+        .padding(.horizontal)
+        .padding(.vertical, 5)
+    }
+}
+
+struct AircraftFilterAllResetActionCell: View {
+    
+    @StateObject var node: SFFilterMultiSelectionNode<Aircraft>
+    
+    var body: some View {
+        HStack {
+            Text(node.isItemEnabled ? "All" : "Reset")
+                .fontWeight(.semibold)
+                .foregroundStyle(node.isItemEnabled ? .blue : .red)
+                .padding()
+            Spacer()
+        }
+        .capsuled(borderColor: node.isItemEnabled ? .blue : .red.opacity(0.7))
+        .contentShape(Rectangle())
+        .frame(height: 30)
+        .padding()
+        .onTapGesture {
+            if node.isItemEnabled {
+                node.deselectAll()
+            } else {
+                node.resetAllFilters()
+            }
+        }
+    }
+}
+
+
+extension View {
+    
+    func capsuled(borderColor: Color) -> some View {
+        RoundedRectangle(cornerRadius: 10)
+            .fill(.clear)
+            .overlay {
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(borderColor, lineWidth: 1)
+            }
+            .overlay {
+                self
+            }
+    }
+}
+
+
+
+
+class AircraftTypeFilterViewProvider: SFFilterMultiSelectionViewProvider {
+
+    func makeView(with node: SFFilterMultiSelectionNode<Aircraft>) -> any View {
+        AircraftTypeFilterView(node: node)
     }
 }

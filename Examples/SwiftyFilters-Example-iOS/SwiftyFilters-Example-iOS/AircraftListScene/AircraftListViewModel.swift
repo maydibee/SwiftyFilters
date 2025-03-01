@@ -24,6 +24,7 @@ class AircraftListViewModel: ObservableObject {
             title: "Type",
             resolver: AircraftTypeFilterResolver(),
             fetcher: AircraftTypeFilterFetcher(),
+            viewProvider: AircraftTypeFilterViewProvider(),
             noneItemTitle: "None"
         )
 //        
@@ -79,18 +80,12 @@ class AircraftListViewModel: ObservableObject {
         
         self.filtersCore = SFFiltersCore<Aircraft>(title: "Filters") {
             aircraftTypeFilterComponent
-//            aircraftExploiterFilterComponent
             aircraftRemarksFilterComponent
             
             SFGroupedComponent(title: "Dates") {
                 aircraftFirstFlightDateFilterComponent
                 aircraftManufactureDateFilterComponent
             }
-            
-//            aircraftCapacityFilterComponent
-//            aircraftNewnessFilterComponent
-//            
-//            aircraftTestCapacityFilterComponent
         }
     }
     
