@@ -23,6 +23,7 @@
 
 
 import Foundation
+import SwiftUI
 
 
 // MARK: - Multi-select filter component
@@ -30,19 +31,36 @@ import Foundation
 class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>: SFFilterComponent<FilteredItem> {
     
     private let filter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>
-    private let multiSelectionViewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>
+    private let view: ((SFFilterMultiSelectionNode<FilteredItem>) -> any View)
     private let noneItemTitle: String
     
-    
+
     init(title: String,
-                noneItemTitle: String,
-                filter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>,
-                viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>
-                
+         noneItemTitle: String,
+         filter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>,
+         view: @escaping ((SFFilterMultiSelectionNode<FilteredItem>) -> any View)
+         
     ) {
         self.noneItemTitle = noneItemTitle
         self.filter = filter
-        self.multiSelectionViewProvider = viewProvider
+        self.view = view
+        super.init(title: title,
+                   isItemEnabled: !filter.isFilterActive,
+                   isComposite: false,
+                   isAllActionIncluded: true)
+    }
+    
+    init(title: String,
+         noneItemTitle: String,
+         filter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>,
+         viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>
+         
+    ) {
+        self.noneItemTitle = noneItemTitle
+        self.filter = filter
+        self.view = { node in
+            viewProvider.makeView(with: node)
+        }
         super.init(title: title,
                    isItemEnabled: !filter.isFilterActive,
                    isComposite: false,
@@ -72,7 +90,7 @@ class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Identifiable &
     }
     
     override func createRelatedNode() -> SFFilterNode<FilteredItem> {
-        SFFilterMultiSelectionNode<FilteredItem>(component: self, viewProvider: multiSelectionViewProvider)
+        SFFilterMultiSelectionNode<FilteredItem>(component: self, view: self.view)
     }
     
     override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {

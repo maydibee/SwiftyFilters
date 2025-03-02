@@ -43,22 +43,35 @@ class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Identifiable &
         return !isAllSelected
     }
     
-    private let resolver: any SFFilterResolver<FilteredItem, [CriteriaItem]>
-    private let fetcher: any SFFilterFetcher<CriteriaItem>
+    private var criteriaItemsDatasource: (() async -> [CriteriaItem])
+    private var filterBehavior: (([FilteredItem], [CriteriaItem], _ isNoneEnabled: Bool) -> [FilteredItem])
     
+    init(criteriaItemsDatasource: @escaping (() async -> [CriteriaItem]),
+         filterBehavior: @escaping (([FilteredItem], [CriteriaItem], _ isNoneEnabled: Bool) -> [FilteredItem]),
+         isNoneIncluded: Bool = false) {
+        
+        self.criteriaItemsDatasource = criteriaItemsDatasource
+        self.filterBehavior = filterBehavior
+        
+        self.isNoneIncluded = isNoneIncluded
+        self.isNoneEnabled = isNoneIncluded
+    }
     
     init(resolver: any SFFilterResolver<FilteredItem, [CriteriaItem]>,
-                fetcher: any SFFilterFetcher<CriteriaItem>,
-                isNoneIncluded: Bool = false) {
-        self.resolver = resolver
-        self.fetcher = fetcher
+         fetcher: any SFFilterFetcher<CriteriaItem>,
+         isNoneIncluded: Bool = false) {
+        self.criteriaItemsDatasource = fetcher.fetchFilterItems
+        self.filterBehavior = { inputItems, criteriaItem, isNoneEnabled in
+            resolver.filterItems(inputItems, basedOn: criteriaItem, isNoneEnabled: isNoneEnabled)
+        }
+        
         self.isNoneIncluded = isNoneIncluded
         self.isNoneEnabled = isNoneIncluded
     }
     
     @discardableResult
     func initializeFilter() async -> [CriteriaItem] {
-        let fetchedItems = await self.fetcher.fetchFilterItems()
+        let fetchedItems = await self.criteriaItemsDatasource()
         self.allItems = fetchedItems
         self.selectedItems = fetchedItems
         return fetchedItems
@@ -66,7 +79,7 @@ class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Identifiable &
     
     func filterItems(inputItems: [FilteredItem]) -> [FilteredItem] {
         guard isFilterActive else { return inputItems }
-        return self.resolver.filterItems(inputItems, basedOn: self.selectedItems, isNoneEnabled: isNoneEnabled)
+        return self.filterBehavior(inputItems, self.selectedItems, isNoneEnabled)
     }
     
     func isItemSelected(_ item: CriteriaItem) -> Bool {

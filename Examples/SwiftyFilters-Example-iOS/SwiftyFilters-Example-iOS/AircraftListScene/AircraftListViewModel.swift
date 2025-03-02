@@ -17,7 +17,7 @@ class AircraftListViewModel: ObservableObject {
     
     let aircrafts: [Aircraft] = Aircraft.mockAircrafts
     
-    let filtersCore: SFFiltersCore<Aircraft>
+    var filtersCore: SFFiltersCore<Aircraft>
     
     init() {
         let aircraftTypeFilterComponent = SFFilterComponentsFactory.createMultiSelectionComponent(
@@ -86,6 +86,20 @@ class AircraftListViewModel: ObservableObject {
                 aircraftFirstFlightDateFilterComponent
                 aircraftManufactureDateFilterComponent
             }
+            
+            SFMultiSelectionFilter<Aircraft, AircraftType>(title: "Type 2")
+                .fetchItems {
+                    await AircraftTypeFilterFetcher().fetchFilterItems()
+                }
+                .filter { inputItems, criteriaItem, isNoneEnabled in
+                    inputItems.filter { inputItem in
+                        criteriaItem.contains { $0.id == inputItem.type.id }
+                    }
+                }
+                .includeNone(withTitle: "NULL")
+                .displayIn { node in
+                    AircraftTypeFilterView(node: node)
+                }
         }
     }
     

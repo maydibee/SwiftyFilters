@@ -22,25 +22,12 @@
 // SOFTWARE.
 
 
-import SwiftUI
+import Foundation
 
 
-/// A specialized node for multi-selection filters.
-///
-/// This node can be used as a view model for custom UI components. It manages the state of a multi-selection filter
-/// and provides a view provider for creating custom views.
-///
-public class SFFilterMultiSelectionNode<FilteredItem>: SFFilterNode<FilteredItem> {
+public protocol SFFilterBuildableComponent<FilteredItem> {
     
-    var view: ((SFFilterMultiSelectionNode<FilteredItem>) -> any View)
-
+    associatedtype FilteredItem
     
-    init(component: SFFilterComponent<FilteredItem>, view: @escaping ((SFFilterMultiSelectionNode<FilteredItem>) -> any View)) {
-        self.view = view
-        super.init(component: component)
-    }
-    
-    override func makeView() -> any View {
-        view(self)
-    }
+    func buildComponent() -> SFFilterComponent<FilteredItem>
 }

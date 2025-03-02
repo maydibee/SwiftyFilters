@@ -24,6 +24,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 
 /// The main entry point for working with filters in client code.
@@ -99,6 +100,8 @@ public class SFFiltersCore<FilteredItem>: ObservableObject {
         let master = SFFilterMasterComponent(title: self.title, nestedFilterItems: filterComponents)
         self.rootNode = SFFilterNode(component: master)
     }
+    
+    public func createT() {}
 }
 
 
@@ -113,5 +116,14 @@ private extension SFFiltersCore {
             .map { !$0 }
             .assign(to: \.isFilterActive, on: self)
             .store(in: &cancellables)
+    }
+}
+
+public extension SFFiltersCore {
+    /// Creates a multi-selection filter component with the inferred `FilteredItem` type.
+    public func multiSelectionFilter<CriteriaItem: Identifiable & SFFiltersTitleable>(
+        title: String
+    ) -> SFMultiSelectionFilter<FilteredItem, CriteriaItem> {
+        SFMultiSelectionFilter<FilteredItem, CriteriaItem>(title: title)
     }
 }

@@ -79,18 +79,4 @@ public struct SFFiltersBuilder<FilteredItem> {
     public static func buildArray(_ components: [[SFFilterComponent<FilteredItem>]]) -> [SFFilterComponent<FilteredItem>] {
         components.flatMap { $0 }
     }
-    
-    /// Converts a grouped component into an array of filter components.
-    public static func buildExpression(_ expression: SFGroupedComponent<FilteredItem>) -> [SFFilterComponent<FilteredItem>] {
-        let components = expression.content()
-        return [self.createGroupedItem(title: expression.title, from: components)]
-    }
 }
-
-private extension SFFiltersBuilder {
-    
-    static func createGroupedItem(title: String, from components: [SFFilterComponent<FilteredItem>]) -> SFFilterMasterComponent<FilteredItem> {
-        SFFilterMasterComponent(title: title, nestedFilterItems: components)
-    }
-}
-
