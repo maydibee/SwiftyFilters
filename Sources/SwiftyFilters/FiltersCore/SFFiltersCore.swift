@@ -79,6 +79,18 @@ public class SFFiltersCore<FilteredItem>: ObservableObject {
         self.filters = builder()
     }
     
+    
+    /// Initializes a new `SFFiltersCore` instance.
+    ///
+    /// - Parameters:
+    ///   - title: The title of the filter tree.
+    ///   - content: Root filter component, an implementation of `SFFilter`.
+    ///
+    public init(title: String, content: any SFFilter<FilteredItem>) {
+        self.title = title
+        self.filters = content.body
+    }
+    
     /// Filters the provided data based on the current state of the filter tree.
     ///
     /// - Parameter items: The data to be filtered.
@@ -116,14 +128,5 @@ private extension SFFiltersCore {
             .map { !$0 }
             .assign(to: \.isFilterActive, on: self)
             .store(in: &cancellables)
-    }
-}
-
-public extension SFFiltersCore {
-    /// Creates a multi-selection filter component with the inferred `FilteredItem` type.
-    public func multiSelectionFilter<CriteriaItem: Identifiable & SFFiltersTitleable>(
-        title: String
-    ) -> SFMultiSelectionFilter<FilteredItem, CriteriaItem> {
-        SFMultiSelectionFilter<FilteredItem, CriteriaItem>(title: title)
     }
 }
