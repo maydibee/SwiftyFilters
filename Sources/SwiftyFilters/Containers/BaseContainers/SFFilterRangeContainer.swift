@@ -42,18 +42,31 @@ class SFFilterRangeContainer<FilteredItem, CriteriaItem: Comparable>: SFFilterNu
         return isBoundSelected
     }
     
-    private let resolver: any SFFilterResolver<FilteredItem, SFFilterRange<CriteriaItem>>
+    private var filterBehavior: (([FilteredItem], SFFilterRange<CriteriaItem>, _ isNoneEnabled: Bool) -> [FilteredItem])
     
     
-    init(resolver: any SFFilterResolver<FilteredItem, SFFilterRange<CriteriaItem>>,
-                isNoneIncluded: Bool = false) {
-        self.resolver = resolver
+    init(filterBehavior: @escaping (([FilteredItem], SFFilterRange<CriteriaItem>, _ isNoneEnabled: Bool) -> [FilteredItem]), isNoneIncluded: Bool = false) {
+        self.filterBehavior = filterBehavior
         self.isNoneIncluded = isNoneIncluded
         self.isNoneEnabled = isNoneIncluded
     }
     
+    
+    convenience init(resolver: any SFFilterResolver<FilteredItem, SFFilterRange<CriteriaItem>>,
+                isNoneIncluded: Bool = false) {
+        
+        let filterBehavior = { inputItems, criteriaItem, isNoneEnabled in
+            resolver.filterItems(inputItems, basedOn: criteriaItem, isNoneEnabled: isNoneEnabled)
+        }
+        
+        self.init(
+            filterBehavior: filterBehavior,
+            isNoneIncluded: isNoneIncluded
+        )
+    }
+    
     func filterItems(inputItems: [FilteredItem]) -> [FilteredItem] {
         guard isFilterActive else { return inputItems }
-        return self.resolver.filterItems(inputItems, basedOn: range, isNoneEnabled: isNoneEnabled)
+        return self.filterBehavior(inputItems, range, isNoneEnabled)
     }
 }

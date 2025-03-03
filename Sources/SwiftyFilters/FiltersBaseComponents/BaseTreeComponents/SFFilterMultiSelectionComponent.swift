@@ -44,10 +44,11 @@ class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Identifiable &
         self.noneItemTitle = noneItemTitle
         self.filter = filter
         self.view = view
-        super.init(title: title,
-                   isItemEnabled: !filter.isFilterActive,
-                   isComposite: false,
-                   isAllActionIncluded: true)
+        super.init(
+            title: title,
+            isItemEnabled: !filter.isFilterActive,
+            isComposite: false,
+            isAllActionIncluded: true)
     }
     
     convenience init(title: String,
@@ -61,10 +62,11 @@ class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Identifiable &
             viewProvider.makeView(with: node)
         }
         
-        self.init(title: title,
-                   noneItemTitle: noneItemTitle,
-                   filter: filter,
-                   view: view
+        self.init(
+            title: title,
+            noneItemTitle: noneItemTitle,
+            filter: filter,
+            view: view
         )
     }
     

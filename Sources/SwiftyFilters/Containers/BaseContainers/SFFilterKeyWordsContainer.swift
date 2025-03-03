@@ -57,7 +57,10 @@ class SFFilterKeyWordsContainer<FilteredItem, CriteriaItem: StringProtocol>: SFF
         let filterBehavior = { inputItems, criteriaItem, isNoneEnabled in
             resolver.filterItems(inputItems, basedOn: criteriaItem, isNoneEnabled: isNoneEnabled)
         }
-        self.init(filterBehavior: filterBehavior, isNoneIncluded: isNoneIncluded)
+        self.init(
+            filterBehavior: filterBehavior,
+            isNoneIncluded: isNoneIncluded
+        )
     }
     
     func filterItems(inputItems: [FilteredItem]) -> [FilteredItem] {

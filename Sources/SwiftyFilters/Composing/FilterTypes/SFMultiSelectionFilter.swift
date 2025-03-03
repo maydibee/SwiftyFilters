@@ -64,7 +64,7 @@ public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Identifiable & S
     /// If not specified, all input items will be returned, and an assertion failure will be triggered in debug mode.
     ///
     private var filterBehavior: (([FilteredItem], [CriteriaItem], _ isNoneEnabled: Bool) -> [FilteredItem]) = { inputItems, _, _ in
-        assertionFailure("Filter behavior is not set. Call `filterWithBehavior` before building the component.")
+        assertionFailure("Filter behavior is not set. Call `filterWithBehavior` or `filter` before building the component.")
         return inputItems
     }
     

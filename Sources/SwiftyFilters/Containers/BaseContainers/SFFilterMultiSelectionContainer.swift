@@ -46,6 +46,7 @@ class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Identifiable &
     private var criteriaItemsDatasource: (() async -> [CriteriaItem])
     private var filterBehavior: (([FilteredItem], [CriteriaItem], _ isNoneEnabled: Bool) -> [FilteredItem])
     
+    
     init(criteriaItemsDatasource: @escaping (() async -> [CriteriaItem]),
          filterBehavior: @escaping (([FilteredItem], [CriteriaItem], _ isNoneEnabled: Bool) -> [FilteredItem]),
          isNoneIncluded: Bool = false) {
@@ -66,7 +67,11 @@ class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Identifiable &
             resolver.filterItems(inputItems, basedOn: criteriaItem, isNoneEnabled: isNoneEnabled)
         }
         
-        self.init(criteriaItemsDatasource: datasource, filterBehavior: filterBehavior, isNoneIncluded: isNoneIncluded)
+        self.init(
+            criteriaItemsDatasource: datasource,
+            filterBehavior: filterBehavior,
+            isNoneIncluded: isNoneIncluded
+        )
     }
     
     @discardableResult

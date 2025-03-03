@@ -25,7 +25,7 @@
 import SwiftUI
 
 
-public class SFKeywordsFilter<FilteredItem> {
+public class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
     
     /// The title of the filter component.
     let title: String
@@ -34,17 +34,18 @@ public class SFKeywordsFilter<FilteredItem> {
     ///
     /// If not specified, all input items will be returned, and an assertion failure will be triggered in debug mode.
     ///
-    private var filterBehavior: (([FilteredItem], SFFilterKeywordsModel<String>, _ isNoneEnabled: Bool) -> [FilteredItem]) = { inputItems, _, _ in
+    private var filterBehavior: (([FilteredItem], SFFilterRange<CriteriaItem>, _ isNoneEnabled: Bool) -> [FilteredItem]) = { inputItems, _, _ in
         assertionFailure("Filter behavior is not set. Call `filterWithBehavior` or `filter` before building the component.")
         return inputItems
     }
     
     /// The view representation of the filter component.
     ///
-    /// If not specified, default view will be returned.
+    /// If not specified, empty view will be returned, and an assertion failure will be triggered in debug mode.
     ///
-    private var view: ((SFFilterKeywordsNode<FilteredItem, String>) -> any View) = { node in
-        return SFFilterKeywordsDefaultView(node: node)
+    private var view: ((SFFilterRangeNode<FilteredItem, CriteriaItem>) -> any View) = { _ in
+        assertionFailure("Filter view is not set. Call `displayIn` before building the component.")
+        return EmptyView()
     }
     
     /// A flag indicating whether the "None" option is included in the filter.
@@ -54,7 +55,7 @@ public class SFKeywordsFilter<FilteredItem> {
     private var noneItemTitle: String = "None"
     
     
-    /// Initializes a new keywords filter component with the specified title.
+    /// Initializes a new multi-selection filter component with the specified title.
     ///
     /// - Parameter title: The title of the filter component.
     ///
@@ -64,23 +65,35 @@ public class SFKeywordsFilter<FilteredItem> {
     
     /// Sets the filtering behavior.
     ///
-    /// - Parameter filter: A closure that defines how input items should be filtered based on criteria item and isNoneEnabled value.
-    /// - Returns: The modified `SFKeywordsFilter` instance.
+    /// - Parameter filter: A closure that defines how input items should be filtered based on criteria items and isNoneEnabled value.
+    /// - Returns: The modified `SFMultiSelectionFilter` instance.
     ///
     @discardableResult
-    public func filter(_ filter: @escaping ([FilteredItem], SFFilterKeywordsModel<String>, _ isNoneEnabled: Bool) -> [FilteredItem]) -> Self {
+    public func filter(_ filter: @escaping ([FilteredItem], SFFilterRange<CriteriaItem>, _ isNoneEnabled: Bool) -> [FilteredItem]) -> Self {
         self.filterBehavior = filter
         return self
     }
     
     
     @discardableResult
-    public func filter(by keyPath: KeyPath<FilteredItem, String>) -> Self {
+    public func filter(by keyPath: KeyPath<FilteredItem, CriteriaItem>) -> Self {
         self.filterBehavior = { inputItems, criteriaItem, isNoneEnabled in
             return inputItems
                 .filter { inputItem in
-                    if !inputItem[keyPath: keyPath].isEmpty {
-                        return criteriaItem.isSafisfy(inputItem[keyPath: keyPath])
+                    criteriaItem.contains(inputItem[keyPath: keyPath])
+                }
+        }
+        return self
+    }
+    
+    
+    @discardableResult
+    public func filter(byOptional keyPath: KeyPath<FilteredItem, CriteriaItem?>) -> Self {
+        self.filterBehavior = { inputItems, criteriaItem, isNoneEnabled in
+            return inputItems
+                .filter { inputItem in
+                    if let value = inputItem[keyPath: keyPath] {
+                        return criteriaItem.contains(value)
                     } else {
                         return isNoneEnabled
                     }
@@ -92,7 +105,7 @@ public class SFKeywordsFilter<FilteredItem> {
     /// Includes a "None" option in the filter.
     ///
     /// - Parameter title: The title of the "None" option.
-    /// - Returns: The modified `SFKeywordsFilter` instance.
+    /// - Returns: The modified `SFRangeFilter` instance.
     ///
     @discardableResult
     public func includeNone(withTitle title: String) -> Self {
@@ -104,28 +117,11 @@ public class SFKeywordsFilter<FilteredItem> {
     /// Sets the view representation of the filter component.
     ///
     /// - Parameter view: A closure that returns a view for the filter component.
-    /// - Returns: The modified `SFKeywordsFilter` instance.
+    /// - Returns: The modified `SFRangeFilter` instance.
     ///
     @discardableResult
-    public func displayIn(_ view: @escaping (SFFilterKeywordsNode<FilteredItem, String>) -> any View) -> Self {
+    public func displayIn(_ view: @escaping ((SFFilterRangeNode<FilteredItem, CriteriaItem>) -> any View)) -> Self {
         self.view = view
         return self
     }
 }
-
-
-// MARK: - SFBuildableComponent implementation
-
-extension SFKeywordsFilter: SFBuildableComponent {
-    
-    /// Builds the final filter component.
-    ///
-    /// - Returns: A `SFFilterComponent<FilteredItem>` instance.
-    ///
-    public func buildComponent() -> SFFilterComponent<FilteredItem> {
-        let container = SFFilterKeyWordsContainer(filterBehavior: self.filterBehavior, isNoneIncluded: self.isNoneIncluded)
-        let component = SFFilterKeyWordsComponent(title: self.title, noneItemTitle: self.noneItemTitle, filter: container, view: self.view)
-        return component
-    }
-}
-

@@ -31,21 +31,40 @@ import SwiftUI
 class SFFilterRangeComponent<FilteredItem, CriteriaItem: Comparable>: SFFilterComponent<FilteredItem> {
     
     private let filter: SFFilterRangeContainer<FilteredItem, CriteriaItem>
-    private let rangeViewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>
+    private let view: ((SFFilterRangeNode<FilteredItem, CriteriaItem>) -> any View)
     private let noneItemTitle: String
     
     
     init(title: String,
+         noneItemTitle: String,
+         filter: SFFilterRangeContainer<FilteredItem, CriteriaItem>,
+         view: @escaping ((SFFilterRangeNode<FilteredItem, CriteriaItem>) -> any View)
+    ) {
+        self.noneItemTitle = noneItemTitle
+        self.filter = filter
+        self.view = view
+        super.init(
+            title: title,
+            isItemEnabled: !filter.isFilterActive,
+            isComposite: false
+        )
+    }
+    
+    convenience init(title: String,
                 noneItemTitle: String,
                 filter: SFFilterRangeContainer<FilteredItem, CriteriaItem>,
                 viewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>
     ) {
-        self.noneItemTitle = noneItemTitle
-        self.filter = filter
-        self.rangeViewProvider = viewProvider
-        super.init(title: title,
-                   isItemEnabled: !filter.isFilterActive,
-                   isComposite: false
+        
+        let view = { node in
+            viewProvider.makeView(with: node)
+        }
+        
+        self.init(
+            title: title,
+            noneItemTitle: noneItemTitle,
+            filter: filter,
+            view: view
         )
     }
     
@@ -69,7 +88,7 @@ class SFFilterRangeComponent<FilteredItem, CriteriaItem: Comparable>: SFFilterCo
     }
     
     override func createRelatedNode() -> SFFilterNode<FilteredItem> {
-        SFFilterRangeNode<FilteredItem, CriteriaItem>(component: self, viewProvider: rangeViewProvider)
+        SFFilterRangeNode<FilteredItem, CriteriaItem>(component: self, view: self.view)
     }
     
     override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {

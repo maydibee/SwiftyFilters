@@ -33,7 +33,7 @@ import SwiftUI
 ///
 public class SFFilterRangeNode<FilteredItem, CriteriaItem: Comparable>: SFFilterNode<FilteredItem> {
     
-    private let rangeViewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>
+    private let view: ((SFFilterRangeNode<FilteredItem, CriteriaItem>) -> any View)
     
     lazy private var rangeFilterComponent: SFFilterRangeComponent<FilteredItem, CriteriaItem>? = {
         component as? SFFilterRangeComponent<FilteredItem, CriteriaItem>
@@ -52,8 +52,8 @@ public class SFFilterRangeNode<FilteredItem, CriteriaItem: Comparable>: SFFilter
     }
     
 
-    init(component: SFFilterComponent<FilteredItem>, viewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>) {
-        self.rangeViewProvider = viewProvider
+    init(component: SFFilterComponent<FilteredItem>, view: @escaping ((SFFilterRangeNode<FilteredItem, CriteriaItem>) -> any View)) {
+        self.view = view
         super.init(component: component)
     }
     
@@ -66,6 +66,6 @@ public class SFFilterRangeNode<FilteredItem, CriteriaItem: Comparable>: SFFilter
     }
     
     override func makeView() -> any View {
-        rangeViewProvider.makeView(with: self)
+        view(self)
     }
 }

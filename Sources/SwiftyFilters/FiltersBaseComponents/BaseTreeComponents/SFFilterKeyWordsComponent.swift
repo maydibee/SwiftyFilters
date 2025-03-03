@@ -43,9 +43,10 @@ class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtocol>: SFF
         self.noneItemTitle = noneItemTitle
         self.filter = filter
         self.view = view
-        super.init(title: title,
-                   isItemEnabled: !filter.isFilterActive,
-                   isComposite: false
+        super.init(
+            title: title,
+            isItemEnabled: !filter.isFilterActive,
+            isComposite: false
         )
     }
     
@@ -59,10 +60,11 @@ class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtocol>: SFF
             viewProvider.makeView(with: node)
         }
         
-        self.init(title: title,
-                  noneItemTitle: noneItemTitle,
-                  filter: filter,
-                  view: view
+        self.init(
+            title: title,
+            noneItemTitle: noneItemTitle,
+            filter: filter,
+            view: view
         )
     }
     
