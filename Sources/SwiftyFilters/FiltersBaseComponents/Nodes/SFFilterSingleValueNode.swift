@@ -23,6 +23,7 @@
 
 
 import Foundation
+import SwiftUI
 
 
 /// A specialized node for single-value filters.
@@ -32,7 +33,7 @@ import Foundation
 /// 
 public class SFFilterSingleValueNode<FilteredItem, CriteriaItem: Equatable>: SFFilterNode<FilteredItem> {
     
-    private let singleValueViewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>
+    private let view: ((SFFilterSingleValueNode<FilteredItem, CriteriaItem>) -> any View)
     
     lazy private var singleValueFilterComponent: SFFilterSingleValueComponent<FilteredItem, CriteriaItem>? = {
         component as? SFFilterSingleValueComponent<FilteredItem, CriteriaItem>
@@ -52,8 +53,8 @@ public class SFFilterSingleValueNode<FilteredItem, CriteriaItem: Equatable>: SFF
     }
     
     
-    init(component: SFFilterComponent<FilteredItem>, viewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>) {
-        self.singleValueViewProvider = viewProvider
+    init(component: SFFilterComponent<FilteredItem>, view: @escaping ((SFFilterSingleValueNode<FilteredItem, CriteriaItem>) -> any View)) {
+        self.view = view
         super.init(component: component)
     }
 
@@ -65,5 +66,9 @@ public class SFFilterSingleValueNode<FilteredItem, CriteriaItem: Equatable>: SFF
         nestedNodes.forEach { node in
             node.resetAllFilters()
         }
+    }
+    
+    override func makeView() -> any View {
+        view(self)
     }
 }

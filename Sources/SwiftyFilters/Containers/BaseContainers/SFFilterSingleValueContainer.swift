@@ -41,18 +41,31 @@ class SFFilterSingleValueContainer<FilteredItem, CriteriaItem: Equatable>: SFFil
         return value != nil
     }
     
-    private let resolver: any SFFilterResolver<FilteredItem, CriteriaItem>
+    private var filterBehavior: (([FilteredItem], CriteriaItem, _ isNoneEnabled: Bool) -> [FilteredItem])
     
     
-    init(resolver: any SFFilterResolver<FilteredItem, CriteriaItem>,
-                isNoneIncluded: Bool = false) {
-        self.resolver = resolver
+    init(filterBehavior: @escaping (([FilteredItem], CriteriaItem, _ isNoneEnabled: Bool) -> [FilteredItem]),
+         isNoneIncluded: Bool = false) {
+        self.filterBehavior = filterBehavior
         self.isNoneIncluded = isNoneIncluded
         self.isNoneEnabled = isNoneIncluded
     }
     
+    convenience init(resolver: any SFFilterResolver<FilteredItem, CriteriaItem>,
+                isNoneIncluded: Bool = false) {
+        
+        let filterBehavior = { inputItems, criteriaItem, isNoneEnabled in
+            resolver.filterItems(inputItems, basedOn: criteriaItem, isNoneEnabled: isNoneEnabled)
+        }
+        
+        self.init(
+            filterBehavior: filterBehavior,
+            isNoneIncluded: isNoneIncluded
+        )
+    }
+    
     func filterItems(inputItems: [FilteredItem]) -> [FilteredItem] {
         guard let value else { return inputItems }
-        return self.resolver.filterItems(inputItems, basedOn: value, isNoneEnabled: isNoneEnabled)
+        return self.filterBehavior(inputItems, value, isNoneEnabled)
     }
 }

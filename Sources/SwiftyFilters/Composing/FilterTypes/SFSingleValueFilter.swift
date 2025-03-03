@@ -25,7 +25,7 @@
 import SwiftUI
 
 
-public class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
+public class SFSingleValueFilter<FilteredItem, CriteriaItem: Equatable> {
     
     /// The title of the filter component.
     let title: String
@@ -34,7 +34,7 @@ public class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
     ///
     /// If not specified, all input items will be returned, and an assertion failure will be triggered in debug mode.
     ///
-    private var filterBehavior: (([FilteredItem], SFFilterRange<CriteriaItem>, _ isNoneEnabled: Bool) -> [FilteredItem]) = { inputItems, _, _ in
+    private var filterBehavior: (([FilteredItem], CriteriaItem, _ isNoneEnabled: Bool) -> [FilteredItem]) = { inputItems, _, _ in
         assertionFailure("Filter behavior is not set. Call `filterWithBehavior` or `filter` before building the component.")
         return inputItems
     }
@@ -43,7 +43,7 @@ public class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
     ///
     /// If not specified, empty view will be returned, and an assertion failure will be triggered in debug mode.
     ///
-    private var view: ((SFFilterRangeNode<FilteredItem, CriteriaItem>) -> any View) = { _ in
+    private var view: ((SFFilterSingleValueNode<FilteredItem, CriteriaItem>) -> any View) = { _ in
         assertionFailure("Filter view is not set. Call `displayIn` before building the component.")
         return EmptyView()
     }
@@ -66,26 +66,24 @@ public class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
     /// Sets the filtering behavior.
     ///
     /// - Parameter filter: A closure that defines how input items should be filtered based on criteria items and isNoneEnabled value.
-    /// - Returns: The modified `SFRangeFilter` instance.
+    /// - Returns: The modified `SFSingleValueFilter` instance.
     ///
     @discardableResult
-    public func filter(_ filter: @escaping ([FilteredItem], SFFilterRange<CriteriaItem>, _ isNoneEnabled: Bool) -> [FilteredItem]) -> Self {
+    public func filter(_ filter: @escaping ([FilteredItem], CriteriaItem, _ isNoneEnabled: Bool) -> [FilteredItem]) -> Self {
         self.filterBehavior = filter
         return self
     }
-    
     
     @discardableResult
     public func filter(by keyPath: KeyPath<FilteredItem, CriteriaItem>) -> Self {
         self.filterBehavior = { inputItems, criteriaItem, isNoneEnabled in
             return inputItems
                 .filter { inputItem in
-                    criteriaItem.contains(inputItem[keyPath: keyPath])
+                    inputItem[keyPath: keyPath] == criteriaItem
                 }
         }
         return self
     }
-    
     
     @discardableResult
     public func filter(byOptional keyPath: KeyPath<FilteredItem, CriteriaItem?>) -> Self {
@@ -93,7 +91,7 @@ public class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
             return inputItems
                 .filter { inputItem in
                     if let value = inputItem[keyPath: keyPath] {
-                        return criteriaItem.contains(value)
+                        return value == criteriaItem
                     } else {
                         return isNoneEnabled
                     }
@@ -105,7 +103,7 @@ public class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
     /// Includes a "None" option in the filter.
     ///
     /// - Parameter title: The title of the "None" option.
-    /// - Returns: The modified `SFRangeFilter` instance.
+    /// - Returns: The modified `SFSingleValueFilter` instance.
     ///
     @discardableResult
     public func includeNone(withTitle title: String) -> Self {
@@ -117,10 +115,10 @@ public class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
     /// Sets the view representation of the filter component.
     ///
     /// - Parameter view: A closure that returns a view for the filter component.
-    /// - Returns: The modified `SFRangeFilter` instance.
+    /// - Returns: The modified `SFSingleValueFilter` instance.
     ///
     @discardableResult
-    public func displayIn(_ view: @escaping ((SFFilterRangeNode<FilteredItem, CriteriaItem>) -> any View)) -> Self {
+    public func displayIn(_ view: @escaping ((SFFilterSingleValueNode<FilteredItem, CriteriaItem>) -> any View)) -> Self {
         self.view = view
         return self
     }
@@ -129,15 +127,15 @@ public class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
 
 // MARK: - SFBuildableComponent implementation
 
-extension SFRangeFilter: SFBuildableComponent {
+extension SFSingleValueFilter: SFBuildableComponent {
     
     /// Builds the final filter component.
     ///
     /// - Returns: A `SFFilterComponent<FilteredItem>` instance.
     ///
     public func buildComponent() -> SFFilterComponent<FilteredItem> {
-        let container = SFFilterRangeContainer(filterBehavior: self.filterBehavior, isNoneIncluded: self.isNoneIncluded)
-        let component = SFFilterRangeComponent(title: self.title, noneItemTitle: self.noneItemTitle, filter: container, view: self.view)
+        let container = SFFilterSingleValueContainer(filterBehavior: self.filterBehavior, isNoneIncluded: self.isNoneIncluded)
+        let component = SFFilterSingleValueComponent(title: self.title, noneItemTitle: self.noneItemTitle, filter: container, view: self.view)
         return component
     }
 }

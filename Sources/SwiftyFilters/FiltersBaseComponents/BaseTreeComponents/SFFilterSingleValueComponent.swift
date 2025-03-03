@@ -23,6 +23,7 @@
 
 
 import Foundation
+import SwiftUI
 
 
 // MARK: - Single value filter component
@@ -30,21 +31,40 @@ import Foundation
 class SFFilterSingleValueComponent<FilteredItem, CriteriaItem: Equatable>: SFFilterComponent<FilteredItem> {
     
     private let filter: SFFilterSingleValueContainer<FilteredItem, CriteriaItem>
-    private let singleValueViewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>
+    private let view: ((SFFilterSingleValueNode<FilteredItem, CriteriaItem>) -> any View)
     private let noneItemTitle: String
     
     
     init(title: String,
+         noneItemTitle: String,
+         filter: SFFilterSingleValueContainer<FilteredItem, CriteriaItem>,
+         view: @escaping ((SFFilterSingleValueNode<FilteredItem, CriteriaItem>) -> any View)
+    ) {
+        self.noneItemTitle = noneItemTitle
+        self.filter = filter
+        self.view = view
+        super.init(
+            title: title,
+            isItemEnabled: !filter.isFilterActive,
+            isComposite: false
+        )
+    }
+    
+    convenience init(title: String,
                 noneItemTitle: String,
                 filter: SFFilterSingleValueContainer<FilteredItem, CriteriaItem>,
                 viewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>
     ) {
-        self.noneItemTitle = noneItemTitle
-        self.filter = filter
-        self.singleValueViewProvider = viewProvider
-        super.init(title: title,
-                   isItemEnabled: !filter.isFilterActive,
-                   isComposite: false)
+        let view = { node in
+            viewProvider.makeView(with: node)
+        }
+        
+        self.init(
+            title: title,
+            noneItemTitle: noneItemTitle,
+            filter: filter,
+            view: view
+        )
     }
     
     override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
@@ -67,7 +87,7 @@ class SFFilterSingleValueComponent<FilteredItem, CriteriaItem: Equatable>: SFFil
     }
     
     override func createRelatedNode() -> SFFilterNode<FilteredItem> {
-        SFFilterSingleValueNode<FilteredItem, CriteriaItem>(component: self, viewProvider: singleValueViewProvider)
+        SFFilterSingleValueNode<FilteredItem, CriteriaItem>(component: self, view: self.view)
     }
     
     override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
