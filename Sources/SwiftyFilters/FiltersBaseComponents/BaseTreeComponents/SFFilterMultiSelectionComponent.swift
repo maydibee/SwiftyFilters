@@ -50,21 +50,22 @@ class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Identifiable &
                    isAllActionIncluded: true)
     }
     
-    init(title: String,
+    convenience init(title: String,
          noneItemTitle: String,
          filter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>,
          viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>
          
     ) {
-        self.noneItemTitle = noneItemTitle
-        self.filter = filter
-        self.view = { node in
+    
+        let view = { node in
             viewProvider.makeView(with: node)
         }
-        super.init(title: title,
-                   isItemEnabled: !filter.isFilterActive,
-                   isComposite: false,
-                   isAllActionIncluded: true)
+        
+        self.init(title: title,
+                   noneItemTitle: noneItemTitle,
+                   filter: filter,
+                   view: view
+        )
     }
     
     override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {

@@ -57,16 +57,16 @@ class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Identifiable &
         self.isNoneEnabled = isNoneIncluded
     }
     
-    init(resolver: any SFFilterResolver<FilteredItem, [CriteriaItem]>,
+    convenience init(resolver: any SFFilterResolver<FilteredItem, [CriteriaItem]>,
          fetcher: any SFFilterFetcher<CriteriaItem>,
          isNoneIncluded: Bool = false) {
-        self.criteriaItemsDatasource = fetcher.fetchFilterItems
-        self.filterBehavior = { inputItems, criteriaItem, isNoneEnabled in
+        
+        let datasource = fetcher.fetchFilterItems
+        let filterBehavior = { inputItems, criteriaItem, isNoneEnabled in
             resolver.filterItems(inputItems, basedOn: criteriaItem, isNoneEnabled: isNoneEnabled)
         }
         
-        self.isNoneIncluded = isNoneIncluded
-        self.isNoneEnabled = isNoneIncluded
+        self.init(criteriaItemsDatasource: datasource, filterBehavior: filterBehavior, isNoneIncluded: isNoneIncluded)
     }
     
     @discardableResult

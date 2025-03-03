@@ -70,11 +70,10 @@ public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Identifiable & S
     
     /// The view representation of the filter component.
     ///
-    /// If not specified, an empty view will be returned, and an assertion failure will be triggered in debug mode.
+    /// If not specified, default view will be returned.
     ///
-    private var view: ((SFFilterMultiSelectionNode<FilteredItem>) -> any View) = { _ in
-        assertionFailure("View provider is not set. Call `presentWithin` before building the component.")
-        return EmptyView()
+    private var view: ((SFFilterMultiSelectionNode<FilteredItem>) -> any View) = { node in
+        return SFFilterMultiSelectionDefaultView(node: node)
     }
     
     /// A flag indicating whether the "None" option is included in the filter.
@@ -256,7 +255,7 @@ extension SFMultiSelectionFilter: SFBuildableComponent {
     ///
     public func buildComponent() -> SFFilterComponent<FilteredItem> {
         let container = SFFilterMultiSelectionContainer(criteriaItemsDatasource: criteriaItemsDatasource, filterBehavior: filterBehavior, isNoneIncluded: isNoneIncluded)
-        let component = SFFilterMultiSelectionComponent(title: self.title, noneItemTitle: self.noneItemTitle, filter: container, view: view)
+        let component = SFFilterMultiSelectionComponent(title: self.title, noneItemTitle: self.noneItemTitle, filter: container, view: self.view)
         return component
     }
 }

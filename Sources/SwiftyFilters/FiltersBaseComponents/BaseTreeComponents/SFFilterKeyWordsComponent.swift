@@ -23,6 +23,7 @@
 
 
 import Foundation
+import SwiftUI
 
 
 // MARK: - Keywords filter component
@@ -30,21 +31,38 @@ import Foundation
 class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtocol>: SFFilterComponent<FilteredItem> {
     
     private let filter: SFFilterKeyWordsContainer<FilteredItem, CriteriaItem>
-    private let keywordsViewProvider: any SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem>
+    private let view: ((SFFilterKeywordsNode<FilteredItem, CriteriaItem>) -> any View)
     private let noneItemTitle: String
     
     
     init(title: String,
+         noneItemTitle: String,
+         filter: SFFilterKeyWordsContainer<FilteredItem, CriteriaItem>,
+         view: @escaping ((SFFilterKeywordsNode<FilteredItem, CriteriaItem>) -> any View)
+    ) {
+        self.noneItemTitle = noneItemTitle
+        self.filter = filter
+        self.view = view
+        super.init(title: title,
+                   isItemEnabled: !filter.isFilterActive,
+                   isComposite: false
+        )
+    }
+    
+    convenience init(title: String,
                 noneItemTitle: String,
                 filter: SFFilterKeyWordsContainer<FilteredItem, CriteriaItem>,
                 viewProvider: any SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem>
     ) {
-        self.noneItemTitle = noneItemTitle
-        self.filter = filter
-        self.keywordsViewProvider = viewProvider
-        super.init(title: title,
-                   isItemEnabled: !filter.isFilterActive,
-                   isComposite: false
+        
+        let view = { node in
+            viewProvider.makeView(with: node)
+        }
+        
+        self.init(title: title,
+                  noneItemTitle: noneItemTitle,
+                  filter: filter,
+                  view: view
         )
     }
     
@@ -68,7 +86,7 @@ class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtocol>: SFF
     }
     
     override func createRelatedNode() -> SFFilterNode<FilteredItem> {
-        SFFilterKeywordsNode<FilteredItem, CriteriaItem>(component: self, viewProvider: keywordsViewProvider)
+        SFFilterKeywordsNode<FilteredItem, CriteriaItem>(component: self, view: self.view)
     }
     
     override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {

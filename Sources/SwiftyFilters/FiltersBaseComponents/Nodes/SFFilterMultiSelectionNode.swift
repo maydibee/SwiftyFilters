@@ -32,7 +32,7 @@ import SwiftUI
 ///
 public class SFFilterMultiSelectionNode<FilteredItem>: SFFilterNode<FilteredItem> {
     
-    var view: ((SFFilterMultiSelectionNode<FilteredItem>) -> any View)
+    private let view: ((SFFilterMultiSelectionNode<FilteredItem>) -> any View)
 
     
     init(component: SFFilterComponent<FilteredItem>, view: @escaping ((SFFilterMultiSelectionNode<FilteredItem>) -> any View)) {

@@ -33,7 +33,7 @@ import SwiftUI
 ///
 public class SFFilterKeywordsNode<FilteredItem, CriteriaItem: StringProtocol>: SFFilterNode<FilteredItem> {
     
-    private let keywordsViewProvider: any SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem>
+    private let view: ((SFFilterKeywordsNode<FilteredItem, CriteriaItem>) -> any View)
     
     lazy private var keywordsFilterComponent: SFFilterKeyWordsComponent<FilteredItem, CriteriaItem>? = {
         component as? SFFilterKeyWordsComponent<FilteredItem, CriteriaItem>
@@ -52,8 +52,8 @@ public class SFFilterKeywordsNode<FilteredItem, CriteriaItem: StringProtocol>: S
     }
     
     
-    init(component: SFFilterComponent<FilteredItem>, viewProvider: any SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem>) {
-        self.keywordsViewProvider = viewProvider
+    init(component: SFFilterComponent<FilteredItem>, view: @escaping ((SFFilterKeywordsNode<FilteredItem, CriteriaItem>) -> any View)) {
+        self.view = view
         super.init(component: component)
     }
     
@@ -67,6 +67,6 @@ public class SFFilterKeywordsNode<FilteredItem, CriteriaItem: StringProtocol>: S
     }
     
     override func makeView() -> any View {
-        keywordsViewProvider.makeView(with: self)
+        view(self)
     }
 }
