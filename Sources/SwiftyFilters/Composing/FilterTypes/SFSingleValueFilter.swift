@@ -25,6 +25,22 @@
 import SwiftUI
 
 
+/// A builder for creating single-value filter components.
+///
+/// This class allows you to declaratively define a single-value filter component by specifying:
+/// - The filtering behavior.
+/// - The view representation.
+///
+/// ### Example
+/// ```swift
+/// SFSingleValueFilter<Participant, ParticipantStatus>(title: "Status")
+///     .filter(byOptional: \.status) // Filter by the optional `status` property
+///     .includeNone(withTitle: "No Status")
+///     .displayIn { node in
+///         ParticipantStatusFilterView(node: node)
+///     }
+/// ```
+///
 public class SFSingleValueFilter<FilteredItem, CriteriaItem: Equatable> {
     
     /// The title of the filter component.
@@ -74,6 +90,23 @@ public class SFSingleValueFilter<FilteredItem, CriteriaItem: Equatable> {
         return self
     }
     
+    /// Filters input items based on a key path to a `CriteriaItem` property.
+    ///
+    /// This method allows you to declaratively specify how input items should be filtered
+    /// by comparing a key path of `FilteredItem` with the criteria item.
+    ///
+    /// - Parameter keyPath: A key path to a `CriteriaItem` property in `FilteredItem`.
+    /// - Returns: The modified `SFSingleValueFilter` instance.
+    ///
+    /// ### Example
+    /// ```swift
+    /// SFSingleValueFilter<Participant, ParticipantStatus>(title: "Status")
+    ///     .filter(by: \.status) // Filter by the `status` property
+    ///     .displayIn { node in
+    ///         ParticipantStatusFilterView(node: node)
+    ///     }
+    /// ```
+    ///
     @discardableResult
     public func filter(by keyPath: KeyPath<FilteredItem, CriteriaItem>) -> Self {
         self.filterBehavior = { inputItems, criteriaItem, isNoneEnabled in
@@ -85,6 +118,25 @@ public class SFSingleValueFilter<FilteredItem, CriteriaItem: Equatable> {
         return self
     }
     
+    /// Filters input items based on a key path to an optional `CriteriaItem` property.
+    ///
+    /// This method allows you to declaratively specify how input items should be filtered
+    /// by comparing a key path of `FilteredItem` with the criteria item.
+    /// If the property is `nil`, the item will be included only if `isNoneEnabled` is `true`.
+    ///
+    /// - Parameter keyPath: A key path to an optional `CriteriaItem` property in `FilteredItem`.
+    /// - Returns: The modified `SFSingleValueFilter` instance.
+    ///
+    /// ### Example
+    /// ```swift
+    /// SFSingleValueFilter<Participant, ParticipantStatus>(title: "Status")
+    ///     .filter(byOptional: \.status) // Filter by the optional `status` property
+    ///     .includeNone(withTitle: "No Status")
+    ///     .displayIn { node in
+    ///         ParticipantStatusFilterView(node: node)
+    ///     }
+    /// ```
+    ///
     @discardableResult
     public func filter(byOptional keyPath: KeyPath<FilteredItem, CriteriaItem?>) -> Self {
         self.filterBehavior = { inputItems, criteriaItem, isNoneEnabled in

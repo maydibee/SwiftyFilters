@@ -104,7 +104,7 @@ public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Identifiable & S
     
     /// Sets the filtering behavior.
     ///
-    /// - Parameter filter: A closure that defines how input items should be filtered based on criteria items and isNoneEnabled value.
+    /// - Parameter filter: A closure that defines how input items should be filtered based on criteria items and `isNoneEnabled` value.
     /// - Returns: The modified `SFMultiSelectionFilter` instance.
     ///
     @discardableResult

@@ -25,6 +25,22 @@
 import SwiftUI
 
 
+/// A builder for creating range-based filter components.
+///
+/// This class allows you to declaratively define a range-based filter component by specifying:
+/// - The filtering behavior.
+/// - The view representation.
+///
+/// ### Example
+/// ```swift
+/// SFRangeFilter<Participant, Int>(title: "Age")
+///     .filter(byOptional: \.age) // Filter by the optional `age` property
+///     .includeNone(withTitle: "No Age")
+///     .displayIn { node in
+///         ParticipantAgeFilterView(node: node)
+///     }
+/// ```
+///
 public class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
     
     /// The title of the filter component.
@@ -74,7 +90,23 @@ public class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
         return self
     }
     
-    
+    /// Filters input items based on a key path to a `CriteriaItem` property.
+    ///
+    /// This method allows you to declaratively specify how input items should be filtered
+    /// by comparing a key path of `FilteredItem` with the range in `SFFilterRange`.
+    ///
+    /// - Parameter keyPath: A key path to a `CriteriaItem` property in `FilteredItem`.
+    /// - Returns: The modified `SFRangeFilter` instance.
+    ///
+    /// ### Example
+    /// ```swift
+    /// SFRangeFilter<Participant, Int>(title: "Age")
+    ///     .filter(by: \.age) // Filter by the `age` property
+    ///     .displayIn { node in
+    ///         ParticipantAgeFilterView(node: node)
+    ///     }
+    /// ```
+    ///
     @discardableResult
     public func filter(by keyPath: KeyPath<FilteredItem, CriteriaItem>) -> Self {
         self.filterBehavior = { inputItems, criteriaItem, isNoneEnabled in
@@ -86,7 +118,25 @@ public class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
         return self
     }
     
-    
+    /// Filters input items based on a key path to an optional `CriteriaItem` property.
+    ///
+    /// This method allows you to declaratively specify how input items should be filtered
+    /// by comparing a key path of `FilteredItem` with the range in `SFFilterRange`.
+    /// If the property is `nil`, the item will be included only if `isNoneEnabled` is `true`.
+    ///
+    /// - Parameter keyPath: A key path to an optional `CriteriaItem` property in `FilteredItem`.
+    /// - Returns: The modified `SFRangeFilter` instance.
+    ///
+    /// ### Example
+    /// ```swift
+    /// SFRangeFilter<Participant, Int>(title: "Age")
+    ///     .filter(byOptional: \.age) // Filter by the optional `age` property
+    ///     .includeNone(withTitle: "No Age")
+    ///     .displayIn { node in
+    ///         ParticipantAgeFilterView(node: node)
+    ///     }
+    /// ```
+    ///
     @discardableResult
     public func filter(byOptional keyPath: KeyPath<FilteredItem, CriteriaItem?>) -> Self {
         self.filterBehavior = { inputItems, criteriaItem, isNoneEnabled in

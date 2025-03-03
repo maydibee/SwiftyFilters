@@ -24,7 +24,22 @@
 
 import SwiftUI
 
-
+/// A builder for creating keyword-based filter components.
+///
+/// This class allows you to declaratively define a keyword-based filter component by specifying:
+/// - The filtering behavior.
+/// - The view representation.
+///
+/// ### Example
+/// ```swift
+/// SFKeywordsFilter<Participant>(title: "Remarks")
+///     .filter(by: \.remarks) // Filter by the `remarks` property
+///     .includeNone(withTitle: "No Remarks")
+///     .displayIn { node in
+///         ParticipantRemarksFilterView(node: node)
+///     }
+/// ```
+///
 public class SFKeywordsFilter<FilteredItem> {
     
     /// The title of the filter component.
@@ -64,7 +79,7 @@ public class SFKeywordsFilter<FilteredItem> {
     
     /// Sets the filtering behavior.
     ///
-    /// - Parameter filter: A closure that defines how input items should be filtered based on criteria item and isNoneEnabled value.
+    /// - Parameter filter: A closure that defines how input items should be filtered based on criteria item and `isNoneEnabled` value.
     /// - Returns: The modified `SFKeywordsFilter` instance.
     ///
     @discardableResult
@@ -73,7 +88,24 @@ public class SFKeywordsFilter<FilteredItem> {
         return self
     }
     
-    
+    /// Filters input items based on a key path to a `String` property.
+    ///
+    /// This method allows you to declaratively specify how input items should be filtered
+    /// by comparing a key path of `FilteredItem` with the keywords in `SFFilterKeywordsModel`.
+    ///
+    /// - Parameter keyPath: A key path to a `String` property in `FilteredItem`.
+    /// - Returns: The modified `SFKeywordsFilter` instance.
+    ///
+    /// ### Example
+    /// ```swift
+    /// SFKeywordsFilter<Participant>(title: "Remarks")
+    ///     .filter(by: \.remarks) // Filter by the `remarks` property
+    ///     .includeNone(withTitle: "No Remarks")
+    ///     .displayIn { node in
+    ///         ParticipantRemarksFilterView(node: node)
+    ///     }
+    /// ```
+    /// 
     @discardableResult
     public func filter(by keyPath: KeyPath<FilteredItem, String>) -> Self {
         self.filterBehavior = { inputItems, criteriaItem, isNoneEnabled in
