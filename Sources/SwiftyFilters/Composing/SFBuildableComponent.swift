@@ -24,10 +24,28 @@
 
 import Foundation
 
-
-public protocol SFFilterBuildableComponent<FilteredItem> {
+/// A protocol for types that can build a filter component.
+///
+/// Types conforming to this protocol must implement the `buildComponent` method,
+/// which returns a `SFFilterComponent<FilteredItem>` instance.
+///
+/// ### Example
+/// ```swift
+/// struct CustomFilterBuilder: SFBuildableComponent {
+///     func buildComponent() -> SFFilterComponent<Item> {
+///         // Build and return the filter component
+///     }
+/// }
+/// ```
+///
+public protocol SFBuildableComponent<FilteredItem> {
     
+    /// The type of items to be filtered.
     associatedtype FilteredItem
     
+    /// Builds the filter component.
+    ///
+    /// - Returns: A `SFFilterComponent<FilteredItem>` instance.
+    ///
     func buildComponent() -> SFFilterComponent<FilteredItem>
 }

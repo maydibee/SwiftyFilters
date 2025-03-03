@@ -25,35 +25,35 @@
 import Foundation
 
 
-// MARK: - SFFilterBuildableComponent support
+// MARK: - SFBuildableComponent support
 
 extension SFFiltersBuilder {
     
-    /// Converts a single `SFFilterBuildableComponent` into an array of `SFFilterComponent`.
-    public static func buildExpression(_ expression: any SFFilterBuildableComponent<FilteredItem>) -> [SFFilterComponent<FilteredItem>] {
+    /// Converts a single `SFBuildableComponent` into an array of `SFFilterComponent`.
+    public static func buildExpression(_ expression: any SFBuildableComponent<FilteredItem>) -> [SFFilterComponent<FilteredItem>] {
         let component = expression.buildComponent()
         return [component]
     }
     
-    /// Handles optional `SFFilterBuildableComponent`.
-    public static func buildOptional(_ component: (any SFFilterBuildableComponent<FilteredItem>)?) -> [SFFilterComponent<FilteredItem>] {
+    /// Handles optional `SFBuildableComponent`.
+    public static func buildOptional(_ component: (any SFBuildableComponent<FilteredItem>)?) -> [SFFilterComponent<FilteredItem>] {
         guard let component = component else { return [] }
         return [component.buildComponent()]
     }
     
-    /// Handles the first branch of a conditional statement for `SFFilterBuildableComponent`.
-    public static func buildEither(first component: any SFFilterBuildableComponent<FilteredItem>) -> [SFFilterComponent<FilteredItem>] {
+    /// Handles the first branch of a conditional statement for `SFBuildableComponent`.
+    public static func buildEither(first component: any SFBuildableComponent<FilteredItem>) -> [SFFilterComponent<FilteredItem>] {
         return [component.buildComponent()]
     }
     
-    /// Handles the second branch of a conditional statement for `SFFilterBuildableComponent`.
-    public static func buildEither(second component: any SFFilterBuildableComponent<FilteredItem>) -> [SFFilterComponent<FilteredItem>] {
+    /// Handles the second branch of a conditional statement for `SFBuildableComponent`.
+    public static func buildEither(second component: any SFBuildableComponent<FilteredItem>) -> [SFFilterComponent<FilteredItem>] {
         return [component.buildComponent()]
     }
     
-    /// Combines an array of `SFFilterBuildableComponent` into a single array of `SFFilterComponent`.
+    /// Combines an array of `SFBuildableComponent` into a single array of `SFFilterComponent`.
     @available(iOS 16.0.0, *)
-    public static func buildArray(_ components: [any SFFilterBuildableComponent<FilteredItem>]) -> [SFFilterComponent<FilteredItem>] {
+    public static func buildArray(_ components: [any SFBuildableComponent<FilteredItem>]) -> [SFFilterComponent<FilteredItem>] {
         return components.map { $0.buildComponent() }
     }
 }

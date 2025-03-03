@@ -91,11 +91,7 @@ class AircraftListViewModel: ObservableObject {
                 .fetchItems {
                     await AircraftTypeFilterFetcher().fetchFilterItems()
                 }
-                .filter { inputItems, criteriaItem, isNoneEnabled in
-                    inputItems.filter { inputItem in
-                        criteriaItem.contains { $0.id == inputItem.type.id }
-                    }
-                }
+                .filter(by: \.type.id)
                 .includeNone(withTitle: "NULL")
                 .displayIn { node in
                     AircraftTypeFilterView(node: node)
