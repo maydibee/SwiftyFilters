@@ -108,7 +108,7 @@ class DatesRangeFilterViewProvider: SFFilterRangeViewProvider {
     }
 }
 
-struct AircraftTypeFilterView: View {
+struct MultiSelectionFilterView: View {
     
     @StateObject var node: SFFilterMultiSelectionNode<Aircraft>
     
@@ -121,7 +121,7 @@ struct AircraftTypeFilterView: View {
                     Group {
                         AircraftFilterAllResetActionCell(node: node)
                         ForEach(node.nestedNodes) { child in
-                            AircraftTypeFilterCellView(node: child)
+                            MultiSelectionFilterCellView(node: child)
                                 .onTapGesture {
                                     child.isItemEnabled.toggle()
                                 }
@@ -137,7 +137,7 @@ struct AircraftTypeFilterView: View {
     }
 }
 
-struct AircraftTypeFilterCellView: View {
+struct MultiSelectionFilterCellView: View {
     
     @StateObject var node: SFFilterNode<Aircraft>
     
@@ -205,6 +205,58 @@ extension View {
 class AircraftTypeFilterViewProvider: SFFilterMultiSelectionViewProvider {
 
     func makeView(with node: SFFilterMultiSelectionNode<Aircraft>) -> any View {
-        AircraftTypeFilterView(node: node)
+        MultiSelectionFilterView(node: node)
+    }
+}
+
+
+import SwiftUI
+
+struct SFSingleValueRadioButtonsView<FilteredItem>: View {
+
+    @StateObject var node: SFFilterSingleValueNode<FilteredItem, Bool>
+    
+    struct Option {
+        let value: Bool
+        let title: String
+    }
+    
+    private let options = [Option(value: true, title: "New"), Option(value: false, title: "Used")]
+    
+    
+    var body: some View {
+        List {
+            if node.value != nil {
+                Button(action: resetSelection) {
+                    HStack {
+                        Text("Reset")
+                            .foregroundColor(.red)
+                        Spacer()
+                    }
+                }
+            }
+
+            ForEach(options, id: \.value) { option in
+                HStack {
+                    Text(option.title)
+                        .foregroundColor(node.value == option.value ? .blue : .primary)
+                    Spacer()
+                    if node.value == option.value {
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    node.value = option.value
+                }
+            }
+        }
+        .navigationTitle(node.title)
+        .animation(.easeInOut, value: node.value)
+    }
+    
+    private func resetSelection() {
+        node.value = nil
     }
 }
