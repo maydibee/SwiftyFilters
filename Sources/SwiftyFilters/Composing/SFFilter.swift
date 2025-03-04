@@ -68,7 +68,7 @@
 ///                SFSingleValueFilter<Aircraft, Bool>(title: "Newness")
 ///                    .filter(by: \.isNew)
 ///                    .displayIn { node in
-///                        SFSingleValueRadioButtonsView(node: node)
+///                        BooleanOptionFilterView(node: node)
 ///                    }
 ///            }
 ///

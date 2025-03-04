@@ -12,7 +12,9 @@ import SwiftyFilters
 // MARK: - AircraftListView
 
 struct AircraftListView: View {
-    @StateObject private var viewModel = AircraftListViewModel()
+    
+    @StateObject var viewModel: AircraftListViewModel
+    
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
@@ -33,7 +35,7 @@ struct AircraftListView: View {
                     .ignoresSafeArea()
             }
             .task {
-                viewModel.loadAircrafts()
+                await viewModel.loadAircrafts()
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -64,6 +66,8 @@ struct AircraftListView: View {
 
 struct AircraftListView_Previews: PreviewProvider {
     static var previews: some View {
-        AircraftListView()
+        let worker = AircraftListWorkerStub()
+        let viewModel = AircraftListViewModel(worker: worker)
+        AircraftListView(viewModel: viewModel)
     }
 }

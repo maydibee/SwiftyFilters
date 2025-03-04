@@ -11,7 +11,9 @@ import SwiftUI
 struct SwiftyFilters_Example_iOSApp: App {
     var body: some Scene {
         WindowGroup {
-            AircraftListView()
+            let worker = AircraftListWorkerStub()
+            let viewModel = AircraftListViewModel(worker: worker)
+            AircraftListView(viewModel: viewModel)
         }
     }
 }
