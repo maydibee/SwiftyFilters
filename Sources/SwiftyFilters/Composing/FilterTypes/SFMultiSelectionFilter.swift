@@ -45,7 +45,7 @@ import SwiftUI
 ///    }
 /// ```
 ///
-public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable> {
+public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Identifiable & Equatable & SFFiltersTitleable> {
     
     /// The title of the filter component.
     let title: String
@@ -118,7 +118,7 @@ public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Identifiable & S
     /// This method allows you to declaratively specify how input items should be filtered
     /// by comparing a key path of `FilteredItem` with the `id` of `CriteriaItem`.
     ///
-    /// - Parameter keyPath: A key path to a non-optional `CriteriaItem.ID` property in `FilteredItem`.
+    /// - Parameter keyPath: A key path to a non-optional `CriteriaItem` property in `FilteredItem`.
     /// - Returns: The modified `SFMultiSelectionFilter` instance.
     ///
     /// ### Example
@@ -127,17 +127,17 @@ public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Identifiable & S
     ///     .fetchItems {
     ///         await ParticipantRolesFilterFetcher().fetchFilterItems()
     ///     }
-    ///     .filter(by: \.role.id) // Filter by the `id` of the `role` property
+    ///     .filter(by: \.role) // Filter by the `role` property
     ///     .displayIn { node in
     ///         ParticipantRolesFilterView(node: node)
     ///     }
     /// ```
     ///
     @discardableResult
-    public func filter(by keyPath: KeyPath<FilteredItem, CriteriaItem.ID>) -> Self {
+    public func filter(by keyPath: KeyPath<FilteredItem, CriteriaItem>) -> Self {
         self.filterBehavior = { inputItems, criteriaItems, _ in
             inputItems.filter { inputItem in
-                criteriaItems.contains { $0.id == inputItem[keyPath: keyPath] }
+                criteriaItems.contains { $0 == inputItem[keyPath: keyPath] }
             }
         }
         return self

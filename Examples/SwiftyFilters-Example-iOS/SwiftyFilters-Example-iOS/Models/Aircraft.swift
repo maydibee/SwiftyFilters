@@ -24,9 +24,12 @@ struct Aircraft {
     var isNew: Bool {
         lastExploater == nil
     }
-    
-    
-    // MARK: - Mocks
+}
+
+
+// MARK: - Mocks
+
+extension Aircraft {
     
     static let mockAircrafts: [Aircraft] = [
         Aircraft(

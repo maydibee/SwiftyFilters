@@ -36,6 +36,10 @@ public struct SFFilterAllCellView<FilteredItem>: View {
     @Environment(\.enabledCheckboxColor) private var enabledCheckboxColor
     
     
+    public init(node: SFFilterNode<FilteredItem>) {
+        _node = StateObject(wrappedValue: node)
+    }
+    
     public var body: some View {
         HStack {
             Text(" ")

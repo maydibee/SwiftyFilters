@@ -27,7 +27,7 @@ import SwiftUI
 
 // MARK: - Filters cell view
 
-struct SFFilterCellView<FilteredItem>: View {
+public struct SFFilterCellView<FilteredItem>: View {
     
     @StateObject var node: SFFilterNode<FilteredItem>
     
@@ -37,7 +37,11 @@ struct SFFilterCellView<FilteredItem>: View {
     @Environment(\.disabledCheckboxColor) private var disabledCheckboxColor
     
     
-    var body: some View {
+    public init(node: SFFilterNode<FilteredItem>) {
+        _node = StateObject(wrappedValue: node)
+    }
+    
+    public var body: some View {
         HStack {
             Text(node.title)
             Spacer()

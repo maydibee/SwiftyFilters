@@ -17,11 +17,25 @@ extension AircraftType: SFFiltersTitleable {
     }
 }
 
+extension AircraftType: Equatable {
+    
+    static func == (lhs: AircraftType, rhs: AircraftType) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
 //MARK: - AircraftExploiter + SFFiltersTitleable
 
 extension AircraftExploiter: SFFiltersTitleable {
     
     var title: String {
         self.name
+    }
+}
+
+extension AircraftExploiter: Equatable {
+    
+    static func == (lhs: AircraftExploiter, rhs: AircraftExploiter) -> Bool {
+        lhs.id == rhs.id
     }
 }

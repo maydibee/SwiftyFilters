@@ -21,21 +21,18 @@ struct AircraftFilter: SFFilter {
         
         SFMultiSelectionFilter<Aircraft, AircraftType>(title: "Type")
             .fetchItems { await worker.fetchAllTypes() }
-            .filter(by: \.type.id)
+            .filter1(by: \.type)
             .displayIn { node in
                 MultiSelectionFilterView(node: node)
             }
         
-        // MARK: - Last exploiter filter
+        // MARK: - Last exploiter filter with default view
         
         SFMultiSelectionFilter<Aircraft, AircraftExploiter>(title: "Last exploiter")
             .fetchItems { await self.worker.fetchAllExploiters() }
             .filter(byOptional: \.lastExploater?.id)
             .includeNone(withTitle: "New aircraft")
-            .displayIn { node in
-                MultiSelectionFilterView(node: node)
-            }
-        
+
         // MARK: - Remarks filter
         
         SFKeywordsFilter(title: "Remarks")
