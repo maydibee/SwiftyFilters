@@ -9,7 +9,7 @@ struct Aircraft {
     var capacity: Int
     var lastExploater: AircraftExploiter?
     
-    var firstFlightDate: Date
+    var firstFlightDate: Date?
     var manufactureDate: Date
     
     var isNew: Bool {

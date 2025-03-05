@@ -79,6 +79,8 @@ public final class SFKeywordsFilter<FilteredItem> {
     
     /// Sets the filtering behavior.
     ///
+    /// This method allows you to define custom filtering logic if the logic provided by default isn't suitable for demands
+    ///
     /// - Parameter filter: A closure that defines how input items should be filtered based on criteria item and `isNoneEnabled` value.
     /// - Returns: The modified `SFKeywordsFilter` instance.
     ///
@@ -92,6 +94,8 @@ public final class SFKeywordsFilter<FilteredItem> {
     ///
     /// This method allows you to declaratively specify how input items should be filtered
     /// by comparing a key path of `FilteredItem` with the keywords in `SFFilterKeywordsModel`.
+    ///
+    /// - Note: According to the specified logic by this method the only items that contains all keywords from `SFFilterKeywordsModel` in a passed property will be returned.
     ///
     /// - Parameter keyPath: A key path to a `String` property in `FilteredItem`.
     /// - Returns: The modified `SFKeywordsFilter` instance.

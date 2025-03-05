@@ -50,7 +50,7 @@ public final class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
     ///
     /// If not specified, all input items will be returned, and an assertion failure will be triggered in debug mode.
     ///
-    private var filterBehavior: (([FilteredItem], SFFilterRange<CriteriaItem>, _ isNoneEnabled: Bool) -> [FilteredItem]) = { inputItems, _, _ in
+    private(set) var filterBehavior: (([FilteredItem], SFFilterRange<CriteriaItem>, _ isNoneEnabled: Bool) -> [FilteredItem]) = { inputItems, _, _ in
         assertionFailure("Filter behavior is not set. Call `filterWithBehavior` or `filter` before building the component.")
         return inputItems
     }
@@ -59,7 +59,7 @@ public final class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
     ///
     /// If not specified, empty view will be returned, and an assertion failure will be triggered in debug mode.
     ///
-    private var view: ((SFFilterRangeNode<FilteredItem, CriteriaItem>) -> any View) = { _ in
+    private(set) var view: ((SFFilterRangeNode<FilteredItem, CriteriaItem>) -> any View) = { _ in
         assertionFailure("Filter view is not set. Call `displayIn` before building the component.")
         return EmptyView()
     }
