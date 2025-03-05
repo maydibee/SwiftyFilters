@@ -67,6 +67,10 @@ public struct SFFilterKeywordsModel<T: StringProtocol> {
         keywordsContainer.words.append(keyword)
     }
     
+    mutating func addKeywords(_ keywords: [T]) {
+        keywordsContainer.words.append(contentsOf: keywords)
+    }
+    
     mutating func removeKeyword(at index: Int) {
         keywordsContainer.words.remove(at: index)
     }

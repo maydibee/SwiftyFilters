@@ -49,7 +49,7 @@ public final class SFKeywordsFilter<FilteredItem> {
     ///
     /// If not specified, all input items will be returned, and an assertion failure will be triggered in debug mode.
     ///
-    private var filterBehavior: (([FilteredItem], SFFilterKeywordsModel<String>, _ isNoneEnabled: Bool) -> [FilteredItem]) = { inputItems, _, _ in
+    private(set) var filterBehavior: (([FilteredItem], SFFilterKeywordsModel<String>, _ isNoneEnabled: Bool) -> [FilteredItem]) = { inputItems, _, _ in
         assertionFailure("Filter behavior is not set. Call `filterWithBehavior` or `filter` before building the component.")
         return inputItems
     }
@@ -58,7 +58,7 @@ public final class SFKeywordsFilter<FilteredItem> {
     ///
     /// If not specified, default view will be returned.
     ///
-    private var view: ((SFFilterKeywordsNode<FilteredItem, String>) -> any View) = { node in
+    private(set) var view: ((SFFilterKeywordsNode<FilteredItem, String>) -> any View) = { node in
         return SFFilterKeywordsDefaultView(node: node)
     }
     
