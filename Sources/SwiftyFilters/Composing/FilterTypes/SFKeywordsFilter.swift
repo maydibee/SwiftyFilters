@@ -40,7 +40,7 @@ import SwiftUI
 ///     }
 /// ```
 ///
-public class SFKeywordsFilter<FilteredItem> {
+public final class SFKeywordsFilter<FilteredItem> {
     
     /// The title of the filter component.
     let title: String

@@ -41,7 +41,7 @@ import SwiftUI
 ///     }
 /// ```
 ///
-public class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
+public final class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
     
     /// The title of the filter component.
     let title: String

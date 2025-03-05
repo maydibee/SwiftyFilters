@@ -41,7 +41,7 @@ import SwiftUI
 ///     }
 /// ```
 ///
-public class SFSingleValueFilter<FilteredItem, CriteriaItem: Equatable> {
+public final class SFSingleValueFilter<FilteredItem, CriteriaItem: Equatable> {
     
     /// The title of the filter component.
     let title: String

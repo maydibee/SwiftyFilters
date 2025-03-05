@@ -45,7 +45,7 @@ import SwiftUI
 ///    }
 /// ```
 ///
-public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Equatable & SFFiltersTitleable> {
+public final class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Equatable & SFFiltersTitleable> {
     
     /// The title of the filter component.
     let title: String
@@ -54,7 +54,7 @@ public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Equatable & SFFi
     ///
     /// If not specified, an empty array will be returned, and an assertion failure will be triggered in debug mode.
     ///
-    private var criteriaItemsDatasource: (() async -> [CriteriaItem]) = {
+    private(set) var criteriaItemsDatasource: (() async -> [CriteriaItem]) = {
         assertionFailure("Criteria items datasource is not set. Call `basedOnDatasource` before building the component.")
         return []
     }
@@ -63,7 +63,7 @@ public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Equatable & SFFi
     ///
     /// If not specified, all input items will be returned, and an assertion failure will be triggered in debug mode.
     ///
-    private var filterBehavior: (([FilteredItem], [CriteriaItem], _ isNoneEnabled: Bool) -> [FilteredItem]) = { inputItems, _, _ in
+    private(set) var filterBehavior: (([FilteredItem], [CriteriaItem], _ isNoneEnabled: Bool) -> [FilteredItem]) = { inputItems, _, _ in
         assertionFailure("Filter behavior is not set. Call `filterWithBehavior` or `filter` before building the component.")
         return inputItems
     }
@@ -72,7 +72,7 @@ public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Equatable & SFFi
     ///
     /// If not specified, default view will be returned.
     ///
-    private var view: ((SFFilterMultiSelectionNode<FilteredItem>) -> any View) = { node in
+    private(set) var view: ((SFFilterMultiSelectionNode<FilteredItem>) -> any View) = { node in
         return SFFilterMultiSelectionDefaultView(node: node)
     }
     
