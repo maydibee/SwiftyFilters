@@ -12,7 +12,7 @@ import Foundation
 
 protocol AircraftListWorker {
     
-    func fetchAllAircrafts() async -> [Aircraft]
+    func fetchAllAircraft() async -> [Aircraft]
     func fetchAllTypes() async -> [AircraftType]
     func fetchAllExploiters() async -> [AircraftExploiter]
 }
@@ -22,11 +22,11 @@ protocol AircraftListWorker {
 
 class AircraftListWorkerStub: AircraftListWorker {
     
-    func fetchAllAircrafts() async -> [Aircraft] {
+    func fetchAllAircraft() async -> [Aircraft] {
         try? await Task.sleep(nanoseconds: 200_000_000)
         
         // returns mock data with delay
-        return Aircraft.mockAircrafts
+        return Aircraft.mockAircraft
     }
     
     func fetchAllTypes() async -> [AircraftType] {

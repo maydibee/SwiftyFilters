@@ -28,7 +28,7 @@ import SwiftUI
 
 // MARK: - Multi-select filter component
 
-class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>: SFFilterComponent<FilteredItem> {
+class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Equatable & SFFiltersTitleable>: SFFilterComponent<FilteredItem> {
     
     private let filter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>
     private let view: ((SFFilterMultiSelectionNode<FilteredItem>) -> any View)

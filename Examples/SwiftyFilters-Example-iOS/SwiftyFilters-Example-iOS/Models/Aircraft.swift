@@ -31,7 +31,7 @@ struct Aircraft {
 
 extension Aircraft {
     
-    static let mockAircrafts: [Aircraft] = [
+    static let mockAircraft: [Aircraft] = [
         Aircraft(
             id: UUID(),
             type: AircraftType.mockBoeing1,

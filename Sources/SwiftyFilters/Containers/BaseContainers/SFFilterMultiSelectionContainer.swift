@@ -27,7 +27,7 @@ import Foundation
 
 // MARK: - Multi-select filter container
 
-class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>: SFFilterNullableContainer {
+class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Equatable & SFFiltersTitleable>: SFFilterNullableContainer {
     
     var allItems = Array<CriteriaItem>()
     var selectedItems = Array<CriteriaItem>()
@@ -88,6 +88,6 @@ class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Identifiable &
     }
     
     func isItemSelected(_ item: CriteriaItem) -> Bool {
-        self.selectedItems.contains { $0.id == item.id }
+        self.selectedItems.contains { $0 == item }
     }
 }

@@ -13,10 +13,10 @@ import SwiftyFilters
 
 class AircraftListViewModel: ObservableObject {
     
-    private var aircrafts: [Aircraft] = []
+    private var aircraft: [Aircraft] = []
     private let worker: AircraftListWorker
     
-    @Published var filteredAircrafts: [Aircraft] = []
+    @Published var filteredAircraft: [Aircraft] = []
     @Published var isFiltersViewPresented = false
     
     let filtersCore: SFFiltersCore<Aircraft>
@@ -28,14 +28,14 @@ class AircraftListViewModel: ObservableObject {
         self.filtersCore = SFFiltersCore<Aircraft>(title: "Filters", content: filter)
     }
     
-    func loadAircrafts() async {
-        self.aircrafts = await worker.fetchAllAircrafts()
+    func loadAircraft() async {
+        self.aircraft = await worker.fetchAllAircraft()
         await MainActor.run {
-            self.filteredAircrafts = self.aircrafts
+            self.filteredAircraft = self.aircraft
         }
     }
     
     func applyFilters() {
-        self.filteredAircrafts = filtersCore.getFilteredData(from: aircrafts)
+        self.filteredAircraft = filtersCore.getFilteredData(from: aircraft)
     }
 }

@@ -38,14 +38,14 @@ import SwiftUI
 ///    .fetchItems {
 ///        await ParticipantRolesFilterFetcher().fetchFilterItems()
 ///    }
-///    .filter(byOptional: \.role?.id)
+///    .filter(byOptional: \.role)
 ///    .includeNone(withTitle: "No Role")
 ///    .displayIn { node in
 ///        ParticipantRolesFilterView(node: node)
 ///    }
 /// ```
 ///
-public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Identifiable & Equatable & SFFiltersTitleable> {
+public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Equatable & SFFiltersTitleable> {
     
     /// The title of the filter component.
     let title: String
@@ -113,10 +113,10 @@ public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Identifiable & E
         return self
     }
     
-    /// Filters input items based on a key path to a non-optional `CriteriaItem.ID` property.
+    /// Filters input items based on a key path to a non-optional `CriteriaItem` property.
     ///
     /// This method allows you to declaratively specify how input items should be filtered
-    /// by comparing a key path of `FilteredItem` with the `id` of `CriteriaItem`.
+    /// by comparing a key path of `FilteredItem` with the `CriteriaItem`.
     ///
     /// - Parameter keyPath: A key path to a non-optional `CriteriaItem` property in `FilteredItem`.
     /// - Returns: The modified `SFMultiSelectionFilter` instance.
@@ -143,15 +143,15 @@ public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Identifiable & E
         return self
     }
     
-    /// Filters input items based on a key path to an optional `CriteriaItem.ID` property.
+    /// Filters input items based on a key path to an optional `CriteriaItem` property.
     ///
     /// This method allows you to declaratively specify how input items should be filtered
-    /// by comparing a key path of `FilteredItem` with the `id` of `CriteriaItem`.
+    /// by comparing a key path of `FilteredItem` with the `CriteriaItem`.
     /// If the property is `nil`, the item will be included only if `isNoneEnabled` is `true`.
     ///
     /// - Note: Value of `isNoneEnabled` will be always false and all items with the `nil` property will not be included if "None" option isn't included by `includeNone` method calling.
     ///
-    /// - Parameter keyPath: A key path to an optional `CriteriaItem.ID` property in `FilteredItem`.
+    /// - Parameter keyPath: A key path to an optional `CriteriaItem` property in `FilteredItem`.
     /// - Returns: The modified `SFMultiSelectionFilter` instance.
     ///
     /// ### Example
@@ -160,7 +160,7 @@ public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Identifiable & E
     ///     .fetchItems {
     ///         await ParticipantRolesFilterFetcher().fetchFilterItems()
     ///     }
-    ///     .filter(byOptional: \.role?.id) // Filter by the optional `id` of the `role` property
+    ///     .filter(byOptional: \.role) // Filter by the optional `id` of the `role` property
     ///     .includeNone(withTitle: "No Role")
     ///     .displayIn { node in
     ///         ParticipantRolesFilterView(node: node)
@@ -168,11 +168,11 @@ public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Identifiable & E
     /// ```
     ///
     @discardableResult
-    public func filter(byOptional keyPath: KeyPath<FilteredItem, CriteriaItem.ID?>) -> Self {
+    public func filter(byOptional keyPath: KeyPath<FilteredItem, CriteriaItem?>) -> Self {
         self.filterBehavior = { inputItems, criteriaItems, isNoneEnabled in
             inputItems.filter { inputItem in
-                if let id = inputItem[keyPath: keyPath] {
-                    return criteriaItems.contains { $0.id == id }
+                if let value = inputItem[keyPath: keyPath] {
+                    return criteriaItems.contains { $0 == value }
                 } else {
                     return isNoneEnabled
                 }
@@ -181,16 +181,16 @@ public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Identifiable & E
         return self
     }
     
-    /// Filters input items based on a key path to an array of `CriteriaItem.ID` properties.
+    /// Filters input items based on a key path to an array of `CriteriaItem` properties.
     ///
     /// This method allows you to declaratively specify how input items should be filtered
-    /// by comparing a key path of `FilteredItem` (which is an array of `CriteriaItem.ID`)
-    /// with the `id` of `CriteriaItem`.
+    /// by comparing a key path of `FilteredItem` (which is an array of `CriteriaItem`)
+    /// with the `CriteriaItem`.
     /// If the property is an empty array, the item will be included only if `isNoneEnabled` is `true`.
     ///
     /// - Note: Value of `isNoneEnabled` will be always false and all items with the `nil` property will not be included if "None" option isn't included by `includeNone` method calling.
     ///
-    /// - Parameter keyPath: A key path to an array of `CriteriaItem.ID` properties in `FilteredItem`.
+    /// - Parameter keyPath: A key path to an array of `CriteriaItem` properties in `FilteredItem`.
     /// - Returns: The modified `SFMultiSelectionFilter` instance.
     ///
     /// ### Example
@@ -199,19 +199,19 @@ public class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Identifiable & E
     ///     .fetchItems {
     ///         await ParticipantRolesFilterFetcher().fetchFilterItems()
     ///     }
-    ///     .filter(byArray: \.roleIds) // Filter by the array of `roleIds`
+    ///     .filter(byArray: \.roles) // Filter by the array of `roleIds`
     ///     .displayIn { node in
     ///         ParticipantRolesFilterView(node: node)
     ///     }
     /// ```
     ///
     @discardableResult
-    public func filter(byArray keyPath: KeyPath<FilteredItem, [CriteriaItem.ID]>) -> Self {
+    public func filter(byArray keyPath: KeyPath<FilteredItem, [CriteriaItem]>) -> Self {
         self.filterBehavior = { inputItems, criteriaItems, isNoneEnabled in
             inputItems.filter { inputItem in
                 if !inputItem[keyPath: keyPath].isEmpty {
                     return criteriaItems.contains { criteriaItem in
-                        inputItem[keyPath: keyPath].contains(criteriaItem.id)
+                        inputItem[keyPath: keyPath].contains(criteriaItem)
                     }
                 } else {
                     return isNoneEnabled

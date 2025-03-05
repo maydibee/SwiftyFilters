@@ -57,7 +57,7 @@ public class SFFilterComponentsFactory {
     ///
     /// - Returns: A configured `SFFilterComponent` for multi-selection filtering.
     ///
-    public static func createMultiSelectionComponent<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>(title: String,
+    public static func createMultiSelectionComponent<FilteredItem, CriteriaItem: Equatable & SFFiltersTitleable>(title: String,
                                                                                                                     resolver: any SFFilterResolver<FilteredItem, [CriteriaItem]>,
                                                                                                                     fetcher: any SFFilterFetcher<CriteriaItem>,
                                                                                                                     viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem> = SFFilterMultiSelectionDefaultViewProvider(),

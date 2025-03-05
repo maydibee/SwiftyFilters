@@ -19,14 +19,14 @@ struct AircraftListView: View {
     
     var body: some View {
         NavigationView {
-            List(viewModel.filteredAircrafts, id: \.id) { aircraft in
+            List(viewModel.filteredAircraft, id: \.id) { aircraft in
                 AircraftRow(aircraft: aircraft)
                     .padding(.vertical, 8)
                     .transition(.slide)
             }
             .navigationTitle("Aircraft List")
             .listStyle(PlainListStyle())
-            .animation(.smooth, value: viewModel.filteredAircrafts.count)
+            .animation(.smooth, value: viewModel.filteredAircraft.count)
             .background {
                 Image("background")
                     .resizable()
@@ -35,7 +35,7 @@ struct AircraftListView: View {
                     .ignoresSafeArea()
             }
             .task {
-                await viewModel.loadAircrafts()
+                await viewModel.loadAircraft()
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
