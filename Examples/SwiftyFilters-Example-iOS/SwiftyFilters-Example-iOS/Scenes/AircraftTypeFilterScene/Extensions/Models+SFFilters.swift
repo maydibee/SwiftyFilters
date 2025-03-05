@@ -8,7 +8,7 @@
 import SwiftyFilters
 
 
-//MARK: - AircraftType + SFFiltersTitleable
+// MARK: - SFFiltersTitleable implementation
 
 extension AircraftType: SFFiltersTitleable {
     
@@ -17,6 +17,8 @@ extension AircraftType: SFFiltersTitleable {
     }
 }
 
+// MARK: - Equatable implementation
+
 extension AircraftType: Equatable {
     
     static func == (lhs: AircraftType, rhs: AircraftType) -> Bool {
@@ -24,7 +26,7 @@ extension AircraftType: Equatable {
     }
 }
 
-//MARK: - AircraftExploiter + SFFiltersTitleable
+// MARK: - SFFiltersTitleable implementation
 
 extension AircraftExploiter: SFFiltersTitleable {
     
@@ -32,6 +34,8 @@ extension AircraftExploiter: SFFiltersTitleable {
         self.name
     }
 }
+
+// MARK: - Equatable implementation
 
 extension AircraftExploiter: Equatable {
     

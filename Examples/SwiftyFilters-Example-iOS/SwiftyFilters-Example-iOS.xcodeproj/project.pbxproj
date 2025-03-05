@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		351BE3642D6CD7D20049E47F /* Models+SFFiltersTitleable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE3632D6CD7D20049E47F /* Models+SFFiltersTitleable.swift */; };
+		351BE3642D6CD7D20049E47F /* Models+SFFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE3632D6CD7D20049E47F /* Models+SFFilters.swift */; };
 		351BE36C2D6D67C20049E47F /* AircraftListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE36B2D6D67C20049E47F /* AircraftListViewModel.swift */; };
 		351BE36E2D6D68220049E47F /* AircraftListFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BE36D2D6D68220049E47F /* AircraftListFiltersView.swift */; };
 		35D783F52D768D5900301BDF /* AircraftListWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D783F42D768D5900301BDF /* AircraftListWorker.swift */; };
@@ -28,7 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		351BE3632D6CD7D20049E47F /* Models+SFFiltersTitleable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models+SFFiltersTitleable.swift"; sourceTree = "<group>"; };
+		351BE3632D6CD7D20049E47F /* Models+SFFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models+SFFilters.swift"; sourceTree = "<group>"; };
 		351BE36B2D6D67C20049E47F /* AircraftListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftListViewModel.swift; sourceTree = "<group>"; };
 		351BE36D2D6D68220049E47F /* AircraftListFiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftListFiltersView.swift; sourceTree = "<group>"; };
 		35D783F42D768D5900301BDF /* AircraftListWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AircraftListWorker.swift; sourceTree = "<group>"; };
@@ -74,7 +74,7 @@
 		351BE3702D6D75F10049E47F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				351BE3632D6CD7D20049E47F /* Models+SFFiltersTitleable.swift */,
+				351BE3632D6CD7D20049E47F /* Models+SFFilters.swift */,
 				35D783FE2D769BB000301BDF /* View.swift */,
 			);
 			path = Extensions;
@@ -265,7 +265,7 @@
 				35D783F52D768D5900301BDF /* AircraftListWorker.swift in Sources */,
 				35D784012D769C4600301BDF /* BooleanOptionFilterView.swift in Sources */,
 				35D783FD2D769B4900301BDF /* MultiSelectionFilterView.swift in Sources */,
-				351BE3642D6CD7D20049E47F /* Models+SFFiltersTitleable.swift in Sources */,
+				351BE3642D6CD7D20049E47F /* Models+SFFilters.swift in Sources */,
 				35D783F72D768EB900301BDF /* AircraftFilter.swift in Sources */,
 				35E779A72D6C4814007D73C7 /* AircraftRow.swift in Sources */,
 				35E779A12D6C46E9007D73C7 /* AircraftExploiter.swift in Sources */,
