@@ -31,12 +31,43 @@ Building filters in SwiftUI just got easier. **SwiftyFilters** is a lightweight,
 
 ### Essentials
 
-- ``Usage``
-- ``FilterTypes``
-
+- <doc:Usage>
 - ``SFFilter``
+- ``SFFiltersCore``
+- ``SFFilterRootView``
+- ``SFGroupedComponent``
 
 ### Filter types
 
+- ``SFMultiSelectionFilter``
+- ``SFKeywordsFilter``
+- ``SFRangeFilter``
+- ``SFSingleValueFilter``
+
+### Node state managers
+
+- ``SFFilterMultiSelectionNode``
+- ``SFFilterKeywordsNode``
+- ``SFFilterRangeNode``
+- ``SFFilterSingleValueNode``
+- ``SFFilterNode``
+
+### Filter models
+
+- ``SFFilterKeywordsModel``
+- ``SFFilterRange``
+
+
+### Imperative approach (**Deprecated**)
+
+- <doc:Imperative>
+- ``SFFilterFetcher``
+- ``SFFilterResolver``
+- ``SFFilterMultiSelectionViewProvider``
+- ``SFFilterKeywordsViewProvider``
+- ``SFFilterRangeViewProvider``
+- ``SFFilterSingleValueViewProvider``
+- ``SFFilterComponentsFactory``
+- ``SFFilterComponent``
 
 
