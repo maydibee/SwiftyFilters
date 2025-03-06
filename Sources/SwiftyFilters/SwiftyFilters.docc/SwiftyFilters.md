@@ -27,14 +27,16 @@ Building filters in SwiftUI just got easier. **SwiftyFilters** is a lightweight,
 - **Customizable**: Use default UI components or build your own.
 - **Type-Safe**: Compiler-checked filter logic for fewer runtime errors.
 
-
 ## Topics
 
 ### Essentials
 
 - ``Usage``
-- ``SwiftyFilters/FilterTypes``
+- ``FilterTypes``
+
+- ``SFFilter``
+
+### Filter types
 
 
-- ``SwiftyFilters/StateManagement``
 

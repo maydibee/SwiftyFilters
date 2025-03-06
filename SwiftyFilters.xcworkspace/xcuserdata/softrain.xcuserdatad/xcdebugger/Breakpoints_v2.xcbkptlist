@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "EEDE308A-CA23-414E-BDD9-770176E6854F"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7CD68951-F7B2-4A9A-A010-40B00D55C56C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Sources/SwiftyFilters/FiltersBaseComponents/Nodes/SFFilterNode.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "loadFilterIfNeeded()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7CD68951-F7B2-4A9A-A010-40B00D55C56C - 8c71398b4fafb167"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for SwiftyFilters.SFFilterNode.loadFilterIfNeeded() async -&gt; ()"
+                  moduleName = "SwiftyFilters-Example-iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Sources/SwiftyFilters/FiltersBaseComponents/Nodes/SFFilterNode.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "96"
+                  endingLineNumber = "96"
+                  offsetFromSymbolStart = "92">
+               </Location>
+               <Location
+                  uuid = "7CD68951-F7B2-4A9A-A010-40B00D55C56C - fd5bdff36e0f724a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for SwiftyFilters.SFFilterNode.loadFilterIfNeeded() async -&gt; ()"
+                  moduleName = "SwiftyFiltersTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Sources/SwiftyFilters/FiltersBaseComponents/Nodes/SFFilterNode.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "96"
+                  endingLineNumber = "96"
+                  offsetFromSymbolStart = "128">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "767232C6-240B-49BA-A8EC-4DE70F3EFE77"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Examples/SwiftyFilters-Example-iOS/SwiftyFilters-Example-iOS/Scenes/AircraftListScene/AircraftListViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "AircraftListViewModel"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "767232C6-240B-49BA-A8EC-4DE70F3EFE77 - b3a3b08c2900874c"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "property wrapper backing initializer of SwiftyFilters_Example_iOS.AircraftListViewModel.filteredAircrafts : Swift.Array&lt;SwiftyFilters_Example_iOS.Aircraft&gt;"
+                  moduleName = "SwiftyFilters-Example-iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Examples/SwiftyFilters-Example-iOS/SwiftyFilters-Example-iOS/Scenes/AircraftListScene/AircraftListViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  uuid = "767232C6-240B-49BA-A8EC-4DE70F3EFE77 - 2a9801555c7cddbc"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftyFilters_Example_iOS.AircraftListViewModel.filteredAircrafts.getter : Swift.Array&lt;SwiftyFilters_Example_iOS.Aircraft&gt;"
+                  moduleName = "SwiftyFilters-Example-iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Examples/SwiftyFilters-Example-iOS/SwiftyFilters-Example-iOS/Scenes/AircraftListScene/AircraftListViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "28">
+               </Location>
+               <Location
+                  uuid = "767232C6-240B-49BA-A8EC-4DE70F3EFE77 - 5601488bd5a2c703"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftyFilters_Example_iOS.AircraftListViewModel.filteredAircrafts.setter : Swift.Array&lt;SwiftyFilters_Example_iOS.Aircraft&gt;"
+                  moduleName = "SwiftyFilters-Example-iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Examples/SwiftyFilters-Example-iOS/SwiftyFilters-Example-iOS/Scenes/AircraftListScene/AircraftListViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "767232C6-240B-49BA-A8EC-4DE70F3EFE77 - 2e9f79c1b2e8a110"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftyFilters_Example_iOS.AircraftListViewModel.filteredAircrafts.modify : Swift.Array&lt;SwiftyFilters_Example_iOS.Aircraft&gt;"
+                  moduleName = "SwiftyFilters-Example-iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Examples/SwiftyFilters-Example-iOS/SwiftyFilters-Example-iOS/Scenes/AircraftListScene/AircraftListViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "767232C6-240B-49BA-A8EC-4DE70F3EFE77 - 68d0ffc7845b7c2a"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftyFilters_Example_iOS.AircraftListViewModel.filteredAircrafts.modify : Swift.Array&lt;SwiftyFilters_Example_iOS.Aircraft&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "SwiftyFilters-Example-iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Examples/SwiftyFilters-Example-iOS/%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "767232C6-240B-49BA-A8EC-4DE70F3EFE77 - 8b4911a0134711ef"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftyFilters_Example_iOS.AircraftListViewModel.$filteredAircrafts.getter : Combine.Published&lt;Swift.Array&lt;SwiftyFilters_Example_iOS.Aircraft&gt;&gt;.Publisher"
+                  moduleName = "SwiftyFilters-Example-iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Examples/SwiftyFilters-Example-iOS/SwiftyFilters-Example-iOS/Scenes/AircraftListScene/AircraftListViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "767232C6-240B-49BA-A8EC-4DE70F3EFE77 - 50547bd55ce3a7d2"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftyFilters_Example_iOS.AircraftListViewModel.$filteredAircrafts.setter : Combine.Published&lt;Swift.Array&lt;SwiftyFilters_Example_iOS.Aircraft&gt;&gt;.Publisher"
+                  moduleName = "SwiftyFilters-Example-iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Examples/SwiftyFilters-Example-iOS/%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "36">
+               </Location>
+               <Location
+                  uuid = "767232C6-240B-49BA-A8EC-4DE70F3EFE77 - 3facb76481b7dfc1"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftyFilters_Example_iOS.AircraftListViewModel.$filteredAircrafts.modify : Combine.Published&lt;Swift.Array&lt;SwiftyFilters_Example_iOS.Aircraft&gt;&gt;.Publisher"
+                  moduleName = "SwiftyFilters-Example-iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Examples/SwiftyFilters-Example-iOS/%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "64">
+               </Location>
+               <Location
+                  uuid = "767232C6-240B-49BA-A8EC-4DE70F3EFE77 - 5264190a563237be"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftyFilters_Example_iOS.AircraftListViewModel.$filteredAircrafts.modify : Combine.Published&lt;Swift.Array&lt;SwiftyFilters_Example_iOS.Aircraft&gt;&gt;.Publisher with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "SwiftyFilters-Example-iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Examples/SwiftyFilters-Example-iOS/%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9CBE43A3-6761-40D9-ACFB-A6D19EBB6ABA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Tests/SwiftyFiltersTests/FilterTypesTests/SFKeywordsFilterTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "testFilterByRemarks_IncludesMatchingAircraft()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7D2EBD05-3C33-4E41-A8F9-2188A27915B1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Sources/SwiftyFilters/Composing/FilterTypes/SFKeywordsFilter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "filter(by:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7D2EBD05-3C33-4E41-A8F9-2188A27915B1 - 9158bda3072dccd3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;&#x3c4;_0_0&gt;, SwiftyFilters.SFFilterKeywordsModel&lt;Swift.String&gt;, Swift.Bool) -&gt; Swift.Array&lt;&#x3c4;_0_0&gt; in SwiftyFilters.SFKeywordsFilter.filter(by: Swift.KeyPath&lt;&#x3c4;_0_0, Swift.String&gt;) -&gt; Self"
+                  moduleName = "SwiftyFiltersTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Sources/SwiftyFilters/Composing/FilterTypes/SFKeywordsFilter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "113"
+                  endingLineNumber = "113"
+                  offsetFromSymbolStart = "256">
+               </Location>
+               <Location
+                  uuid = "7D2EBD05-3C33-4E41-A8F9-2188A27915B1 - 784afd3fc9630c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (&#x3c4;_0_0) -&gt; Swift.Bool in closure #1 (Swift.Array&lt;&#x3c4;_0_0&gt;, SwiftyFilters.SFFilterKeywordsModel&lt;Swift.String&gt;, Swift.Bool) -&gt; Swift.Array&lt;&#x3c4;_0_0&gt; in SwiftyFilters.SFKeywordsFilter.filter(by: Swift.KeyPath&lt;&#x3c4;_0_0, Swift.String&gt;) -&gt; Self"
+                  moduleName = "SwiftyFiltersTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Sources/SwiftyFilters/Composing/FilterTypes/SFKeywordsFilter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "113"
+                  endingLineNumber = "113"
+                  offsetFromSymbolStart = "200">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5E562C7D-6BBF-4A27-8B64-3872DE795883"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Sources/SwiftyFilters/Composing/FilterTypes/SFKeywordsFilter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "filter(by:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6C61355A-6C83-4AD3-ACD3-FE4C4318A3AA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Sources/SwiftyFilters/Models/SFFilterKeywordsModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "isSafisfy(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1D7AA79A-EACB-46F8-9141-E4DCE12086CD"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Sources/SwiftyFilters/Models/SFFilterKeywords.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "isSafisfy(_:isCaseSensitive:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1D7AA79A-EACB-46F8-9141-E4DCE12086CD - 205ff94272a9125e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftyFilters.SFFilterKeywords.isSafisfy(_: &#x3c4;_0_0, isCaseSensitive: Swift.Bool) -&gt; Swift.Bool"
+                  moduleName = "SwiftyFiltersTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Sources/SwiftyFilters/Models/SFFilterKeywords.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "356">
+               </Location>
+               <Location
+                  uuid = "1D7AA79A-EACB-46F8-9141-E4DCE12086CD - 1426e8d8567ea847"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (&#x3c4;_0_0) -&gt; Swift.Bool in SwiftyFilters.SFFilterKeywords.isSafisfy(_: &#x3c4;_0_0, isCaseSensitive: Swift.Bool) -&gt; Swift.Bool"
+                  moduleName = "SwiftyFiltersTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Sources/SwiftyFilters/Models/SFFilterKeywords.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "64">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "06DB7D1B-FDA4-4C92-844B-9ED598BA52B7"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Sources/SwiftyFilters/Models/SFFilterKeywords.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "isSafisfy(_:isCaseSensitive:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "06DB7D1B-FDA4-4C92-844B-9ED598BA52B7 - 205ff94272a91210"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SwiftyFilters.SFFilterKeywords.isSafisfy(_: &#x3c4;_0_0, isCaseSensitive: Swift.Bool) -&gt; Swift.Bool"
+                  moduleName = "SwiftyFiltersTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Sources/SwiftyFilters/Models/SFFilterKeywords.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "572">
+               </Location>
+               <Location
+                  uuid = "06DB7D1B-FDA4-4C92-844B-9ED598BA52B7 - cd352322df40ae0a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (&#x3c4;_0_0) -&gt; Swift.Bool in SwiftyFilters.SFFilterKeywords.isSafisfy(_: &#x3c4;_0_0, isCaseSensitive: Swift.Bool) -&gt; Swift.Bool"
+                  moduleName = "SwiftyFiltersTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/softrain/Developer/SwiftyFilters/Sources/SwiftyFilters/Models/SFFilterKeywords.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "80">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
