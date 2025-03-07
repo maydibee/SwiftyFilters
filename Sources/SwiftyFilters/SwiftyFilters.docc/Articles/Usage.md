@@ -159,6 +159,7 @@ struct AircraftFilter: SFFilter {
     }
 }
 ```
+- Note: The generic type of `SFFilterComponent` in the `body` array must match the type of the items being filtered
 
 #### 2. Add a Multi-Selection Filter
 Let's implement our aircraft type filter. We'll use `SFMultiSelectionFilter`, specifying:
