@@ -18,7 +18,7 @@ struct AircraftFilter: SFFilter {
         
         // MARK: - Aircraft types filter
         
-        SFMultiSelectionFilter<Aircraft, AircraftType>(title: "Type")
+        SFMultiSelectionFilter(title: "Type")
             .fetchItems { await worker.fetchAllTypes() }
             .filter(by: \.type)
             .displayIn { node in
@@ -27,7 +27,7 @@ struct AircraftFilter: SFFilter {
         
         // MARK: - Last exploiter filter with default view
         
-        SFMultiSelectionFilter<Aircraft, AircraftExploiter>(title: "Last exploiter")
+        SFMultiSelectionFilter(title: "Last exploiter")
             .fetchItems { await self.worker.fetchAllExploiters() }
             .filter(byOptional: \.lastExploater)
             .includeNone(withTitle: "New aircraft")

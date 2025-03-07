@@ -33,7 +33,7 @@ import SwiftUI
 ///
 /// ### Example
 /// ```swift
-/// SFSingleValueFilter<Participant, ParticipantStatus>(title: "Status")
+/// SFSingleValueFilter(title: "Status")
 ///     .filter(byOptional: \.status) // Filter by the optional `status` property
 ///     .includeNone(withTitle: "No Status")
 ///     .displayIn { node in
@@ -100,7 +100,7 @@ public final class SFSingleValueFilter<FilteredItem, CriteriaItem: Equatable> {
     ///
     /// ### Example
     /// ```swift
-    /// SFSingleValueFilter<Participant, ParticipantStatus>(title: "Status")
+    /// SFSingleValueFilter(title: "Status")
     ///     .filter(by: \.status) // Filter by the `status` property
     ///     .displayIn { node in
     ///         ParticipantStatusFilterView(node: node)
@@ -129,7 +129,7 @@ public final class SFSingleValueFilter<FilteredItem, CriteriaItem: Equatable> {
     ///
     /// ### Example
     /// ```swift
-    /// SFSingleValueFilter<Participant, ParticipantStatus>(title: "Status")
+    /// SFSingleValueFilter(title: "Status")
     ///     .filter(byOptional: \.status) // Filter by the optional `status` property
     ///     .includeNone(withTitle: "No Status")
     ///     .displayIn { node in

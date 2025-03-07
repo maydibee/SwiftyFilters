@@ -34,7 +34,7 @@ import SwiftUI
 ///
 /// ### Example
 /// ```swift
-/// SFMultiSelectionFilter<Participant, ParticipantRole>(title: "Roles")
+/// SFMultiSelectionFilter(title: "Roles")
 ///    .fetchItems {
 ///        await ParticipantRolesFilterFetcher().fetchFilterItems()
 ///    }
@@ -123,7 +123,7 @@ public final class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Equatable 
     ///
     /// ### Example
     /// ```swift
-    /// SFMultiSelectionFilter<Participant, ParticipantRole>(title: "Roles")
+    /// SFMultiSelectionFilter(title: "Roles")
     ///     .fetchItems {
     ///         await ParticipantRolesFilterFetcher().fetchFilterItems()
     ///     }
@@ -156,7 +156,7 @@ public final class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Equatable 
     ///
     /// ### Example
     /// ```swift
-    /// SFMultiSelectionFilter<Participant, ParticipantRole>(title: "Roles")
+    /// SFMultiSelectionFilter(title: "Roles")
     ///     .fetchItems {
     ///         await ParticipantRolesFilterFetcher().fetchFilterItems()
     ///     }
@@ -195,7 +195,7 @@ public final class SFMultiSelectionFilter<FilteredItem, CriteriaItem: Equatable 
     ///
     /// ### Example
     /// ```swift
-    /// SFMultiSelectionFilter<Participant, ParticipantRole>(title: "Roles")
+    /// SFMultiSelectionFilter(title: "Roles")
     ///     .fetchItems {
     ///         await ParticipantRolesFilterFetcher().fetchFilterItems()
     ///     }

@@ -65,7 +65,7 @@
 ///
 ///                // MARK: Newness filter
 ///
-///                SFSingleValueFilter<Aircraft, Bool>(title: "Newness")
+///                SFSingleValueFilter(title: "Newness")
 ///                    .filter(by: \.isNew)
 ///                    .displayIn { node in
 ///                        BooleanOptionFilterView(node: node)

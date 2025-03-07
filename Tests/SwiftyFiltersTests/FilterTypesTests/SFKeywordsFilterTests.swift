@@ -52,7 +52,7 @@ final class SFKeywordsFilterTests: XCTestCase {
         super.setUp()
         
         // Initialize filter with test data
-        filter = SFKeywordsFilter<Aircraft>(title: "Remarks")
+        filter = SFKeywordsFilter(title: "Remarks")
             .filter(by: \.remarks)
             .includeNone(withTitle: "No Remarks")
     }

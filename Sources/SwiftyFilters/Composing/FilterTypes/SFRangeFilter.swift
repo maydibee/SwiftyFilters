@@ -33,7 +33,7 @@ import SwiftUI
 ///
 /// ### Example
 /// ```swift
-/// SFRangeFilter<Participant, Int>(title: "Age")
+/// SFRangeFilter(title: "Age")
 ///     .filter(byOptional: \.age) // Filter by the optional `age` property
 ///     .includeNone(withTitle: "No Age")
 ///     .displayIn { node in
@@ -100,7 +100,7 @@ public final class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
     ///
     /// ### Example
     /// ```swift
-    /// SFRangeFilter<Participant, Int>(title: "Age")
+    /// SFRangeFilter(title: "Age")
     ///     .filter(by: \.age) // Filter by the `age` property
     ///     .displayIn { node in
     ///         ParticipantAgeFilterView(node: node)
@@ -129,7 +129,7 @@ public final class SFRangeFilter<FilteredItem, CriteriaItem: Comparable> {
     ///
     /// ### Example
     /// ```swift
-    /// SFRangeFilter<Participant, Int>(title: "Age")
+    /// SFRangeFilter(title: "Age")
     ///     .filter(byOptional: \.age) // Filter by the optional `age` property
     ///     .includeNone(withTitle: "No Age")
     ///     .displayIn { node in

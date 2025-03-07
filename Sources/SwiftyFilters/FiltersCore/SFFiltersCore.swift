@@ -40,7 +40,7 @@ import SwiftUI
 ///
 ///     var body: [SFFilterComponent<Aircraft>] {
 ///
-///        SFMultiSelectionFilter<Aircraft, AircraftType>(title: "Type")
+///        SFMultiSelectionFilter(title: "Type")
 ///            .fetchItems { await worker.fetchAllTypes() }
 ///            .filter(by: \.type)
 ///            .displayIn { node in

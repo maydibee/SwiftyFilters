@@ -40,7 +40,7 @@ struct AircraftDatesFilter: SFFilter {
                 
                 // MARK: Newness filter
                 
-                SFSingleValueFilter<Aircraft, Bool>(title: "Is new")
+                SFSingleValueFilter(title: "Is new")
                     .filter(by: \.isNew)
                     .displayIn { node in
                         BooleanOptionFilterView(node: node)

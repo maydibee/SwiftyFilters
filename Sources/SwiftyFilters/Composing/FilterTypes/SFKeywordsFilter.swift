@@ -32,7 +32,7 @@ import SwiftUI
 ///
 /// ### Example
 /// ```swift
-/// SFKeywordsFilter<Participant>(title: "Remarks")
+/// SFKeywordsFilter(title: "Remarks")
 ///     .filter(by: \.remarks) // Filter by the `remarks` property
 ///     .includeNone(withTitle: "No Remarks")
 ///     .displayIn { node in
@@ -102,7 +102,7 @@ public final class SFKeywordsFilter<FilteredItem> {
     ///
     /// ### Example
     /// ```swift
-    /// SFKeywordsFilter<Participant>(title: "Remarks")
+    /// SFKeywordsFilter(title: "Remarks")
     ///     .filter(by: \.remarks) // Filter by the `remarks` property
     ///     .includeNone(withTitle: "No Remarks")
     ///     .displayIn { node in
