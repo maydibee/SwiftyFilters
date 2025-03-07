@@ -140,7 +140,7 @@ A Node (like `SFFilterMultiSelectionNode`) acts as a state manager for your filt
 - Provides `nestedNodes` for each criteria item.
 - Use `@StateObject` to preserve state across updates.
 
-For advanced usage, see the SwiftyFilters Documentation.
+For advanced usage, see the SwiftyFilters Documentation or review the following article: <doc:CustomViewCreation>
 
 ### Building the Filter Component  
 Perfect! We're all set to start creating our filter component. This is where the real magic of SwiftyFilters happens ✨—building filters declaratively, just like you build SwiftUI views. With SwiftyFilters, you define what you want to filter, and the framework takes care of the how. Let's dive into the process step by step.

@@ -154,9 +154,30 @@ public struct FilterCellView<FilteredItem>: View {
 6) Additionally, we trigger changes in the selection state by tapping on `FilterCellView`, allowing the user to enable or disable a criteria item (e.g., the "None" option in this case).
 - Tip: You can combine a custom views with the views provided by the framework, for example in our case we could use ``SFFilterCellView`` instead of creating `FilterCellView` if it meet your requirements.
 
+All nested nodes of the node will be loaded automatically when our custom view appears on the screen.
 
+### Using the custom view
+
+After the view is ready, we can use it to display the range filter component by calling the ``SFRangeFilter/displayIn(_:)`` method:
+
+```swift
+
+// MARK: Manufacture date filter
+
+SFRangeFilter(title: "Manufacture date")
+    .filter(by: \.manufactureDate)
+    .displayIn { node in
+        FilterDateRangeView(node: node)
+    }
+
+```
 
 ### Creating a custom view for a multi-selection filter
 
-Creation of multi-selection filter custom view almost the same as for range filter.
-The only difference related to nested nodes. When 
+Creating a custom view for a multi-selection filter is almost the same as for a range filter, but it uses a different type of node manager: ``SFFilterMultiSelectionNode``, which is designed for multi-selection filters.
+
+The main difference lies in the nested nodes. While a range filter node contains only a "None" option (if included), a multi-selection filter node contains child nodes corresponding to each criteria item, plus the "None" option if included.
+
+In a multi-selection filter component, the main node provides nested nodes for each criteria item. These nodes can be used to display the list of selectable options in the multi-selection view and to manage user interactions. To represent each criteria item, we can use either the `FilterCellView` implemented above or the default ``SFFilterCellView`` provided by the framework.
+
+The creation of a custom view for a multi-selection filter is briefly covered in the following article: <doc:Usage>

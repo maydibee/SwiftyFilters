@@ -27,6 +27,7 @@ import SwiftUI
 
 // MARK: - Filters cell view
 
+/// Default cell view for nested nodes state representation
 public struct SFFilterCellView<FilteredItem>: View {
     
     @StateObject var node: SFFilterNode<FilteredItem>

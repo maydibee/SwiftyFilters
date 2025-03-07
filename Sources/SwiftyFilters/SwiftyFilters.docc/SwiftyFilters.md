@@ -32,6 +32,7 @@ Building filters in SwiftUI just got easier. **SwiftyFilters** is a lightweight,
 ### Essentials
 
 - <doc:Usage>
+- <doc:CustomViewCreation>
 - ``SFFilter``
 - ``SFFiltersCore``
 - ``SFFilterRootView``
