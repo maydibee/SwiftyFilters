@@ -57,6 +57,16 @@ Building filters in SwiftUI just got easier. **SwiftyFilters** is a lightweight,
 - ``SFFilterKeywordsModel``
 - ``SFFilterRange``
 
+### Default views
+
+- ``SFFilterMultiSelectionDefaultView``
+- ``SFFilterKeywordsDefaultView``
+
+### Example views
+
+- ``SFFilterDateRangeView``
+- ``SFFilterSingleDateView``
+
 
 ### Imperative approach (**Deprecated**)
 

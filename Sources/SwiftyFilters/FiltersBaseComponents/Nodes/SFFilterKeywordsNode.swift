@@ -26,10 +26,14 @@ import Foundation
 import SwiftUI
 
 
-/// A specialized node for keyword-based filters.
+/// A specialized node manager for keyword-based filters.
 ///
 /// This node can be used as a view model for custom UI components. It manages the state of a keywords filter
 /// and provides a `keywordsModel` for UI updates.
+///
+/// ### Generic Parameters
+/// - `FilteredItem`: The type of data being filtered.
+/// - `CriteriaItem`: The type of criteria for filtering, confirms to `StringProtocol`.
 ///
 public class SFFilterKeywordsNode<FilteredItem, CriteriaItem: StringProtocol>: SFFilterNode<FilteredItem> {
     

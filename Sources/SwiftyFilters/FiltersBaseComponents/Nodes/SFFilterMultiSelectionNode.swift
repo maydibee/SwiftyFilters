@@ -25,10 +25,13 @@
 import SwiftUI
 
 
-/// A specialized node for multi-selection filters.
+/// A specialized node manager for multi-selection filters.
 ///
 /// This node can be used as a view model for custom UI components. It manages the state of a multi-selection filter
 /// and provides a view provider for creating custom views.
+///
+/// ### Generic Parameters
+/// - `FilteredItem`: The type of data being filtered.
 ///
 public class SFFilterMultiSelectionNode<FilteredItem>: SFFilterNode<FilteredItem> {
     

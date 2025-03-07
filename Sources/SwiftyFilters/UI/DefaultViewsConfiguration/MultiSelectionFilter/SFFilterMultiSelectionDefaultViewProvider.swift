@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 
-// TODO: add documentation
-
+/// Default view provider for multi-selection filter component
+///
 public class SFFilterMultiSelectionDefaultViewProvider<FilteredItem>: SFFilterMultiSelectionViewProvider {
     
     public init() {}

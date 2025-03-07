@@ -29,19 +29,28 @@ import SwiftUI
 
 /// The main entry point for working with filters in client code.
 ///
-/// This class allows client code to be informed when filters are active, build complex multi-level
-/// filter hierarchies using the `@SFFiltersBuilder` result builder, and participate in filtering data
+/// This class is the central component for managing and applying filters in SwiftyFilters. It acts as the state manager for your filter hierarchy, allowing you to build complex filter trees, track filter activity, and participate in filtering data
 /// by traversing the entire filter component tree.
 ///
 /// ### Example
 /// ```swift
-/// let filtersCore = SFFiltersCore<Landmark>(title: "Filters") {
-///     SFGroupedComponent(title: "Category") {
-///         categoryFilterComponent
-///         subcategoryFilterComponent
-///     }
-///     distanceRangeFilterComponent
+/// struct AircraftFilter: SFFilter {
+///
+///     let worker: AircraftListWorker
+///
+///     var body: [SFFilterComponent<Aircraft>] {
+///
+///        SFMultiSelectionFilter<Aircraft, AircraftType>(title: "Type")
+///            .fetchItems { await worker.fetchAllTypes() }
+///            .filter(by: \.type)
+///            .displayIn { node in
+///                 MultiSelectionFilterView(node: node)
+///            }
+///      }
 /// }
+///
+/// let filter = AircraftFilter(worker: worker)
+/// let filtersCore = SFFiltersCore<Aircraft>(title: "Filters", content: filter)
 /// ```
 ///
 public class SFFiltersCore<FilteredItem>: ObservableObject {
@@ -54,7 +63,7 @@ public class SFFiltersCore<FilteredItem>: ObservableObject {
     /// This property represents the top-level node of the filter hierarchy. It can be used for customizing
     /// behavior or creating a custom filter core. In most cases, it does not need to be accessed directly.
     ///
-    @Published public var rootNode: SFFilterNode<FilteredItem>? {
+    @Published var rootNode: SFFilterNode<FilteredItem>? {
         didSet {
             subscribeToIsItemEnabled()
         }
@@ -112,8 +121,6 @@ public class SFFiltersCore<FilteredItem>: ObservableObject {
         let master = SFFilterMasterComponent(title: self.title, nestedFilterItems: filterComponents)
         self.rootNode = SFFilterNode(component: master)
     }
-    
-    public func createT() {}
 }
 
 

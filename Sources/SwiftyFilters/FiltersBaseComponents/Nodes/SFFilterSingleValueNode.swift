@@ -26,11 +26,15 @@ import Foundation
 import SwiftUI
 
 
-/// A specialized node for single-value filters.
+/// A specialized node manager for single-value filters.
 ///
 /// This node can be used as a view model for custom UI components. It manages the state of a single-value filter
 /// and provides a `value` property for UI updates.
-/// 
+///
+/// ### Generic Parameters
+/// - `FilteredItem`: The type of data being filtered.
+/// - `CriteriaItem`: The type of criteria for filtering, confirms to `Equatable`.
+///
 public class SFFilterSingleValueNode<FilteredItem, CriteriaItem: Equatable>: SFFilterNode<FilteredItem> {
     
     private let view: ((SFFilterSingleValueNode<FilteredItem, CriteriaItem>) -> any View)

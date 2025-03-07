@@ -27,7 +27,9 @@ import SwiftUI
 
 // MARK: - Single date filter view
 
-struct SFFilterSingleDateView<FilteredItem>: View {
+/// Example view for single value filter component
+///
+public struct SFFilterSingleDateView<FilteredItem>: View {
     
     @StateObject var node: SFFilterSingleValueNode<FilteredItem, Date>
     
@@ -35,7 +37,7 @@ struct SFFilterSingleDateView<FilteredItem>: View {
     @Environment(\.resetString) private var resetString
     
     
-    var body: some View {
+    public var body: some View {
         List {
             Group {
                 if !node.nestedNodes.isEmpty {

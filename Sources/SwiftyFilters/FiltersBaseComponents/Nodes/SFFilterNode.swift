@@ -31,6 +31,9 @@ import SwiftUI
 /// This class is responsible for maintaining the state of a filter component, including its selection status,
 /// loading state, and nested child nodes.
 ///
+/// ### Generic Parameters
+/// - `FilteredItem`: The type of data being filtered.
+///
 public class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     
     /// A unique identifier for the node.

@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 
-// TODO: add documentation
-
+/// Default view provider for keyword-based filter component
+///
 public class SFFilterKeywordsDefaultViewProvider<FilteredItem>: SFFilterKeywordsViewProvider {
     
     public init() {}

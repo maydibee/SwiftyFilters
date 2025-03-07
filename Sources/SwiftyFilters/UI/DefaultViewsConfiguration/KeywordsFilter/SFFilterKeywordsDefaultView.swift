@@ -27,6 +27,8 @@ import SwiftUI
 
 // MARK: - Keywords filter view
 
+/// Default view for keyword-based filter component
+///
 public struct SFFilterKeywordsDefaultView<FilteredItem>: View {
     
     @StateObject public var node: SFFilterKeywordsNode<FilteredItem, String>

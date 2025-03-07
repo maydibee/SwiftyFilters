@@ -8,8 +8,10 @@
 import SwiftUI
 
 
-// TODO: Add documentation
+// MARK: - Multi-selection filter view
 
+/// Default view for multi-selection filter component
+///
 public struct SFFilterMultiSelectionDefaultView<FilteredItem>: View {
     
     @StateObject var node: SFFilterMultiSelectionNode<FilteredItem>

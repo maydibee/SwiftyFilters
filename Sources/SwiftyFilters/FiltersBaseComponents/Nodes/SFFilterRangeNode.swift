@@ -26,10 +26,14 @@ import Foundation
 import SwiftUI
 
 
-/// A specialized node for range-based filters.
+/// A specialized node manager for range-based filters.
 ///
 /// This node can be used as a view model for custom UI components. It manages the state of a range filter
 /// and provides a `range` model for UI updates.
+///
+/// ### Generic Parameters
+/// - `FilteredItem`: The type of data being filtered.
+/// - `CriteriaItem`: The type of criteria for filtering, confirmes to `Comparable`.
 ///
 public class SFFilterRangeNode<FilteredItem, CriteriaItem: Comparable>: SFFilterNode<FilteredItem> {
     
