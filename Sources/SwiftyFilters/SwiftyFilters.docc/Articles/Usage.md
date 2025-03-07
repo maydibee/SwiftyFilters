@@ -176,7 +176,7 @@ struct AircraftFilter: SFFilter {
     let worker: AircraftListWorker
     
     var body: [SFFilterComponent<Aircraft>] {
-        SFMultiSelectionFilter<Aircraft, AircraftType>(title: "Type")
+        SFMultiSelectionFilter(title: "Type")
             .fetchItems { await worker.fetchAllTypes() }
             .filter(by: \ .type)
             .displayIn { node in
@@ -205,13 +205,13 @@ struct AircraftFilter: SFFilter {
     
     var body: [SFFilterComponent<Aircraft>] {
         // MARK: - Aircraft Type Filter
-        SFMultiSelectionFilter<Aircraft, AircraftType>(title: "Type")
+        SFMultiSelectionFilter(title: "Type")
             .fetchItems { await worker.fetchAllTypes() }
             .filter(by: \ .type)
             .displayIn { MultiSelectionFilterView(node: $0) }
         
         // MARK: - Last Exploiter Filter (with default UI)
-        SFMultiSelectionFilter<Aircraft, AircraftExploiter>(title: "Last Exploiter")
+        SFMultiSelectionFilter(title: "Last Exploiter")
             .fetchItems { await worker.fetchAllExploiters() }
             .filter(byOptional: \ .lastExploater)
             .includeNone(withTitle: "New Aircraft")
@@ -233,7 +233,7 @@ struct AircraftFilter: SFFilter {
                     .filter(by: \ .manufactureDate)
                     .displayIn { SFFilterDateRangeView(node: $0) }
                 
-                SFSingleValueFilter<Aircraft, Bool>(title: "Is New?")
+                SFSingleValueFilter(title: "Is New?")
                     .filter(by: \ .isNew)
                     .displayIn { BooleanOptionFilterView(node: $0) }
             }
@@ -263,7 +263,7 @@ struct AircraftDatesFilter: SFFilter {
                     .filter(by: \ .manufactureDate)
                     .displayIn { SFFilterDateRangeView(node: $0) }
                 
-                SFSingleValueFilter<Aircraft, Bool>(title: "Is New?")
+                SFSingleValueFilter(title: "Is New?")
                     .filter(by: \ .isNew)
                     .displayIn { BooleanOptionFilterView(node: $0) }
             }
@@ -283,8 +283,8 @@ struct AircraftFilter: SFFilter {
     let worker: AircraftListWorker
     
     var body: [SFFilterComponent<Aircraft>] {
-        SFMultiSelectionFilter<Aircraft, AircraftType>(title: "Type") { ... }
-        SFMultiSelectionFilter<Aircraft, AircraftExploiter>(title: "Last Exploiter") { ... }
+        SFMultiSelectionFilter(title: "Type") { ... }
+        SFMultiSelectionFilter(title: "Last Exploiter") { ... }
         SFKeywordsFilter(title: "Remarks") { ... }
         
         // Reusable dates section

@@ -22,10 +22,9 @@ Building filters in SwiftUI just got easier. **SwiftyFilters** is a lightweight,
 ### Key Benefits:
 - **Declarative API**: Define filters using a SwiftUI-like syntax.
 - **Nested Filters**: Create complex filter hierarchies with ease.
-- **Lazy Loading**: Resources are loaded only when needed, ensuring optimal performance.
+- **Lazy Loading**: Resources are loaded only when needed.
 - **SwiftUI Integration**: Designed to work seamlessly with SwiftUI.
 - **Customizable**: Use default UI components or build your own.
-- **Type-Safe**: Compiler-checked filter logic for fewer runtime errors.
 
 ## Topics
 
