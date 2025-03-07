@@ -77,9 +77,6 @@ public struct SFFilterDateRangeView<FilteredItem>: View {
             )
         }
         .navigationTitle(node.title)
-        .task {
-            await self.node.loadFilterIfNeeded()
-        }
     }
 }
 
@@ -111,113 +108,5 @@ private extension SFFilterDateRangeView {
         DatePicker("", selection: date, in: range, displayedComponents: .date)
             .datePickerStyle(.wheel)
             .labelsHidden()
-    }
-}
-
-
-struct FilterDateRangeView<FilteredItem>: View {
-    
-    @StateObject var node: SFFilterRangeNode<FilteredItem, Date>
-    
-    @Environment(\.colorScheme) private var colorScheme
-
-    
-    var body: some View {
-        
-        Button {
-            node.resetAllFilters()
-        } label: {
-            Text("Reset")
-        }
-
-        List {
-            if !node.nestedNodes.isEmpty {
-                ForEach(node.nestedNodes) { child in
-                    FilterCellView(node: child)
-                        .onTapGesture {
-                            child.isItemEnabled.toggle()
-                        }
-                }
-            }
-            
-            dateSection(title: "Start date",
-                        date: Binding(
-                            get: { node.range.lowerBound ?? Date() },
-                            set: { newValue in
-                                node.range = SFFilterRange(lowerBound: newValue.startOfDay, upperBound: node.range.upperBound)
-                            }),
-                        range: Date.distantPast...(node.range.upperBound ?? Date.distantFuture),
-                        isActive: node.range.lowerBound != nil,
-                        onReset: { node.range = SFFilterRange(lowerBound: nil, upperBound: node.range.upperBound) }
-            )
-            
-            dateSection(title: "Finish date",
-                        date: Binding(
-                            get: { node.range.upperBound ?? Date() },
-                            set: { newValue in
-                                node.range = SFFilterRange(lowerBound: node.range.lowerBound, upperBound: newValue.endOfDay)
-                            }),
-                        range: (node.range.lowerBound ?? Date.distantPast)...Date.distantFuture,
-                        isActive: node.range.upperBound != nil,
-                        onReset: { node.range = SFFilterRange(lowerBound: node.range.lowerBound, upperBound: nil) }
-            )
-        }
-        .navigationTitle(node.title)
-        .task {
-            await self.node.loadFilterIfNeeded()
-        }
-    }
-}
-
-
-// MARK: - UI Components
-
-private extension FilterDateRangeView {
-    
-    func dateSection(title: String, date: Binding<Date>, range: ClosedRange<Date>, isActive: Bool, onReset: @escaping () -> Void) -> some View {
-        VStack(spacing: 8) {
-            headerView(title: title, isActive: isActive, onReset: onReset)
-            datePickerView(date: date, range: range)
-        }
-    }
-    
-    func headerView(title: String, isActive: Bool, onReset: @escaping () -> Void) -> some View {
-        HStack {
-            Text(title)
-                .bold()
-                .foregroundStyle(isActive ? .blue : colorScheme == .dark ? .white : .black)
-            Spacer()
-            Button("Reset", action: onReset)
-                .disabled(!isActive)
-        }
-        .padding(.horizontal, 5)
-    }
-    
-    func datePickerView(date: Binding<Date>, range: ClosedRange<Date>) -> some View {
-        DatePicker("", selection: date, in: range, displayedComponents: .date)
-            .datePickerStyle(.wheel)
-            .labelsHidden()
-    }
-}
-
-
-public struct FilterCellView<FilteredItem>: View {
-    
-    @StateObject var node: SFFilterNode<FilteredItem>
-    
-    public var body: some View {
-        HStack {
-            Text(node.title)
-            Spacer()
-            Group {
-                if node.isItemEnabled {
-                    Image(systemName: "checkmark.circle.fill")
-                } else {
-                    Image(systemName: "circle")
-                }
-            }
-            .foregroundColor(.blue)
-        }
-        .contentShape(Rectangle())
     }
 }

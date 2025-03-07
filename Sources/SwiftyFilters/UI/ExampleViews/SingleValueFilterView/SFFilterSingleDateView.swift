@@ -60,9 +60,6 @@ public struct SFFilterSingleDateView<FilteredItem>: View {
             }
         }
         .navigationTitle(node.title)
-        .task {
-            await self.node.loadFilterIfNeeded()
-        }
     }
 }
 

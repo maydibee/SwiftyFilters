@@ -70,9 +70,6 @@ public struct SFFilterKeywordsDefaultView<FilteredItem>: View {
             .animation(.easeInOut , value: enteredText)
         }
         .navigationTitle(node.title)
-        .task {
-            await self.node.loadFilterIfNeeded()
-        }
     }
 }
 

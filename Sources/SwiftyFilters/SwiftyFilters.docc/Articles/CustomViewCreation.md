@@ -14,39 +14,149 @@ Learn how to create custom views for filter components
 
 ## Overview
 
-Swifty filters supply us with default views for filter components like ``SFMultiSelectionFilter`` and ``SFKeywordsFilter``. However SwiftyFilters is a flexible from the prospective of UI as well since it allows you to use your own UI implememtations for filter components in case if default implementations are not following your requirements or while using filters such as ``SFRangeFilter`` or ``SFSingleValueFilter`` without default views. By the way SwiftyFilters provides us with example views for these filters that can be copy to your project and customised according to your requirements or even can be used as a reference for your custom UI for filter component.
+SwiftyFilters provides default views for filter components like ``SFMultiSelectionFilter`` and ``SFKeywordsFilter``. However, SwiftyFilters is also flexible in terms of UI, allowing you to implement your own custom UI for filter components if the default implementations do not meet your requirements. This is particularly useful when working with filters such as ``SFRangeFilter`` or ``SFSingleValueFilter``, which do not come with default views. 
 
+Additionally, SwiftyFilters offers example views for these filters, which you can copy into your project, customize as needed, or use as references for creating your own custom UI for filter components.
 
-In this article we will consider how to create a custom filter views by example of creating views for ``SFRangeFilter`` and ``SFMultiSelectionFilter``. For other filter types the strategy will be almost the same.
+In this article, we will explore how to create custom filter views using ``SFRangeFilter`` and ``SFMultiSelectionFilter`` as examples. The general approach will be similar for other filter types.
 
-### Creating custom view for range filter
+### Creating a custom view for a range filter
 
-Let's assume that we need a view that will be responsible for representing dates range filter. 
-View implememntation and its controlls may be different across implementations of views for certain filter, but the key thing is that your view need to embed corresponding type of node manager into itself and operates with it like with view model. For each type of filter designed specific node manager, but all nodes has almost the same role namely:
+Let's assume we need a view responsible for representing a date range filter. 
 
-- Providing component title specified when defining filter
-- Managing state of filter component, like filter or loading activity
-- Providing model of critaria items for updates
-- Providing the ability for bulk oberations like filter reseting 
+The implementation and controls of the view may vary depending on specific needs, but the key aspect is that your view should embed the corresponding type of node manager and operate with it as a view model. Each filter type has a dedicated node manager, but all nodes share a common purpose:
 
-Let's cut to the chase and implement custom date range view and review how to operate with view node:
+- Providing the component title specified when defining the filter
+- Managing the state of the filter component, such as filter activity or loading state
+- Providing a model of criteria items for updates
+- Enabling bulk operations like resetting the filter
 
-Here is how the view may looks like:
+Now, let's dive into the implementation of a custom date range view and see how to interact with the view node:
+
+Here’s how the view might look:
 
 ```swift
+import SwiftyFilters
 
 
-// Code here
+struct FilterDateRangeView<FilteredItem>: View {
+    
+    @StateObject var node: SFFilterRangeNode<FilteredItem, Date>
+    
+    @Environment(\.colorScheme) private var colorScheme
+
+    
+    var body: some View {
+        
+        Button {
+            node.resetAllFilters()
+        } label: {
+            Text("Reset")
+        }
+
+        List {
+            if !node.nestedNodes.isEmpty {
+                ForEach(node.nestedNodes) { child in
+                    FilterCellView(node: child)
+                        .onTapGesture {
+                            child.isItemEnabled.toggle()
+                        }
+                }
+            }
+            
+            dateSection(title: "Start date",
+                        date: Binding(
+                            get: { node.range.lowerBound ?? Date() },
+                            set: { newValue in
+                                node.range = SFFilterRange(lowerBound: newValue.startOfDay, upperBound: node.range.upperBound)
+                            }),
+                        range: Date.distantPast...(node.range.upperBound ?? Date.distantFuture),
+                        isActive: node.range.lowerBound != nil,
+                        onReset: { node.range = SFFilterRange(lowerBound: nil, upperBound: node.range.upperBound) }
+            )
+            
+            dateSection(title: "Finish date",
+                        date: Binding(
+                            get: { node.range.upperBound ?? Date() },
+                            set: { newValue in
+                                node.range = SFFilterRange(lowerBound: node.range.lowerBound, upperBound: newValue.endOfDay)
+                            }),
+                        range: (node.range.lowerBound ?? Date.distantPast)...Date.distantFuture,
+                        isActive: node.range.upperBound != nil,
+                        onReset: { node.range = SFFilterRange(lowerBound: node.range.lowerBound, upperBound: nil) }
+            )
+        }
+        .navigationTitle(node.title)
+    }
+}
 
 
+// MARK: - UI Components
+
+private extension FilterDateRangeView {
+    
+    func dateSection(title: String, date: Binding<Date>, range: ClosedRange<Date>, isActive: Bool, onReset: @escaping () -> Void) -> some View {
+        VStack(spacing: 8) {
+            headerView(title: title, isActive: isActive, onReset: onReset)
+            datePickerView(date: date, range: range)
+        }
+    }
+    
+    func headerView(title: String, isActive: Bool, onReset: @escaping () -> Void) -> some View {
+        HStack {
+            Text(title)
+                .bold()
+                .foregroundStyle(isActive ? .blue : colorScheme == .dark ? .white : .black)
+            Spacer()
+            Button("Reset", action: onReset)
+                .disabled(!isActive)
+        }
+        .padding(.horizontal, 5)
+    }
+    
+    func datePickerView(date: Binding<Date>, range: ClosedRange<Date>) -> some View {
+        DatePicker("", selection: date, in: range, displayedComponents: .date)
+            .datePickerStyle(.wheel)
+            .labelsHidden()
+    }
+}
+
+
+public struct FilterCellView<FilteredItem>: View {
+    
+    @StateObject var node: SFFilterNode<FilteredItem>
+    
+    public var body: some View {
+        HStack {
+            Text(node.title)
+            Spacer()
+            Group {
+                if node.isItemEnabled {
+                    Image(systemName: "checkmark.circle.fill")
+                } else {
+                    Image(systemName: "circle")
+                }
+            }
+            .foregroundColor(.blue)
+        }
+        .contentShape(Rectangle())
+    }
+}
 ```
 
-What's happening here?
+### What happens in this implementation?
 
-1) We have embedded ``SFFilterRangeNode`` into the view to operate with it as with view model that have a type of the second generic type as Date, because our aim is to create a dates range filter. 
-2) We are using ``SFFilterRangeNode/range``  model from the node to obtain dates range lower and upper bounds and modify or reset it as well
-3) Title is beight used for representing navigation title
-4) We have creted the separate button responsible for filter resetting by call ``SFFilterRangeNode/resetAllFilters()`` method.
-5) We are using ``SFFilterNode/loadFilterIfNeeded()`` to load all nested nodes for the filter. In case of ``SFFilterRangeNode`` after loading nested nodes will contain only None option if it's being included by ``SFRangeFilter/includeNone(withTitle:)`` method. So for representing it we are using a ForEach view and pass child node to implemented `FilterCellView` that is representing the title of child node and the state(is selected or not). 
-6) You might also noticed that we triggers child selection state by tapping on `FilterCellView` in order to enable or disable criteria item (None option in our case).
+1) We embed ``SFFilterRangeNode`` into the view and use it as a view model. Since we are creating a date range filter, we specify `Date` as the type for the second generic parameter.
+2) We use the ``SFFilterRangeNode/range`` model from the node to obtain and modify the lower and upper bounds of the date range, as well as to reset it if needed.
+3) The title is used to represent the navigation title.
+4) We create a separate button responsible for resetting the filter by calling the ``SFFilterRangeNode/resetAllFilters()`` method.
+5) All nested nodes of the node will be loaded automatically when our custom view appears on the screen. In the case of ``SFFilterRangeNode``, after loading, the nested nodes will contain only the "None" option if it has been included via the ``SFRangeFilter/includeNone(withTitle:)`` method. To display this, we use a `ForEach` view, passing the child node to an implemented `FilterCellView`, which represents the title and selection state of the child node.
+6) Additionally, we trigger changes in the selection state by tapping on `FilterCellView`, allowing the user to enable or disable a criteria item (e.g., the "None" option in this case).
+- Tip: You can combine a custom views with the views provided by the framework, for example in our case we could use ``SFFilterCellView`` instead of creating `FilterCellView` if it meet your requirements.
 
+
+
+### Creating a custom view for a multi-selection filter
+
+Creation of multi-selection filter custom view almost the same as for range filter.
+The only difference related to nested nodes. When 
