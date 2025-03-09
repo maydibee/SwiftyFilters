@@ -1,5 +1,5 @@
 
-import SwiftyFilters
+@testable import SwiftyFilters
 
 
 final class SFFilterComponentStub<FilteredItem>: SFFilterComponent<FilteredItem> {

@@ -23,22 +23,40 @@
 
 
 import Foundation
+import SwiftUI
 
 
-// MARK: Filter node (API-RW)
-
-open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
+/// A node in the filter tree that manages the state of the current filter component and its child nodes.
+///
+/// This class is responsible for maintaining the state of a filter component, including its selection status,
+/// loading state, and nested child nodes.
+///
+/// ### Generic Parameters
+/// - `FilteredItem`: The type of data being filtered.
+///
+public class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     
+    /// A unique identifier for the node.
     public let id = UUID()
-    let title: String
+    
+    /// The title of the filter node, which matches the title of the associated filter component.
+    public let title: String
     let isComposite: Bool
     
     weak var parent: SFFilterNode?
     
     let component: SFFilterComponent<FilteredItem>
     
+    /// A flag indicating whether the node is currently loading data.
     @Published public var isLoading: Bool = false
+    
+    /// The child nodes of the current node.
     @Published public var nestedNodes: [SFFilterNode<FilteredItem>] = []
+    
+    /// A flag indicating whether the current node is selected.
+    ///
+    /// When set, it updates the state of the associated component and propagates the change to the parent node.
+    ///
     @Published public var isItemEnabled: Bool {
         didSet {
             component.isItemEnabled = isItemEnabled
@@ -47,36 +65,37 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     }
     
     
-    public init(component: SFFilterComponent<FilteredItem>) {
+    init(component: SFFilterComponent<FilteredItem>) {
         self.component = component
         self.title = component.title
         self.isComposite = component.isComposite
         self.isItemEnabled = component.isItemEnabled
     }
     
-    open func resetAllFilters() {
+    /// Resets the filter tree starting from the current node.
+    ///
+    /// All nested nodes are also reset.
+    ///
+    public func resetAllFilters() {
         isItemEnabled = true
         nestedNodes.forEach { node in
             node.resetAllFilters()
         }
     }
     
-    open func deselectAll() {
+    /// Deselects all nodes in the filter tree starting from the current node.
+    ///
+    public func deselectAll() {
         isItemEnabled = false
         nestedNodes.forEach { node in
             node.deselectAll()
         }
     }
-    
-    open func getFilteredData(from items: [FilteredItem]) -> [FilteredItem] {
-        var filteredArray = component.getFilteredItems(for: items)
-        nestedNodes.forEach { nestedNode in
-            filteredArray = nestedNode.getFilteredData(from: filteredArray)
-        }
-        return filteredArray
-    }
-    
-    open func loadFilterIfNeeded() async {
+
+    /// Loads filter items or child nodes if they are not already loaded.
+    ///
+    /// Sets `isLoading` to `true` during the loading process.
+    public func loadFilterIfNeeded() async {
         guard nestedNodes.isEmpty else { return }
 
         await MainActor.run { isLoading = true }
@@ -92,9 +111,21 @@ open class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
             isLoading = false
         }
     }
+    
+    func getFilteredData(from items: [FilteredItem]) -> [FilteredItem] {
+        var filteredArray = component.getFilteredItems(for: items)
+        nestedNodes.forEach { nestedNode in
+            filteredArray = nestedNode.getFilteredData(from: filteredArray)
+        }
+        return filteredArray
+    }
 
-    open func updateState() {
+    func updateState() {
         self.component.updateState()
         self.isItemEnabled = component.isItemEnabled
+    }
+    
+    func makeView() -> any View {
+        Text("No view provided")
     }
 }

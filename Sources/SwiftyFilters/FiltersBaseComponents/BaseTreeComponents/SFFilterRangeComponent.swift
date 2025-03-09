@@ -23,23 +23,52 @@
 
 
 import Foundation
+import SwiftUI
 
 
-// MARK: - Range filter component (API-RO)
+// MARK: - Range filter component
 
-public class SFFilterRangeComponent<FilteredItem, CriteriaItem: Comparable>: SFFilterComponent<FilteredItem> {
+class SFFilterRangeComponent<FilteredItem, CriteriaItem: Comparable>: SFFilterComponent<FilteredItem> {
     
     private let filter: SFFilterRangeContainer<FilteredItem, CriteriaItem>
+    private let view: ((SFFilterRangeNode<FilteredItem, CriteriaItem>) -> any View)
     private let noneItemTitle: String
     
     
-    public init(title: String, noneItemTitle: String, filter: SFFilterRangeContainer<FilteredItem, CriteriaItem>) {
+    init(title: String,
+         noneItemTitle: String,
+         filter: SFFilterRangeContainer<FilteredItem, CriteriaItem>,
+         view: @escaping ((SFFilterRangeNode<FilteredItem, CriteriaItem>) -> any View)
+    ) {
         self.noneItemTitle = noneItemTitle
         self.filter = filter
-        super.init(title: title, isItemEnabled: !filter.isFilterActive, isComposite: false)
+        self.view = view
+        super.init(
+            title: title,
+            isItemEnabled: !filter.isFilterActive,
+            isComposite: false
+        )
     }
     
-    public override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
+    convenience init(title: String,
+                noneItemTitle: String,
+                filter: SFFilterRangeContainer<FilteredItem, CriteriaItem>,
+                viewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>
+    ) {
+        
+        let view = { node in
+            viewProvider.makeView(with: node)
+        }
+        
+        self.init(
+            title: title,
+            noneItemTitle: noneItemTitle,
+            filter: filter,
+            view: view
+        )
+    }
+    
+    override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
         var nestedItems: [SFFilterComponent<FilteredItem>] = []
         
         if self.filter.isNoneIncluded {
@@ -50,19 +79,19 @@ public class SFFilterRangeComponent<FilteredItem, CriteriaItem: Comparable>: SFF
         return nestedItems
     }
     
-    public override func updateState() {
+    override func updateState() {
         self.isItemEnabled = !filter.isFilterActive
     }
     
-    public func updateRange(_ range: SFFilterRange<CriteriaItem>) {
+    func updateRange(_ range: SFFilterRange<CriteriaItem>) {
         filter.range = range
     }
     
-    public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
-        SFFilterRangeNode<FilteredItem, CriteriaItem>(component: self)
+    override func createRelatedNode() -> SFFilterNode<FilteredItem> {
+        SFFilterRangeNode<FilteredItem, CriteriaItem>(component: self, view: self.view)
     }
     
-    public override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
+    override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
         return filter.filterItems(inputItems: items)
     }
 }

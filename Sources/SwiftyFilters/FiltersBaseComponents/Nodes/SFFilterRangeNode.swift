@@ -23,16 +23,30 @@
 
 
 import Foundation
+import SwiftUI
 
 
-// MARK: - Range filter node (API-RO)
-
+/// A specialized node manager for range-based filters.
+///
+/// This node can be used as a view model for custom UI components. It manages the state of a range filter
+/// and provides a `range` model for UI updates.
+///
+/// ### Generic Parameters
+/// - `FilteredItem`: The type of data being filtered.
+/// - `CriteriaItem`: The type of criteria for filtering, confirmes to `Comparable`.
+///
 public class SFFilterRangeNode<FilteredItem, CriteriaItem: Comparable>: SFFilterNode<FilteredItem> {
+    
+    private let view: ((SFFilterRangeNode<FilteredItem, CriteriaItem>) -> any View)
     
     lazy private var rangeFilterComponent: SFFilterRangeComponent<FilteredItem, CriteriaItem>? = {
         component as? SFFilterRangeComponent<FilteredItem, CriteriaItem>
     }()
 
+    /// A model representing the range for UI updates.
+    ///
+    /// When set, it updates the associated filter component and propagates the change to the parent node.
+    /// 
     @Published public var range: SFFilterRange<CriteriaItem> = .init(lowerBound: nil, upperBound: nil) {
         didSet {
             rangeFilterComponent?.updateRange(range)
@@ -41,11 +55,21 @@ public class SFFilterRangeNode<FilteredItem, CriteriaItem: Comparable>: SFFilter
         }
     }
     
+
+    init(component: SFFilterComponent<FilteredItem>, view: @escaping ((SFFilterRangeNode<FilteredItem, CriteriaItem>) -> any View)) {
+        self.view = view
+        super.init(component: component)
+    }
+    
+    /// Resets the range model and all nested nodes.
     override public func resetAllFilters() {
         range = .init(lowerBound: nil, upperBound: nil)
         nestedNodes.forEach { node in
             node.resetAllFilters()
         }
     }
+    
+    override func makeView() -> any View {
+        view(self)
+    }
 }
-

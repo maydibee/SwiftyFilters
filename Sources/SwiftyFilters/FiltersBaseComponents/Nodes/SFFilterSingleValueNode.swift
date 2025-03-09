@@ -23,16 +23,31 @@
 
 
 import Foundation
+import SwiftUI
 
 
-// MARK: - Single value filter node (API-RO)
-
+/// A specialized node manager for single-value filters.
+///
+/// This node can be used as a view model for custom UI components. It manages the state of a single-value filter
+/// and provides a `value` property for UI updates.
+///
+/// ### Generic Parameters
+/// - `FilteredItem`: The type of data being filtered.
+/// - `CriteriaItem`: The type of criteria for filtering, confirms to `Equatable`.
+///
 public class SFFilterSingleValueNode<FilteredItem, CriteriaItem: Equatable>: SFFilterNode<FilteredItem> {
+    
+    private let view: ((SFFilterSingleValueNode<FilteredItem, CriteriaItem>) -> any View)
     
     lazy private var singleValueFilterComponent: SFFilterSingleValueComponent<FilteredItem, CriteriaItem>? = {
         component as? SFFilterSingleValueComponent<FilteredItem, CriteriaItem>
     }()
     
+    
+    /// A model representing the value for UI updates.
+    ///
+    /// When set, it updates the associated filter component and propagates the change to the parent node.
+    ///
     @Published public var value: CriteriaItem? {
         didSet {
             singleValueFilterComponent?.updateValue(value)
@@ -40,11 +55,24 @@ public class SFFilterSingleValueNode<FilteredItem, CriteriaItem: Equatable>: SFF
             parent?.updateState()
         }
     }
+    
+    
+    init(component: SFFilterComponent<FilteredItem>, view: @escaping ((SFFilterSingleValueNode<FilteredItem, CriteriaItem>) -> any View)) {
+        self.view = view
+        super.init(component: component)
+    }
 
+    /// Resets the filter tree starting from the current node.
+    ///
+    /// All nested nodes are also reset.
     public override func resetAllFilters() {
         value = nil
         nestedNodes.forEach { node in
             node.resetAllFilters()
         }
+    }
+    
+    override func makeView() -> any View {
+        view(self)
     }
 }

@@ -23,38 +23,48 @@
 
 
 import Foundation
+import SwiftUI
 
 
 // MARK: - Filter component base class
 
-open class SFFilterComponent<FilteredItem> {
+/// A base class representing a filter component.
+///
+/// Instances of this class (or its subclasses) are created by the client code using the `SFFilterComponentsFactory`
+/// and are used to build the filter tree.
+///
+public class SFFilterComponent<FilteredItem> {
     
-    open var title: String
-    open var isItemEnabled: Bool
-    open var isComposite: Bool
-    open var isAllActionIncluded: Bool
+    var title: String
+    var isItemEnabled: Bool
+    var isComposite: Bool
+    var isAllActionIncluded: Bool
     
     
-    public init(title: String, isItemEnabled: Bool, isComposite: Bool, isAllActionIncluded: Bool = false) {
+    init(title: String, isItemEnabled: Bool, isComposite: Bool, isAllActionIncluded: Bool = false) {
         self.title = title
         self.isItemEnabled = isItemEnabled
         self.isComposite = isComposite
         self.isAllActionIncluded = isAllActionIncluded
     }
     
-    open func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
+    func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
         fatalError("Must be overridden")
     }
     
-    open func updateState() {
+    func updateState() {
         fatalError("Must be overridden")
     }
     
-    open func createRelatedNode() -> SFFilterNode<FilteredItem> {
+    func createRelatedNode() -> SFFilterNode<FilteredItem> {
         fatalError("Must be overridden")
     }
     
-    open func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
+    func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
         return items
+    }
+    
+    func makeView() -> any View {
+        Text("View not defined")
     }
 }

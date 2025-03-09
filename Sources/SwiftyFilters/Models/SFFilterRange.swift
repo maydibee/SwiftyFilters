@@ -44,6 +44,11 @@ public struct SFFilterRange<T: Comparable> {
     /// The upper bound of the range. If `nil`, the range has no upper limit.
     public let upperBound: T?
     
+    public init(lowerBound: T?, upperBound: T?) {
+        self.lowerBound = lowerBound
+        self.upperBound = upperBound
+    }
+    
     /// Checks if a value falls within the range.
     ///
     /// - Parameter value: The value to check.

@@ -23,16 +23,30 @@
 
 
 import Foundation
+import SwiftUI
 
 
-// MARK: - Keywords container filter node (API-RO)
-
+/// A specialized node manager for keyword-based filters.
+///
+/// This node can be used as a view model for custom UI components. It manages the state of a keywords filter
+/// and provides a `keywordsModel` for UI updates.
+///
+/// ### Generic Parameters
+/// - `FilteredItem`: The type of data being filtered.
+/// - `CriteriaItem`: The type of criteria for filtering, confirms to `StringProtocol`.
+///
 public class SFFilterKeywordsNode<FilteredItem, CriteriaItem: StringProtocol>: SFFilterNode<FilteredItem> {
+    
+    private let view: ((SFFilterKeywordsNode<FilteredItem, CriteriaItem>) -> any View)
     
     lazy private var keywordsFilterComponent: SFFilterKeyWordsComponent<FilteredItem, CriteriaItem>? = {
         component as? SFFilterKeyWordsComponent<FilteredItem, CriteriaItem>
     }()
     
+    /// A model representing the keywords for UI updates.
+    ///
+    /// When set, it updates the associated filter component and propagates the change to the parent node.
+    ///
     @Published public var keywordsModel: SFFilterKeywordsModel<CriteriaItem> = .init() {
         didSet {
             keywordsFilterComponent?.updateKeywords(keywordsModel)
@@ -41,10 +55,22 @@ public class SFFilterKeywordsNode<FilteredItem, CriteriaItem: StringProtocol>: S
         }
     }
     
+    
+    init(component: SFFilterComponent<FilteredItem>, view: @escaping ((SFFilterKeywordsNode<FilteredItem, CriteriaItem>) -> any View)) {
+        self.view = view
+        super.init(component: component)
+    }
+    
+    /// Resets the keywords model and all nested nodes.
+    ///
     public override func resetAllFilters() {
         keywordsModel.reset()
         nestedNodes.forEach { node in
             node.resetAllFilters()
         }
+    }
+    
+    override func makeView() -> any View {
+        view(self)
     }
 }

@@ -32,22 +32,25 @@ import Foundation
 ///
 /// ### Example
 /// ```swift
-/// @SFFiltersBuilder<Landmark>
-/// static func buildFilters() -> [SFFilterComponent<Landmark>] {
 ///
-///     SFGroupedComponent(title: "Status") {
-///        statusesFilterComponent
+///SFGroupedComponent(title: "Age") {
 ///
-///         SFGroupedComponent(title: "Status history") {
-///             statusChangeRemark
+///    // MARK: Manufacture date filter
 ///
-///             SFGroupedComponent(title: "Status dates") {
-///                 statusChangeDateFilterComponent
-///                 statusInitialSetDateFilterComponent
-///             }
-///         }
-///     }
-/// }  
+///    SFRangeFilter(title: "Manufacture date")
+///        .filter(by: \.manufactureDate)
+///        .displayIn { node in
+///            SFFilterDateRangeView(node: node)
+///        }
+///
+///    // MARK: Newness filter
+///
+///    SFSingleValueFilter(title: "Is new")
+///        .filter(by: \.isNew)
+///        .displayIn { node in
+///            BooleanOptionFilterView(node: node)
+///        }
+///}
 /// ```
 ///
 public struct SFGroupedComponent<FilteredItem> {
