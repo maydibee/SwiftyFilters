@@ -111,5 +111,9 @@ func applyFilters() {
 
 ## 📝 Documentation
 
-Documentation is coming soon! Stay tuned for detailed guides and API references.
+Read the full documentation here:  
+👉 [SwiftyFilters Documentation](https://maydibee.github.io/SwiftyFilters/documentation/swiftyfilters/)
+
+
+👉 [Usage](https://maydibee.github.io/SwiftyFilters/documentation/swiftyfilters/usage)
 
