@@ -25,17 +25,17 @@
 import Foundation
 
 
-// MARK: - Multi-select filter container (API-RO)
+// MARK: - Multi-select filter container
 
-public class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>: SFFilterNullableContainer {
+class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Equatable & SFFiltersTitleable>: SFFilterNullableContainer {
     
-    public var allItems = Array<CriteriaItem>()
-    public var selectedItems = Array<CriteriaItem>()
+    var allItems = Array<CriteriaItem>()
+    var selectedItems = Array<CriteriaItem>()
     
-    public var isNoneEnabled: Bool
-    public let isNoneIncluded: Bool
+    var isNoneEnabled: Bool
+    let isNoneIncluded: Bool
     
-    public var isFilterActive: Bool {
+    var isFilterActive: Bool {
         let isAllSelected: Bool = allItems.count == selectedItems.count
         if isNoneIncluded {
             return !isAllSelected || !isNoneEnabled
@@ -43,33 +43,51 @@ public class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Identif
         return !isAllSelected
     }
     
-    private let resolver: any SFFilterResolver<FilteredItem, [CriteriaItem]>
-    private let fetcher: any SFFilterFetcher<CriteriaItem>
+    private var criteriaItemsDatasource: (() async -> [CriteriaItem])
+    private var filterBehavior: (([FilteredItem], [CriteriaItem], _ isNoneEnabled: Bool) -> [FilteredItem])
     
     
-    public init(resolver: any SFFilterResolver<FilteredItem, [CriteriaItem]>,
-                fetcher: any SFFilterFetcher<CriteriaItem>,
-                isNoneIncluded: Bool = false) {
-        self.resolver = resolver
-        self.fetcher = fetcher
+    init(criteriaItemsDatasource: @escaping (() async -> [CriteriaItem]),
+         filterBehavior: @escaping (([FilteredItem], [CriteriaItem], _ isNoneEnabled: Bool) -> [FilteredItem]),
+         isNoneIncluded: Bool = false) {
+        
+        self.criteriaItemsDatasource = criteriaItemsDatasource
+        self.filterBehavior = filterBehavior
+        
         self.isNoneIncluded = isNoneIncluded
         self.isNoneEnabled = isNoneIncluded
     }
     
+    convenience init(resolver: any SFFilterResolver<FilteredItem, [CriteriaItem]>,
+         fetcher: any SFFilterFetcher<CriteriaItem>,
+         isNoneIncluded: Bool = false) {
+        
+        let datasource = fetcher.fetchFilterItems
+        let filterBehavior = { inputItems, criteriaItem, isNoneEnabled in
+            resolver.filterItems(inputItems, basedOn: criteriaItem, isNoneEnabled: isNoneEnabled)
+        }
+        
+        self.init(
+            criteriaItemsDatasource: datasource,
+            filterBehavior: filterBehavior,
+            isNoneIncluded: isNoneIncluded
+        )
+    }
+    
     @discardableResult
-    public func initializeFilter() async -> [CriteriaItem] {
-        let fetchedItems = await self.fetcher.fetchFilterItems()
+    func initializeFilter() async -> [CriteriaItem] {
+        let fetchedItems = await self.criteriaItemsDatasource()
         self.allItems = fetchedItems
         self.selectedItems = fetchedItems
         return fetchedItems
     }
     
-    public func filterItems(inputItems: [FilteredItem]) -> [FilteredItem] {
+    func filterItems(inputItems: [FilteredItem]) -> [FilteredItem] {
         guard isFilterActive else { return inputItems }
-        return self.resolver.filterItems(inputItems, basedOn: self.selectedItems, isNoneEnabled: isNoneEnabled)
+        return self.filterBehavior(inputItems, self.selectedItems, isNoneEnabled)
     }
     
-    public func isItemSelected(_ item: CriteriaItem) -> Bool {
-        self.selectedItems.contains { $0.id == item.id }
+    func isItemSelected(_ item: CriteriaItem) -> Bool {
+        self.selectedItems.contains { $0 == item }
     }
 }

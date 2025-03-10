@@ -23,25 +23,51 @@
 
 
 import Foundation
+import SwiftUI
 
 
-// MARK: - Single value filter component (API-RO)
+// MARK: - Single value filter component
 
-public class SFFilterSingleValueComponent<FilteredItem, CriteriaItem: Equatable>: SFFilterComponent<FilteredItem> {
+class SFFilterSingleValueComponent<FilteredItem, CriteriaItem: Equatable>: SFFilterComponent<FilteredItem> {
     
     private let filter: SFFilterSingleValueContainer<FilteredItem, CriteriaItem>
+    private let view: ((SFFilterSingleValueNode<FilteredItem, CriteriaItem>) -> any View)
     private let noneItemTitle: String
     
     
-    public init(title: String, noneItemTitle: String, filter: SFFilterSingleValueContainer<FilteredItem, CriteriaItem>) {
+    init(title: String,
+         noneItemTitle: String,
+         filter: SFFilterSingleValueContainer<FilteredItem, CriteriaItem>,
+         view: @escaping ((SFFilterSingleValueNode<FilteredItem, CriteriaItem>) -> any View)
+    ) {
         self.noneItemTitle = noneItemTitle
         self.filter = filter
-        super.init(title: title,
-                   isItemEnabled: !filter.isFilterActive,
-                   isComposite: false)
+        self.view = view
+        super.init(
+            title: title,
+            isItemEnabled: !filter.isFilterActive,
+            isComposite: false
+        )
     }
     
-    public override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
+    convenience init(title: String,
+                noneItemTitle: String,
+                filter: SFFilterSingleValueContainer<FilteredItem, CriteriaItem>,
+                viewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>
+    ) {
+        let view = { node in
+            viewProvider.makeView(with: node)
+        }
+        
+        self.init(
+            title: title,
+            noneItemTitle: noneItemTitle,
+            filter: filter,
+            view: view
+        )
+    }
+    
+    override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
         var nestedItems: [SFFilterComponent<FilteredItem>] = []
         
         if self.filter.isNoneIncluded {
@@ -52,19 +78,19 @@ public class SFFilterSingleValueComponent<FilteredItem, CriteriaItem: Equatable>
         return nestedItems
     }
     
-    public override func updateState() {
+    override func updateState() {
         self.isItemEnabled = !filter.isFilterActive
     }
     
-    public func updateValue(_ value: CriteriaItem?) {
+    func updateValue(_ value: CriteriaItem?) {
         filter.value = value
     }
     
-    public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
-        SFFilterSingleValueNode<FilteredItem, CriteriaItem>(component: self)
+    override func createRelatedNode() -> SFFilterNode<FilteredItem> {
+        SFFilterSingleValueNode<FilteredItem, CriteriaItem>(component: self, view: self.view)
     }
     
-    public override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
+    override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
         return filter.filterItems(inputItems: items)
     }
 }

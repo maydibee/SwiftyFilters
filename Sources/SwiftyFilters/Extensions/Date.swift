@@ -24,7 +24,8 @@
 
 import Foundation
 
-public extension Date {
+
+extension Date {
 
     var startOfDay: Date {
         Calendar.current.startOfDay(for: self)

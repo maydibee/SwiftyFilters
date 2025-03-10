@@ -1,0 +1,12 @@
+{
+  "theme": {
+    "color": {
+      "documentation-intro-fill": "linear-gradient(90deg, #5a4064, #bbe9e4)",
+      "fill": {
+        "dark": "#1b141f",
+        "light": "#f3e6fa"
+      },
+      "nav-solid-background": "var(--color-fill)"
+    }
+  }
+}

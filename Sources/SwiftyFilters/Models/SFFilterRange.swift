@@ -24,12 +24,36 @@
 
 import Foundation
 
-
+/// A container representing a range of comparable values.
+///
+/// This struct is used as criteria in range-based filters to define a range with optional
+/// lower and upper bounds. It provides a method to check if a value falls within the range.
+///
+/// ### Example of internal usage
+/// ```swift
+/// let range = SFFilterRange(lowerBound: 5, upperBound: 10)
+/// print(range.contains(7)) // true
+/// print(range.contains(12)) // false
+/// ```
+///
 public struct SFFilterRange<T: Comparable> {
     
-    let lowerBound: T?
-    let upperBound: T?
+    /// The lower bound of the range. If `nil`, the range has no lower limit.
+    public let lowerBound: T?
     
+    /// The upper bound of the range. If `nil`, the range has no upper limit.
+    public let upperBound: T?
+    
+    public init(lowerBound: T?, upperBound: T?) {
+        self.lowerBound = lowerBound
+        self.upperBound = upperBound
+    }
+    
+    /// Checks if a value falls within the range.
+    ///
+    /// - Parameter value: The value to check.
+    /// - Returns: `true` if the value is within the range, otherwise `false`.
+    ///
     public func contains(_ value: T) -> Bool {
         if let lowerBound = lowerBound, value < lowerBound {
             return false

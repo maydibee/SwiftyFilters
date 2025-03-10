@@ -23,46 +23,127 @@
 
 
 import Foundation
+import SwiftUI
 
 
-// MARK: - Filter's base components abstract factory
-
+/// A factory class for creating filter components of different types.
+///
+/// This class provides static methods to create filter components for:
+/// - Multi-selection filters
+/// - Range filters
+/// - Keywords filters
+/// - Single value filters
+///
+/// Each method returns a `SFFilterComponent` configured with the specified parameters.
+///
 public class SFFilterComponentsFactory {
     
-    public static func createMultiSelectionComponent<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>(title: String,
+    /// Creates a multi-selection filter component.
+    ///
+    /// This component allows filtering based on multiple criteria of type `CriteriaItem`
+    /// or the absence of a value (if `isNoneIncluded` is `true`).
+    ///
+    /// - Parameters:
+    ///   - title: The title of the filter component.
+    ///   - resolver: An object conforming to `SFFilterResolver` that defines the filtering behavior
+    ///              based on an array of `CriteriaItem`.
+    ///   - fetcher: An object conforming to `SFFilterFetcher` that fetches the data source for the filter.
+    ///   - viewProvider: An object conforming to  `SFFilterMultiSelectionViewProvider` that defines filter component UI representation.
+    ///                   Defaults to `SFFilterMultiSelectionDefaultViewProvider()`
+    ///                   that provides default view provider with defined multi-selection filter component view.
+    ///   - isNoneIncluded: A flag indicating whether the "None" option is included in the filter.
+    ///                     Defaults to `false`.
+    ///   - noneItemTitle: The title of the "None" option, displayed if `isNoneIncluded` is `true`.
+    ///
+    /// - Returns: A configured `SFFilterComponent` for multi-selection filtering.
+    ///
+    public static func createMultiSelectionComponent<FilteredItem, CriteriaItem: Equatable & SFFiltersTitleable>(title: String,
                                                                                                                     resolver: any SFFilterResolver<FilteredItem, [CriteriaItem]>,
                                                                                                                     fetcher: any SFFilterFetcher<CriteriaItem>,
+                                                                                                                    viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem> = SFFilterMultiSelectionDefaultViewProvider(),
                                                                                                                     isNoneIncluded: Bool = false,
                                                                                                                     noneItemTitle: String) -> SFFilterComponent<FilteredItem> {
         let container = SFFilterMultiSelectionContainer(resolver: resolver, fetcher: fetcher, isNoneIncluded: isNoneIncluded)
-        let component = SFFilterMultiSelectionComponent(title: title, noneItemTitle: noneItemTitle, filter: container)
+        let component = SFFilterMultiSelectionComponent(title: title, noneItemTitle: noneItemTitle, filter: container, viewProvider: viewProvider)
         return component
     }
     
+    /// Creates a range filter component.
+    ///
+    /// This component allows filtering based on a range of values or the absence of a value
+    /// (if `isNoneIncluded` is `true`).
+    ///
+    /// - Parameters:
+    ///   - title: The title of the filter component.
+    ///   - resolver: An object conforming to `SFFilterResolver` that defines the filtering behavior
+    ///              based on a `SFFilterRange<CriteriaItem>`.
+    ///   - viewProvider: An object conforming to  `SFFilterRangeViewProvider` that defines filter component UI representation.
+    ///   - isNoneIncluded: A flag indicating whether the "None" option is included in the filter.
+    ///                     Defaults to `false`.
+    ///   - noneItemTitle: The title of the "None" option, displayed if `isNoneIncluded` is `true`.
+    ///
+    /// - Returns: A configured `SFFilterComponent` for range-based filtering.
+    ///
     public static func createRangeComponent<FilteredItem, CriteriaItem: Comparable>(title: String,
                                                                                     resolver: any SFFilterResolver<FilteredItem, SFFilterRange<CriteriaItem>>,
+                                                                                    viewProvider: any SFFilterRangeViewProvider<FilteredItem, CriteriaItem>,
                                                                                     isNoneIncluded: Bool = false,
                                                                                     noneItemTitle: String) -> SFFilterComponent<FilteredItem> {
         let container = SFFilterRangeContainer(resolver: resolver, isNoneIncluded: isNoneIncluded)
-        let component = SFFilterRangeComponent(title: title, noneItemTitle: noneItemTitle, filter: container)
+        let component = SFFilterRangeComponent(title: title, noneItemTitle: noneItemTitle, filter: container, viewProvider: viewProvider)
         return component
     }
     
-    public static func createKeywordsComponent<FilteredItem, CriteriaItem: StringProtocol>(title: String,
-                                                                                           resolver: any SFFilterResolver<FilteredItem, SFFilterKeywordsModel<CriteriaItem>>,
+    /// Creates a keywords filter component.
+    ///
+    /// This component allows filtering based on a set of keywords or the absence of a value
+    /// (if `isNoneIncluded` is `true`).
+    ///
+    /// - Parameters:
+    ///   - title: The title of the filter component.
+    ///   - resolver: An object conforming to `SFFilterResolver` that defines the filtering behavior
+    ///              based on a `SFFilterKeywordsModel<CriteriaItem>`.
+    ///   - viewProvider: An object conforming to  `SFFilterKeywordsViewProvider` that defines filter component UI representation.
+    ///                   Defaults to `SFFilterKeywordsDefaultViewProvider()`
+    ///                   that provides default view provider with defined multi-selection filter component view.
+    ///   - isNoneIncluded: A flag indicating whether the "None" option is included in the filter.
+    ///                     Defaults to `false`.
+    ///   - noneItemTitle: The title of the "None" option, displayed if `isNoneIncluded` is `true`.
+    ///
+    /// - Returns: A configured `SFFilterComponent` for keyword-based filtering.
+    ///
+    public static func createKeywordsComponent<FilteredItem>(title: String,
+                                                                                           resolver: any SFFilterResolver<FilteredItem, SFFilterKeywordsModel<String>>,
+                                                                                           viewProvider: any SFFilterKeywordsViewProvider<FilteredItem, String> = SFFilterKeywordsDefaultViewProvider(),
                                                                                            isNoneIncluded: Bool = false,
                                                                                            noneItemTitle: String) -> SFFilterComponent<FilteredItem> {
         let container = SFFilterKeyWordsContainer(resolver: resolver, isNoneIncluded: isNoneIncluded)
-        let component = SFFilterKeyWordsComponent(title: title, noneItemTitle: noneItemTitle, filter: container)
+        let component = SFFilterKeyWordsComponent(title: title, noneItemTitle: noneItemTitle, filter: container, viewProvider: viewProvider)
         return component
     }
     
+    /// Creates a single value filter component.
+    ///
+    /// This component allows filtering based on a specific value or the absence of a value
+    /// (if `isNoneIncluded` is `true`).
+    ///  - Parameters:
+    ///    - title: The title of the filter component.
+    ///    - resolver: An object conforming to `SFFilterResolver` that defines the filtering behavior
+    ///              based on a single `CriteriaItem`.
+    ///    - viewProvider: An object conforming to  `SFFilterSingleValueViewProvider` that defines filter component UI representation.
+    ///    - isNoneIncluded: A flag indicating whether the "None" option is included in the filter.
+    ///                     Defaults to `false`.
+    ///    - noneItemTitle: The title of the "None" option, displayed if `isNoneIncluded` is `true`.
+    ///
+    /// - Returns: A configured `SFFilterComponent` for single value-based filtering.
+    ///
     public static func createSingleValueComponent<FilteredItem, CriteriaItem: Equatable>(title: String,
                                                                                          resolver: any SFFilterResolver<FilteredItem, CriteriaItem>,
+                                                                                         viewProvider: any SFFilterSingleValueViewProvider<FilteredItem, CriteriaItem>,
                                                                                          isNoneIncluded: Bool = false,
                                                                                          noneItemTitle: String) -> SFFilterComponent<FilteredItem> {
         let container = SFFilterSingleValueContainer(resolver: resolver, isNoneIncluded: isNoneIncluded)
-        let component = SFFilterSingleValueComponent(title: title, noneItemTitle: noneItemTitle, filter: container)
+        let component = SFFilterSingleValueComponent(title: title, noneItemTitle: noneItemTitle, filter: container, viewProvider: viewProvider)
         return component
     }
 }

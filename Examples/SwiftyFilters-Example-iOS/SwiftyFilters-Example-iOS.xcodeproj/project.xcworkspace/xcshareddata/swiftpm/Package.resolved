@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "swiftyfilters",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/maydibee/SwiftyFilters.git",
+      "state" : {
+        "revision" : "6303f5149bee42b95027081433a92248534b4e7b",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 2
+}

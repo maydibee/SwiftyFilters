@@ -25,35 +25,46 @@
 import Foundation
 
 
-// MARK: - Keywords filter container (API-RO)
+// MARK: - Keywords filter container
 
-public class SFFilterKeyWordsContainer<FilteredItem, CriteriaItem: StringProtocol>: SFFilterNullableContainer {
+class SFFilterKeyWordsContainer<FilteredItem, CriteriaItem: StringProtocol>: SFFilterNullableContainer {
     
-    public var keywordsModel = SFFilterKeywordsModel<CriteriaItem>()
+    var keywordsModel = SFFilterKeywordsModel<CriteriaItem>()
     
-    public var isNoneEnabled: Bool
-    public var isNoneIncluded: Bool
+    var isNoneEnabled: Bool
+    var isNoneIncluded: Bool
     
-    public var isFilterActive: Bool {
+    var isFilterActive: Bool {
         let isKeywordsEmpty = keywordsModel.isEmpty
         if isNoneIncluded {
             return !isKeywordsEmpty || !isNoneEnabled
         }
         return !isKeywordsEmpty
     }
+
+    private var filterBehavior: (([FilteredItem], SFFilterKeywordsModel<CriteriaItem>, _ isNoneEnabled: Bool) -> [FilteredItem])
     
-    private let resolver: any SFFilterResolver<FilteredItem, SFFilterKeywordsModel<CriteriaItem>>
     
-    
-    public init(resolver: any SFFilterResolver<FilteredItem, SFFilterKeywordsModel<CriteriaItem>>,
-                isNoneIncluded: Bool = false) {
-        self.resolver = resolver
+    init(filterBehavior: @escaping (([FilteredItem], SFFilterKeywordsModel<CriteriaItem>, _ isNoneEnabled: Bool) -> [FilteredItem]), isNoneIncluded: Bool = false) {
+        self.filterBehavior = filterBehavior
         self.isNoneIncluded = isNoneIncluded
         self.isNoneEnabled = isNoneIncluded
     }
     
-    public func filterItems(inputItems: [FilteredItem]) -> [FilteredItem] {
+    convenience init(resolver: any SFFilterResolver<FilteredItem, SFFilterKeywordsModel<CriteriaItem>>,
+                isNoneIncluded: Bool = false) {
+        
+        let filterBehavior = { inputItems, criteriaItem, isNoneEnabled in
+            resolver.filterItems(inputItems, basedOn: criteriaItem, isNoneEnabled: isNoneEnabled)
+        }
+        self.init(
+            filterBehavior: filterBehavior,
+            isNoneIncluded: isNoneIncluded
+        )
+    }
+    
+    func filterItems(inputItems: [FilteredItem]) -> [FilteredItem] {
         guard isFilterActive else { return inputItems }
-        return self.resolver.filterItems(inputItems, basedOn: keywordsModel, isNoneEnabled: isNoneEnabled)
+        return self.filterBehavior(inputItems, keywordsModel, isNoneEnabled)
     }
 }

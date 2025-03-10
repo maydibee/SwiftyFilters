@@ -23,23 +23,52 @@
 
 
 import Foundation
+import SwiftUI
 
 
-// MARK: - Keywords filter component (API-RO)
+// MARK: - Keywords filter component
 
-public class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtocol>: SFFilterComponent<FilteredItem> {
+class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtocol>: SFFilterComponent<FilteredItem> {
     
     private let filter: SFFilterKeyWordsContainer<FilteredItem, CriteriaItem>
+    private let view: ((SFFilterKeywordsNode<FilteredItem, CriteriaItem>) -> any View)
     private let noneItemTitle: String
     
     
-    public init(title: String, noneItemTitle: String, filter: SFFilterKeyWordsContainer<FilteredItem, CriteriaItem>) {
+    init(title: String,
+         noneItemTitle: String,
+         filter: SFFilterKeyWordsContainer<FilteredItem, CriteriaItem>,
+         view: @escaping ((SFFilterKeywordsNode<FilteredItem, CriteriaItem>) -> any View)
+    ) {
         self.noneItemTitle = noneItemTitle
         self.filter = filter
-        super.init(title: title, isItemEnabled: !filter.isFilterActive, isComposite: false)
+        self.view = view
+        super.init(
+            title: title,
+            isItemEnabled: !filter.isFilterActive,
+            isComposite: false
+        )
     }
     
-    public override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
+    convenience init(title: String,
+                noneItemTitle: String,
+                filter: SFFilterKeyWordsContainer<FilteredItem, CriteriaItem>,
+                viewProvider: any SFFilterKeywordsViewProvider<FilteredItem, CriteriaItem>
+    ) {
+        
+        let view = { node in
+            viewProvider.makeView(with: node)
+        }
+        
+        self.init(
+            title: title,
+            noneItemTitle: noneItemTitle,
+            filter: filter,
+            view: view
+        )
+    }
+    
+    override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
         var nestedItems: [SFFilterComponent<FilteredItem>] = []
         
         if self.filter.isNoneIncluded {
@@ -50,19 +79,19 @@ public class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtoco
         return nestedItems
     }
     
-    public override func updateState() {
+    override func updateState() {
         self.isItemEnabled = !filter.isFilterActive
     }
     
-    public func updateKeywords(_ keywords: SFFilterKeywordsModel<CriteriaItem>) {
+    func updateKeywords(_ keywords: SFFilterKeywordsModel<CriteriaItem>) {
         filter.keywordsModel = keywords
     }
     
-    public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
-        SFFilterKeywordsNode<FilteredItem, CriteriaItem>(component: self)
+    override func createRelatedNode() -> SFFilterNode<FilteredItem> {
+        SFFilterKeywordsNode<FilteredItem, CriteriaItem>(component: self, view: self.view)
     }
     
-    public override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
+    override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
         return filter.filterItems(inputItems: items)
     }
 }

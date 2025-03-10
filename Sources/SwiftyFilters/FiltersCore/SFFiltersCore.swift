@@ -23,21 +23,97 @@
 
 
 import Foundation
+import Combine
+import SwiftUI
 
 
+/// The main entry point for working with filters in client code.
+///
+/// This class is the central component for managing and applying filters in SwiftyFilters. It acts as the state manager for your filter hierarchy, allowing you to build complex filter trees, track filter activity, and participate in filtering data
+/// by traversing the entire filter component tree.
+///
+/// ### Example
+/// ```swift
+/// struct AircraftFilter: SFFilter {
+///
+///     let worker: AircraftListWorker
+///
+///     var body: [SFFilterComponent<Aircraft>] {
+///
+///        SFMultiSelectionFilter(title: "Type")
+///            .fetchItems { await worker.fetchAllTypes() }
+///            .filter(by: \.type)
+///            .displayIn { node in
+///                 MultiSelectionFilterView(node: node)
+///            }
+///      }
+/// }
+///
+/// let filter = AircraftFilter(worker: worker)
+/// let filtersCore = SFFiltersCore<Aircraft>(title: "Filters", content: filter)
+/// ```
+///
 public class SFFiltersCore<FilteredItem>: ObservableObject {
 
+    /// The title of the filter tree, which can be used for display purposes (e.g., in a navigation bar).
     public let title: String
     
-    @Published public var rootNode: SFFilterNode<FilteredItem>?
-    public var onFiltesUpdated: (() -> Void)?
+    /// The root node of the filter tree.
+    ///
+    /// This property represents the top-level node of the filter hierarchy. It can be used for customizing
+    /// behavior or creating a custom filter core. In most cases, it does not need to be accessed directly.
+    ///
+    @Published var rootNode: SFFilterNode<FilteredItem>? {
+        didSet {
+            subscribeToIsItemEnabled()
+        }
+    }
+    
+    /// Indicates whether the filter is active (i.e., whether any filter component affects the filtering).
+    ///
+    @Published public var isFilterActive: Bool = false
+
     
     private var filters: [SFFilterComponent<FilteredItem>]
+    private var cancellables = Set<AnyCancellable>()
     
-    
+    /// Initializes a new `SFFiltersCore` instance.
+    ///
+    /// - Parameters:
+    ///   - title: The title of the filter tree.
+    ///   - builder: A result builder (`@SFFiltersBuilder`) used to construct the filter hierarchy.
+    ///
     public init(title: String, @SFFiltersBuilder<FilteredItem> builder: () -> [SFFilterComponent<FilteredItem>]) {
         self.title = title
         self.filters = builder()
+    }
+    
+    
+    /// Initializes a new `SFFiltersCore` instance.
+    ///
+    /// - Parameters:
+    ///   - title: The title of the filter tree.
+    ///   - content: Root filter component, an implementation of `SFFilter`.
+    ///
+    public init(title: String, content: any SFFilter<FilteredItem>) {
+        self.title = title
+        self.filters = content.body
+    }
+    
+    /// Filters the provided data based on the current state of the filter tree.
+    ///
+    /// - Parameter items: The data to be filtered.
+    /// - Returns: The filtered data.
+    ///
+    public func getFilteredData(from items: [FilteredItem]) -> [FilteredItem] {
+        guard let rootNode else { return items }
+        return rootNode.getFilteredData(from: items)
+    }
+    
+    /// Resets all filters in filter tree.
+    ///
+    public func resetFilters() {
+        rootNode?.resetAllFilters()
     }
     
     func compose() {
@@ -45,9 +121,19 @@ public class SFFiltersCore<FilteredItem>: ObservableObject {
         let master = SFFilterMasterComponent(title: self.title, nestedFilterItems: filterComponents)
         self.rootNode = SFFilterNode(component: master)
     }
+}
+
+
+// MARK: - Subscriptions configuration
+
+private extension SFFiltersCore {
     
-    public func getFilteredData(from items: [FilteredItem]) -> [FilteredItem] {
-        guard let rootNode else { return items }
-        return rootNode.getFilteredData(from: items)
+    private func subscribeToIsItemEnabled() {
+        cancellables.removeAll()
+        
+        rootNode?.$isItemEnabled
+            .map { !$0 }
+            .assign(to: \.isFilterActive, on: self)
+            .store(in: &cancellables)
     }
 }

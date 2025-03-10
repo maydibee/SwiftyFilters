@@ -25,8 +25,8 @@
 import Foundation
 
 
-// MARK: - Abstraction for containers that can tackle none-containing elements (API-RO)
+// MARK: - Abstraction for containers that can tackle none-containing elements
 
-public protocol SFFilterNullableContainer: AnyObject {
+protocol SFFilterNullableContainer: AnyObject {
     var isNoneEnabled: Bool { get set }
 }

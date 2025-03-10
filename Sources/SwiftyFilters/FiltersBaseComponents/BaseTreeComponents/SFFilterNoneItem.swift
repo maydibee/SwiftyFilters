@@ -25,11 +25,11 @@
 import Foundation
 
 
-// MARK: - Selectable filter None sub-component (API-RO)
+// MARK: - Selectable filter None sub-component
 
-public class SFFilterNoneItem<FilteredItem>: SFFilterComponent<FilteredItem> {
+class SFFilterNoneItem<FilteredItem>: SFFilterComponent<FilteredItem> {
 
-    public override var isItemEnabled: Bool {
+    override var isItemEnabled: Bool {
         didSet {
             self.relatedFilter.isNoneEnabled = isItemEnabled
         }
@@ -38,16 +38,16 @@ public class SFFilterNoneItem<FilteredItem>: SFFilterComponent<FilteredItem> {
     private let relatedFilter: SFFilterNullableContainer
     
     
-    public init(title: String, relatedFilter: SFFilterNullableContainer) {
+    init(title: String, relatedFilter: SFFilterNullableContainer) {
         self.relatedFilter = relatedFilter
         super.init(title: title, isItemEnabled: true, isComposite: false)
     }
     
-    public override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] { [] }
+    override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] { [] }
     
-    public override func updateState() {}
+    override func updateState() {}
     
-    public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
+    override func createRelatedNode() -> SFFilterNode<FilteredItem> {
         SFFilterNode<FilteredItem>(component: self)
     }
 }

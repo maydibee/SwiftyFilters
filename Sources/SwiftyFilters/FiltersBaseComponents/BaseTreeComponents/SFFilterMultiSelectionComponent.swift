@@ -23,26 +23,54 @@
 
 
 import Foundation
+import SwiftUI
 
 
-// MARK: - Multi-select filter component (API-RO)
+// MARK: - Multi-select filter component
 
-public class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Identifiable & SFFiltersTitleable>: SFFilterComponent<FilteredItem> {
+class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Equatable & SFFiltersTitleable>: SFFilterComponent<FilteredItem> {
     
     private let filter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>
+    private let view: ((SFFilterMultiSelectionNode<FilteredItem>) -> any View)
     private let noneItemTitle: String
     
-    
-    public init(title: String, noneItemTitle: String, filter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>) {
+
+    init(title: String,
+         noneItemTitle: String,
+         filter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>,
+         view: @escaping ((SFFilterMultiSelectionNode<FilteredItem>) -> any View)
+         
+    ) {
         self.noneItemTitle = noneItemTitle
         self.filter = filter
-        super.init(title: title,
-                   isItemEnabled: !filter.isFilterActive,
-                   isComposite: true,
-                   isAllActionIncluded: true)
+        self.view = view
+        super.init(
+            title: title,
+            isItemEnabled: !filter.isFilterActive,
+            isComposite: false,
+            isAllActionIncluded: true)
     }
     
-    public override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
+    convenience init(title: String,
+         noneItemTitle: String,
+         filter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>,
+         viewProvider: any SFFilterMultiSelectionViewProvider<FilteredItem>
+         
+    ) {
+    
+        let view = { node in
+            viewProvider.makeView(with: node)
+        }
+        
+        self.init(
+            title: title,
+            noneItemTitle: noneItemTitle,
+            filter: filter,
+            view: view
+        )
+    }
+    
+    override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] {
         var nestedItems: [SFFilterComponent<FilteredItem>] = []
         
         let fetchedItems = await self.filter.initializeFilter()
@@ -60,15 +88,15 @@ public class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Identif
         return nestedItems
     }
     
-    public override func updateState() {
+    override func updateState() {
         self.isItemEnabled = !filter.isFilterActive
     }
     
-    public override func createRelatedNode() -> SFFilterNode<FilteredItem> {
-        SFFilterNode<FilteredItem>(component: self)
+    override func createRelatedNode() -> SFFilterNode<FilteredItem> {
+        SFFilterMultiSelectionNode<FilteredItem>(component: self, view: self.view)
     }
     
-    public override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
+    override func getFilteredItems(for items: [FilteredItem]) -> [FilteredItem] {
         return filter.filterItems(inputItems: items)
     }
 }
