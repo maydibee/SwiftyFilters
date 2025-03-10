@@ -26,6 +26,9 @@ public struct SFFilterMultiSelectionDefaultView<FilteredItem>: View {
                 ProgressView()
             } else {
                 List {
+                    if node.component.isAllActionIncluded {
+                        SFFilterAllCellView(node: node)
+                    }
                     ForEach(node.nestedNodes) { child in
                         SFFilterCellView(node: child)
                             .onTapGesture {
