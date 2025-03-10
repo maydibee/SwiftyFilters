@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="SwiftyFiltersLogo.png" alt="SwiftyFilters Banner">
+  <img src="Resources/SwiftyFiltersLogo.png" alt="SwiftyFilters Banner">
 </p> <!-- Закрываем тег <p> для изображения -->
 
 <p align="center">
