@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="SwiftyFiltersLogo.png" alt="SwiftyFilters Banner">
+  <img src="Resources/SwiftyFiltersLogo.png" alt="SwiftyFilters Banner">
 </p> <!-- Закрываем тег <p> для изображения -->
 
 <p align="center">
@@ -111,5 +111,9 @@ func applyFilters() {
 
 ## 📝 Documentation
 
-Documentation is coming soon! Stay tuned for detailed guides and API references.
+Read the full documentation here:  
+👉 [SwiftyFilters Documentation](https://maydibee.github.io/SwiftyFilters/documentation/swiftyfilters/)
+
+
+👉 [Usage](https://maydibee.github.io/SwiftyFilters/documentation/swiftyfilters/usage)
 
