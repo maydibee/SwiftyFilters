@@ -47,6 +47,7 @@ class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Equatable & SF
         super.init(
             title: title,
             isItemEnabled: !filter.isFilterActive,
+            isItemModified: filter.isFilterModified,
             isComposite: false,
             isAllActionIncluded: true)
     }
@@ -90,6 +91,7 @@ class SFFilterMultiSelectionComponent<FilteredItem, CriteriaItem: Equatable & SF
     
     override func updateState() {
         self.isItemEnabled = !filter.isFilterActive
+        self.isItemModified = filter.isFilterModified
     }
     
     override func createRelatedNode() -> SFFilterNode<FilteredItem> {

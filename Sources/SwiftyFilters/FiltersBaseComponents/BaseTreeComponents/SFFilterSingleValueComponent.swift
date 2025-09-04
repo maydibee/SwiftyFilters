@@ -46,6 +46,7 @@ class SFFilterSingleValueComponent<FilteredItem, CriteriaItem: Equatable>: SFFil
         super.init(
             title: title,
             isItemEnabled: !filter.isFilterActive,
+            isItemModified: filter.isFilterModified,
             isComposite: false
         )
     }
@@ -80,6 +81,7 @@ class SFFilterSingleValueComponent<FilteredItem, CriteriaItem: Equatable>: SFFil
     
     override func updateState() {
         self.isItemEnabled = !filter.isFilterActive
+        self.isItemModified = filter.isFilterModified
     }
     
     func updateValue(_ value: CriteriaItem?) {

@@ -36,6 +36,7 @@ class SFFilterMasterComponent<FilteredItem>: SFFilterComponent<FilteredItem> {
         self.nestedFilterComponents = nestedFilterItems
         super.init(title: title,
                    isItemEnabled: !nestedFilterComponents.contains(where: { !$0.isItemEnabled }),
+                   isItemModified: nestedFilterComponents.contains(where: { $0.isItemModified }),
                    isComposite: true)
     }
     
@@ -45,6 +46,7 @@ class SFFilterMasterComponent<FilteredItem>: SFFilterComponent<FilteredItem> {
     
     override func updateState() {
         self.isItemEnabled = !nestedFilterComponents.contains(where: { !$0.isItemEnabled })
+        self.isItemModified = nestedFilterComponents.contains(where: { $0.isItemModified })
     }
     
     override func createRelatedNode() -> SFFilterNode<FilteredItem> {

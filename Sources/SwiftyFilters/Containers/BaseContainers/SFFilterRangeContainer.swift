@@ -27,7 +27,7 @@ import Foundation
 
 // MARK: - Range filter container
 
-class SFFilterRangeContainer<FilteredItem, CriteriaItem: Comparable>: SFFilterNullableContainer {
+class SFFilterRangeContainer<FilteredItem, CriteriaItem: Comparable>: SFFilterContainer {
     
     var range: SFFilterRange<CriteriaItem> = .init(lowerBound: nil, upperBound: nil)
     
@@ -35,6 +35,14 @@ class SFFilterRangeContainer<FilteredItem, CriteriaItem: Comparable>: SFFilterNu
     var isNoneIncluded: Bool
     
     var isFilterActive: Bool {
+        let isBoundSelected = range.lowerBound != nil || range.upperBound != nil
+        if isNoneIncluded {
+            return isBoundSelected || !isNoneEnabled
+        }
+        return isBoundSelected
+    }
+    
+    var isFilterModified: Bool {
         let isBoundSelected = range.lowerBound != nil || range.upperBound != nil
         if isNoneIncluded {
             return isBoundSelected || !isNoneEnabled

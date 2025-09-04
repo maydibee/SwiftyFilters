@@ -30,3 +30,11 @@ import Foundation
 protocol SFFilterNullableContainer: AnyObject {
     var isNoneEnabled: Bool { get set }
 }
+
+// MARK: - Abstraction for containers that can be modified via nested components selection
+
+protocol SFFilterModifiableContainer: AnyObject {
+    var isFilterModified: Bool { get }
+}
+
+typealias SFFilterContainer = SFFilterNullableContainer & SFFilterModifiableContainer

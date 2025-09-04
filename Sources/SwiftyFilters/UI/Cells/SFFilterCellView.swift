@@ -45,6 +45,7 @@ public struct SFFilterCellView<FilteredItem>: View {
     public var body: some View {
         HStack {
             Text(node.title)
+                .foregroundStyle(node.isItemModified ? .primary : Color.blue)
             Spacer()
             Group {
                 if node.isItemEnabled {

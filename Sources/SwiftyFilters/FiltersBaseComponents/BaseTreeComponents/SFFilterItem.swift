@@ -48,12 +48,17 @@ class SFFilterItem<FilteredItem, CriteriaItem: Equatable & SFFiltersTitleable>: 
     init(title: String, item: CriteriaItem, relatedFilter: SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem>) {
         self.item = item
         self.relatedFilter = relatedFilter
-        super.init(title: title, isItemEnabled: relatedFilter.isItemSelected(self.item), isComposite: false)
+        super.init(title: title,
+                   isItemEnabled: relatedFilter.isItemSelected(self.item),
+                   isItemModified: !relatedFilter.isItemSelected(self.item),
+                   isComposite: false)
     }
     
     override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] { [] }
     
-    override func updateState() {}
+    override func updateState() {
+        self.isItemModified = !relatedFilter.isItemSelected(self.item)
+    }
     
     override func createRelatedNode() -> SFFilterNode<FilteredItem> {
         SFFilterNode<FilteredItem>(component: self)

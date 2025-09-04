@@ -27,7 +27,7 @@ import Foundation
 
 // MARK: - Multi-select filter container
 
-class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Equatable & SFFiltersTitleable>: SFFilterNullableContainer {
+class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Equatable & SFFiltersTitleable>: SFFilterContainer {
     
     var allItems = Array<CriteriaItem>()
     var selectedItems = Array<CriteriaItem>()
@@ -36,6 +36,14 @@ class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Equatable & SF
     let isNoneIncluded: Bool
     
     var isFilterActive: Bool {
+        let isAllSelected: Bool = allItems.count == selectedItems.count
+        if isNoneIncluded {
+            return !isAllSelected || !isNoneEnabled
+        }
+        return !isAllSelected
+    }
+    
+    var isFilterModified: Bool {
         let isAllSelected: Bool = allItems.count == selectedItems.count
         if isNoneIncluded {
             return !isAllSelected || !isNoneEnabled
