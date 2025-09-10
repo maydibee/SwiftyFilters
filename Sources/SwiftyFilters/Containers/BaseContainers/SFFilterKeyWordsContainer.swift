@@ -36,11 +36,7 @@ class SFFilterKeyWordsContainer<FilteredItem, CriteriaItem: StringProtocol>: SFF
     var isNoneIncluded: Bool
     
     var isFilterActive: Bool {
-        let isKeywordsEmpty = keywordsModel.isEmpty
-        if isNoneIncluded {
-            return !isKeywordsEmpty || !isNoneEnabled
-        }
-        return !isKeywordsEmpty
+        return isFilterModified
     }
     
     var isFilterModified: Bool {
@@ -73,7 +69,7 @@ class SFFilterKeyWordsContainer<FilteredItem, CriteriaItem: StringProtocol>: SFF
     }
     
     func filterItems(inputItems: [FilteredItem]) -> [FilteredItem] {
-        guard isFilterActive else { return inputItems }
+        guard isFilterModified else { return inputItems }
         return self.filterBehavior(inputItems, keywordsModel, isNoneEnabled)
     }
 }
