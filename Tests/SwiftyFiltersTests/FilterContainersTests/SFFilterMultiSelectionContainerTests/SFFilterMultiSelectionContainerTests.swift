@@ -38,7 +38,7 @@ final class SFFilterMultiSelectionContainerTests: XCTestCase {
         XCTAssertEqual(container.isNoneEnabled, container.isNoneIncluded)
         XCTAssertTrue(container.allItems.isEmpty)
         XCTAssertTrue(container.selectedItems.isEmpty)
-        XCTAssertFalse(container.isFilterActive)
+        XCTAssertTrue(container.isFilterActive)
     }
     
     func testInitialState_WhenNoneIsIncluded_ShouldEnableNoneByDefault() {
@@ -69,12 +69,18 @@ final class SFFilterMultiSelectionContainerTests: XCTestCase {
     
     // MARK: - Filter Activity Tests
     
-    func testFilterActivity_WhenAllItemsSelected_ShouldBeInactive() async {
+    func testFilterActivity_WhenUnloaded_ShouldBeActive() async {
+
+        // Assert
+        XCTAssertTrue(container.isFilterActive)
+    }
+    
+    func testFilterActivity_WhenAllItemsSelected_ShouldBeActive() async {
         // Arrange
         await container.initializeFilter()
         
         // Assert
-        XCTAssertFalse(container.isFilterActive)
+        XCTAssertTrue(container.isFilterActive)
     }
     
     func testFilterActivity_WhenItemDeselected_ShouldBeActive() async {
@@ -86,6 +92,17 @@ final class SFFilterMultiSelectionContainerTests: XCTestCase {
         
         // Assert
         XCTAssertTrue(container.isFilterActive)
+    }
+    
+    func testFilterActivity_WhenAllDeselected_ShouldBeActive() async {
+        // Arrange
+        await container.initializeFilter()
+        
+        // Act
+        container.selectedItems.removeAll()
+        
+        // Assert
+        XCTAssertFalse(container.isFilterActive)
     }
     
     func testFilterActivity_WhenNoneDisabledWithInclusion_ShouldBeActive() {
@@ -105,15 +122,19 @@ final class SFFilterMultiSelectionContainerTests: XCTestCase {
     
     // MARK: - Filtration Behavior Tests
     
-    func testFilterItems_WhenInactive_ShouldReturnAllItems() {
+    func testFilterItems_WhenInactive_ShouldReturnAllItems() async {
         // Arrange
         let inputItems = Array(1...3).map(SFFilterFilteredItemMock.init)
+        await container.initializeFilter()
         
         // Act
+        container.selectedItems.removeAll()
         let result = container.filterItems(inputItems: inputItems)
+        
         
         // Assert
         XCTAssertEqual(result.count, 3)
+        
     }
     
     func testFilterItems_WhenActive_ShouldApplyResolverLogic() async {
@@ -137,7 +158,7 @@ final class SFFilterMultiSelectionContainerTests: XCTestCase {
         container.isNoneEnabled = false
         
         // Assert
-        XCTAssertFalse(container.isFilterActive)
+        XCTAssertTrue(container.isFilterActive)
     }
     
     func testNoneHandling_WhenIncludedAndDisabled_ShouldAffectFilterState() {
@@ -164,6 +185,6 @@ final class SFFilterMultiSelectionContainerTests: XCTestCase {
         )
         
         // Assert
-        XCTAssertFalse(container.isFilterActive)
+        XCTAssertTrue(container.isFilterActive)
     }
 }

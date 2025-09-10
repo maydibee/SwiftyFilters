@@ -16,7 +16,7 @@ final class SFFilterNodeTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        component = SFFilterComponentStub(title: "Test Component", isItemEnabled: true, isComposite: true)
+        component = SFFilterComponentStub(title: "Test Component", isItemEnabled: true, isItemModified: false, isComposite: true)
         node = SFFilterNode(component: component)
     }
     
@@ -41,7 +41,7 @@ final class SFFilterNodeTests: XCTestCase {
     
     func testIsItemEnabled_WhenSet_ShouldUpdateComponentAndParent() {
         // Arrange
-        let parentComponent = SFFilterComponentStub<Int>(title: "Parent Component", isItemEnabled: true, isComposite: true)
+        let parentComponent = SFFilterComponentStub<Int>(title: "Parent Component", isItemEnabled: true, isItemModified: false, isComposite: true)
         parentNode = SFFilterNode(component: parentComponent)
         node.parent = parentNode
         
@@ -58,7 +58,7 @@ final class SFFilterNodeTests: XCTestCase {
     
     func testResetAllFilters_ShouldEnableAllNodes() {
         // Arrange
-        let childComponent = SFFilterComponentStub<Int>(title: "Child Component", isItemEnabled: false, isComposite: false)
+        let childComponent = SFFilterComponentStub<Int>(title: "Child Component", isItemEnabled: false, isItemModified: true, isComposite: false)
         let childNode = SFFilterNode(component: childComponent)
         node.nestedNodes = [childNode]
         
@@ -74,7 +74,7 @@ final class SFFilterNodeTests: XCTestCase {
     
     func testDeselectAll_ShouldDisableAllNodes() {
         // Arrange
-        let childComponent = SFFilterComponentStub<Int>(title: "Child Component", isItemEnabled: true, isComposite: false)
+        let childComponent = SFFilterComponentStub<Int>(title: "Child Component", isItemEnabled: true, isItemModified: false, isComposite: false)
         let childNode = SFFilterNode(component: childComponent)
         node.nestedNodes = [childNode]
         
@@ -103,7 +103,7 @@ final class SFFilterNodeTests: XCTestCase {
     func testGetFilteredData_WithNestedNodes_ShouldApplyNestedFiltering() {
         // Arrange
         let inputItems = [1, 2, 3, 4, 5]
-        let childComponent = SFFilterComponentStub<Int>(title: "Child Component", isItemEnabled: true, isComposite: false)
+        let childComponent = SFFilterComponentStub<Int>(title: "Child Component", isItemEnabled: true, isItemModified: false, isComposite: false)
         childComponent.getFilteredItemsResult = [3, 4]
         let childNode = SFFilterNode(component: childComponent)
         node.nestedNodes = [childNode]
@@ -120,7 +120,7 @@ final class SFFilterNodeTests: XCTestCase {
     
     func testLoadFilterIfNeeded_ShouldLoadNestedItems() async {
         // Arrange
-        let nestedComponent = SFFilterComponentStub<Int>(title: "Nested Component", isItemEnabled: true, isComposite: false)
+        let nestedComponent = SFFilterComponentStub<Int>(title: "Nested Component", isItemEnabled: true, isItemModified: false, isComposite: false)
         component.loadNestedItemsResult = [nestedComponent]
         
         // Act
@@ -134,7 +134,7 @@ final class SFFilterNodeTests: XCTestCase {
     
     func testLoadFilterIfNeeded_WhenAlreadyLoaded_ShouldNotReload() async {
         // Arrange
-        let nestedComponent = SFFilterComponentStub<Int>(title: "Nested Component", isItemEnabled: true, isComposite: false)
+        let nestedComponent = SFFilterComponentStub<Int>(title: "Nested Component", isItemEnabled: true, isItemModified: false, isComposite: false)
         node.nestedNodes = [SFFilterNode(component: nestedComponent)]
         
         // Act

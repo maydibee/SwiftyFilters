@@ -36,11 +36,12 @@ class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Equatable & SF
     let isNoneIncluded: Bool
     
     var isFilterActive: Bool {
-        let isAllSelected: Bool = allItems.count == selectedItems.count
+        let isFilterUnload = allItems.isEmpty
+        let isSomethingSelected: Bool = !allItems.isEmpty && !selectedItems.isEmpty
         if isNoneIncluded {
-            return !isAllSelected || !isNoneEnabled
+            return isSomethingSelected || isNoneEnabled || isFilterUnload
         }
-        return !isAllSelected
+        return isSomethingSelected || allItems.isEmpty || isFilterUnload
     }
     
     var isFilterModified: Bool {

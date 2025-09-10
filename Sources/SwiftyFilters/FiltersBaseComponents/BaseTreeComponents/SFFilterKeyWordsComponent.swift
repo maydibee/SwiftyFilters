@@ -45,7 +45,7 @@ class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtocol>: SFF
         self.view = view
         super.init(
             title: title,
-            isItemEnabled: !filter.isFilterActive,
+            isItemEnabled: filter.isFilterActive,
             isItemModified: filter.isFilterModified,
             isComposite: false
         )
