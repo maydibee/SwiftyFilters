@@ -35,7 +35,7 @@ class SFFilterMasterComponent<FilteredItem>: SFFilterComponent<FilteredItem> {
     init(title: String, nestedFilterItems: [SFFilterComponent<FilteredItem>]) {
         self.nestedFilterComponents = nestedFilterItems
         super.init(title: title,
-                   isItemEnabled: !nestedFilterComponents.contains(where: { !$0.isItemEnabled }),
+                   isItemEnabled: nestedFilterComponents.contains(where: { $0.isItemEnabled }),
                    isItemModified: nestedFilterComponents.contains(where: { $0.isItemModified }),
                    isComposite: true)
     }
