@@ -70,24 +70,3 @@ struct SFFilterComponentView<FilteredItem>: View {
         
     }
 }
-
-
-struct SFInvisableNavigationLink<Destination: View>: ViewModifier {
-
-    var destination: () -> Destination
-    
-    func body(content: Content) -> some View {
-        content
-            .overlay {
-                NavigationLink("", destination: destination)
-                    .opacity(0)
-            }
-        
-    }
-}
-
-extension View {
-    func withInvisibleNavigation(to destination: @escaping () -> some View) -> some View {
-        modifier(SFInvisableNavigationLink(destination: destination))
-    }
-}
