@@ -104,6 +104,6 @@ extension EnvironmentValues {
         set { self[SFTitleDisplayMode.self] = newValue }
     }
     
-    @Entry var modifiedFilterItemColor = Color.black
+    @Entry var modifiedFilterItemColor = Color.primary
     @Entry var unmodifiedFilterItemColor = Color.blue
 }

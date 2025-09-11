@@ -47,6 +47,7 @@ public struct SFFilterCellView<FilteredItem>: View {
     public var body: some View {
         HStack {
             Text(node.title)
+                .fontWeight(node.isItemModified ? .thin : .medium )
                 .foregroundStyle(node.isItemModified ? modifiedFilterItemColor : unmodifiedFilterItemColor)
             Spacer()
             Group {

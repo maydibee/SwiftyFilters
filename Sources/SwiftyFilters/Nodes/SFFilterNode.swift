@@ -64,6 +64,8 @@ public class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
         }
     }
     
+    /// A flag indicating whether the current node is modified.
+    ///
     @Published public var isItemModified: Bool
     
     
