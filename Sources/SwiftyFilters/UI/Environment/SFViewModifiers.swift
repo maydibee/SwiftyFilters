@@ -83,6 +83,24 @@ public extension View {
         environment(\.disabledCheckboxColor, value)
     }
     
+    /// Sets the color for the filter item row text when item is modified.
+    ///
+    /// - Parameter value: The color to apply.
+    /// - Returns: A view with the updated environment value.
+    ///
+    func modifiedFilterItemColor(_ value: Color) -> some View {
+        environment(\.modifiedFilterItemColor, value)
+    }
+    
+    /// Sets the color for the filter item row text when item is unmodified.
+    ///
+    /// - Parameter value: The color to apply.
+    /// - Returns: A view with the updated environment value.
+    ///
+    func unmodifiedFilterItemColor(_ value: Color) -> some View {
+        environment(\.unmodifiedFilterItemColor, value)
+    }
+    
     /// Sets the hint text for the text field in the keywords filter component.
     ///
     /// - Parameter value: The hint text string.

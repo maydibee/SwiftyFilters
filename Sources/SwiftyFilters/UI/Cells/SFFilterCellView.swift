@@ -36,6 +36,8 @@ public struct SFFilterCellView<FilteredItem>: View {
     @Environment(\.disabledCheckboxImage) private var disabledCheckboxImage
     @Environment(\.enabledCheckboxColor) private var enabledCheckboxColor
     @Environment(\.disabledCheckboxColor) private var disabledCheckboxColor
+    @Environment(\.modifiedFilterItemColor) private var modifiedFilterItemColor
+    @Environment(\.unmodifiedFilterItemColor) private var unmodifiedFilterItemColor
     
     
     public init(node: SFFilterNode<FilteredItem>) {
@@ -45,7 +47,7 @@ public struct SFFilterCellView<FilteredItem>: View {
     public var body: some View {
         HStack {
             Text(node.title)
-                .foregroundStyle(node.isItemModified ? .primary : Color.blue)
+                .foregroundStyle(node.isItemModified ? modifiedFilterItemColor : unmodifiedFilterItemColor)
             Spacer()
             Group {
                 if node.isItemEnabled {

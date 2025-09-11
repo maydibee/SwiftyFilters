@@ -62,6 +62,7 @@ struct SFFilterComponentView<FilteredItem>: View {
                         }
                     }
                 }
+                .listStyle(.plain)
                 .navigationTitle(node.title)
             }
         }
