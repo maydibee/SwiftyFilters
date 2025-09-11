@@ -60,6 +60,7 @@ public class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     @Published public var isItemEnabled: Bool {
         didSet {
             component.isItemEnabled = isItemEnabled
+            self.isItemModified = !isItemEnabled
             parent?.updateState()
         }
     }
