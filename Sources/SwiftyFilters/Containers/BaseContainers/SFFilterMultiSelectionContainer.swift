@@ -36,12 +36,14 @@ class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Equatable & SF
     let isNoneIncluded: Bool
     
     var isFilterActive: Bool {
-        let isFilterUnload = allItems.isEmpty
-        let isSomethingSelected: Bool = !allItems.isEmpty && !selectedItems.isEmpty
-        if isNoneIncluded {
-            return isSomethingSelected || isNoneEnabled || isFilterUnload
+        if allItems.isEmpty {
+            return true
         }
-        return isSomethingSelected || allItems.isEmpty || isFilterUnload
+        if isNoneIncluded {
+            return !selectedItems.isEmpty || isNoneEnabled
+        } else {
+            return !selectedItems.isEmpty
+        }
     }
     
     var isFilterModified: Bool {
@@ -92,7 +94,7 @@ class SFFilterMultiSelectionContainer<FilteredItem, CriteriaItem: Equatable & SF
     }
     
     func filterItems(inputItems: [FilteredItem]) -> [FilteredItem] {
-        guard isFilterActive else { return inputItems }
+        guard (isFilterActive && !allItems.isEmpty) else { return inputItems }
         return self.filterBehavior(inputItems, self.selectedItems, isNoneEnabled)
     }
     

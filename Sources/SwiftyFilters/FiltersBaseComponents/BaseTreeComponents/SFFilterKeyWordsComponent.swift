@@ -81,7 +81,7 @@ class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtocol>: SFF
     }
     
     override func updateState() {
-        self.isItemEnabled = !filter.isFilterActive
+        self.isItemEnabled = filter.isFilterActive
         self.isItemModified = filter.isFilterModified
     }
     

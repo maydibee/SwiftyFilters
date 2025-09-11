@@ -281,6 +281,20 @@ final class SFFilterMultiSelectionContainerTests: XCTestCase {
     
     // MARK: - Filtration Behavior Tests
     
+    func testFilterItems_WhenUnload_ShouldReturnAllItems() async {
+        // Arrange
+        let inputItems = Array(1...3).map(SFFilterFilteredItemMock.init)
+        
+        // Act
+        let result = container.filterItems(inputItems: inputItems)
+        
+        
+        // Assert
+        XCTAssertEqual(result.count, 3)
+        XCTAssertTrue(container.allItems.isEmpty)
+        
+    }
+    
     func testFilterItems_WhenInactive_ShouldReturnAllItems() async {
         // Arrange
         let inputItems = Array(1...3).map(SFFilterFilteredItemMock.init)

@@ -35,10 +35,7 @@ class SFFilterSingleValueContainer<FilteredItem, CriteriaItem: Equatable>: SFFil
     var isNoneIncluded: Bool
     
     var isFilterActive: Bool {
-        if isNoneIncluded {
-            return value != nil || !isNoneEnabled
-        }
-        return value != nil
+        return isFilterModified
     }
     
     var isFilterModified: Bool {

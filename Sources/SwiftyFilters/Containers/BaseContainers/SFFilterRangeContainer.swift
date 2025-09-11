@@ -35,11 +35,7 @@ class SFFilterRangeContainer<FilteredItem, CriteriaItem: Comparable>: SFFilterCo
     var isNoneIncluded: Bool
     
     var isFilterActive: Bool {
-        let isBoundSelected = range.lowerBound != nil || range.upperBound != nil
-        if isNoneIncluded {
-            return isBoundSelected || !isNoneEnabled
-        }
-        return isBoundSelected
+        return isFilterModified
     }
     
     var isFilterModified: Bool {
