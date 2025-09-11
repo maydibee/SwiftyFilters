@@ -45,7 +45,8 @@ class SFFilterRangeComponent<FilteredItem, CriteriaItem: Comparable>: SFFilterCo
         self.view = view
         super.init(
             title: title,
-            isItemEnabled: !filter.isFilterActive,
+            isItemEnabled: filter.isFilterActive,
+            isItemModified: filter.isFilterModified,
             isComposite: false
         )
     }
@@ -80,7 +81,8 @@ class SFFilterRangeComponent<FilteredItem, CriteriaItem: Comparable>: SFFilterCo
     }
     
     override func updateState() {
-        self.isItemEnabled = !filter.isFilterActive
+        self.isItemEnabled = filter.isFilterActive
+        self.isItemModified = filter.isFilterModified
     }
     
     func updateRange(_ range: SFFilterRange<CriteriaItem>) {

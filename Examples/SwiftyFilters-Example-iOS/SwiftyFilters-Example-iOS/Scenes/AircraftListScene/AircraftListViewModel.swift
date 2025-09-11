@@ -28,6 +28,7 @@ class AircraftListViewModel: ObservableObject {
         self.filtersCore = SFFiltersCore<Aircraft>(title: "Filters", content: filter)
     }
     
+    @MainActor
     func loadAircraft() async {
         self.aircraft = await worker.fetchAllAircraft()
         await MainActor.run {
@@ -35,6 +36,7 @@ class AircraftListViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     func applyFilters() {
         self.filteredAircraft = filtersCore.getFilteredData(from: aircraft)
     }

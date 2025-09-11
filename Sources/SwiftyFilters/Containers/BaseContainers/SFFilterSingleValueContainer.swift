@@ -27,7 +27,7 @@ import Foundation
 
 // MARK: - Single value filter container
 
-class SFFilterSingleValueContainer<FilteredItem, CriteriaItem: Equatable>: SFFilterNullableContainer {
+class SFFilterSingleValueContainer<FilteredItem, CriteriaItem: Equatable>: SFFilterContainer {
     
     var value: CriteriaItem?
     
@@ -35,6 +35,10 @@ class SFFilterSingleValueContainer<FilteredItem, CriteriaItem: Equatable>: SFFil
     var isNoneIncluded: Bool
     
     var isFilterActive: Bool {
+        return isFilterModified
+    }
+    
+    var isFilterModified: Bool {
         if isNoneIncluded {
             return value != nil || !isNoneEnabled
         }

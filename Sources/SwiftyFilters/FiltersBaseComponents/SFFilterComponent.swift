@@ -37,13 +37,15 @@ public class SFFilterComponent<FilteredItem> {
     
     var title: String
     var isItemEnabled: Bool
+    var isItemModified: Bool
     var isComposite: Bool
     var isAllActionIncluded: Bool
     
     
-    init(title: String, isItemEnabled: Bool, isComposite: Bool, isAllActionIncluded: Bool = false) {
+    init(title: String, isItemEnabled: Bool, isItemModified: Bool, isComposite: Bool, isAllActionIncluded: Bool = false) {
         self.title = title
         self.isItemEnabled = isItemEnabled
+        self.isItemModified = isItemModified
         self.isComposite = isComposite
         self.isAllActionIncluded = isAllActionIncluded
     }

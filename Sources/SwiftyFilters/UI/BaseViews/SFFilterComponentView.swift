@@ -40,28 +40,27 @@ struct SFFilterComponentView<FilteredItem>: View {
                 List {
                     if node.component.isAllActionIncluded {
                         SFFilterAllCellView(node: node)
+                            .padding(.vertical, 2)
                     }
                     ForEach(node.nestedNodes) { child in
                         if child.isComposite {
-                            NavigationLink(destination: SFFilterComponentView(node: child)) {
-                                SFFilterCellView(node: child)
-                            }
+                            SFFilterCellView(node: child)
+                                .withInvisibleNavigation(to: {
+                                    SFFilterComponentView(node: child)
+                                })
+                                .listRowSeparator(.hidden)
                         } else {
-                            NavigationLink {
-                                AnyView(
-                                    child.makeView()
-                                )
-                                .navigationTitle(child.title)
-                                .task {
-                                    await child.loadFilterIfNeeded()
-                                }
-                                
-                            } label: {
-                                SFFilterCellView(node: child)
-                            }
+                            SFFilterCellView(node: child)
+                                .withInvisibleNavigation(to: {
+                                    AnyView(child.makeView())
+                                        .navigationTitle(child.title)
+                                        .task { await child.loadFilterIfNeeded() }
+                                })
+                                .listRowSeparator(.hidden)
                         }
                     }
                 }
+                .listStyle(.inset)
                 .navigationTitle(node.title)
             }
         }

@@ -44,16 +44,16 @@ public struct SFFilterAllCellView<FilteredItem>: View {
         HStack {
             Text(" ")
             Spacer()
-            Text(node.isItemEnabled ? allString : resetString)
+            Text(node.isItemModified ? resetString : allString)
                 .fontWeight(.semibold)
                 .foregroundStyle(enabledCheckboxColor)
         }
         .contentShape(Rectangle())
         .onTapGesture {
-            if node.isItemEnabled {
-                node.deselectAll()
-            } else {
+            if node.isItemModified {
                 node.resetAllFilters()
+            } else {
+                node.deselectAll()
             }
         }
     }

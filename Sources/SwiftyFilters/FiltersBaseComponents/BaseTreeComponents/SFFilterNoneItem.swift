@@ -35,17 +35,19 @@ class SFFilterNoneItem<FilteredItem>: SFFilterComponent<FilteredItem> {
         }
     }
     
-    private let relatedFilter: SFFilterNullableContainer
+    private let relatedFilter: SFFilterContainer
     
     
-    init(title: String, relatedFilter: SFFilterNullableContainer) {
+    init(title: String, relatedFilter: SFFilterContainer) {
         self.relatedFilter = relatedFilter
-        super.init(title: title, isItemEnabled: true, isComposite: false)
+        super.init(title: title, isItemEnabled: true, isItemModified: false, isComposite: false)
     }
     
     override func loadNestedItems() async -> [SFFilterComponent<FilteredItem>] { [] }
     
-    override func updateState() {}
+    override func updateState() {
+        self.isItemModified = relatedFilter.isFilterModified
+    }
     
     override func createRelatedNode() -> SFFilterNode<FilteredItem> {
         SFFilterNode<FilteredItem>(component: self)

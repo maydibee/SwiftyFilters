@@ -36,8 +36,22 @@ final class SFFilterKeyWordsContainerTests: XCTestCase {
     
     // MARK: - Filter Activity Tests
     
+    
+    func testFilterActivity_WnenInitialStateAndNoneIsNotIncluded_FilterIsActive() {
+        
+        // Assert
+        XCTAssertFalse(container.isFilterActive)
+    }
+    
+    func testFilterActivity_WnenInitialStateAndNoneIsIncluded_FilterIsActive() {
+        // Arrange
+        let container = SFFilterKeyWordsContainer(resolver: resolver, isNoneIncluded: true)
+        
+        // Assert
+        XCTAssertFalse(container.isFilterActive)
+    }
+    
     func testFilterActivity_WhenKeywordAdded_FilterIsActive() {
-        // Act
         container.keywordsModel.addKeyword("Comment")
         
         // Assert
@@ -79,6 +93,126 @@ final class SFFilterKeyWordsContainerTests: XCTestCase {
         
         // Assert
         XCTAssertFalse(container.isFilterActive)
+    }
+    
+    // MARK: - Tests for isFilterModified
+
+    func testIsFilterModified_WhenInitialStateAndNoneIsNotIncluded_ReturnsFalse() {
+        // Assert
+        XCTAssertFalse(container.isFilterModified)
+    }
+
+    func testIsFilterModified_WhenInitialStateAndNoneIsIncluded_ReturnsFalse() {
+        // Arrange
+        let container = SFFilterKeyWordsContainer(resolver: resolver, isNoneIncluded: true)
+        
+        // Assert
+        XCTAssertFalse(container.isFilterModified)
+    }
+
+    func testIsFilterModified_WhenKeywordAdded_ReturnsTrue() {
+        // Act
+        container.keywordsModel.addKeyword("Comment")
+        
+        // Assert
+        XCTAssertTrue(container.isFilterModified)
+    }
+
+    func testIsFilterModified_WhenNoneIsNotIncludedAndNoneEnabledIsFalse_ReturnsFalse() {
+        // Act
+        container.isNoneEnabled = false
+        
+        // Assert
+        XCTAssertFalse(container.isFilterModified)
+    }
+
+    func testIsFilterModified_WhenNoneIsIncludedAndNoneEnabledIsFalse_ReturnsTrue() {
+        // Arrange
+        let container = SFFilterKeyWordsContainer(resolver: resolver, isNoneIncluded: true)
+        
+        // Act
+        container.isNoneEnabled = false
+        
+        // Assert
+        XCTAssertTrue(container.isFilterModified)
+    }
+
+    func testIsFilterModified_WhenKeywordAddedAndThenDeleted_ReturnsFalse() {
+        // Act
+        container.keywordsModel.addKeyword("Comment")
+        container.keywordsModel.reset()
+        
+        // Assert
+        XCTAssertFalse(container.isFilterModified)
+    }
+
+    func testIsFilterModified_WhenNoneEnabledToggled_ReturnsFalse() {
+        // Act
+        container.isNoneEnabled = false
+        container.isNoneEnabled = true
+        
+        // Assert
+        XCTAssertFalse(container.isFilterModified)
+    }
+
+    // MARK: - Additional tests for complete coverage of isFilterModified
+
+    func testIsFilterModified_WhenNoneIsIncludedAndNoneEnabledIsTrue_ReturnsFalse() {
+        // Arrange
+        let container = SFFilterKeyWordsContainer(resolver: resolver, isNoneIncluded: true)
+        
+        // Act
+        container.isNoneEnabled = true
+        
+        // Assert
+        XCTAssertFalse(container.isFilterModified)
+    }
+
+    func testIsFilterModified_WhenNoneIsIncludedAndKeywordsNotEmpty_ReturnsTrue() {
+        // Arrange
+        let container = SFFilterKeyWordsContainer(resolver: resolver, isNoneIncluded: true)
+        
+        // Act
+        container.keywordsModel.addKeyword("Comment")
+        
+        // Assert
+        XCTAssertTrue(container.isFilterModified)
+    }
+
+    func testIsFilterModified_WhenNoneIsIncluded_NoneDisabledAndKeywordsEmpty_ReturnsTrue() {
+        // Arrange
+        let container = SFFilterKeyWordsContainer(resolver: resolver, isNoneIncluded: true)
+        
+        // Act
+        container.isNoneEnabled = false
+        
+        // Assert
+        XCTAssertTrue(container.isFilterModified)
+    }
+
+    func testIsFilterModified_WhenNoneIsIncluded_NoneEnabledAndKeywordsNotEmpty_ReturnsTrue() {
+        // Arrange
+        let container = SFFilterKeyWordsContainer(resolver: resolver, isNoneIncluded: true)
+        
+        // Act
+        container.isNoneEnabled = true
+        container.keywordsModel.addKeyword("Comment")
+        
+        // Assert
+        XCTAssertTrue(container.isFilterModified)
+    }
+
+    func testIsFilterModified_WhenNoneIsNotIncludedAndKeywordsNotEmpty_ReturnsTrue() {
+        // Act
+        container.keywordsModel.addKeyword("Comment")
+        
+        // Assert
+        XCTAssertTrue(container.isFilterModified)
+    }
+
+    func testIsFilterModified_WhenNoneIsNotIncludedAndKeywordsEmpty_ReturnsFalse() {
+        // Assert (keywords empty by default)
+        XCTAssertFalse(container.isFilterModified)
     }
     
     // MARK: - Filtration Tests

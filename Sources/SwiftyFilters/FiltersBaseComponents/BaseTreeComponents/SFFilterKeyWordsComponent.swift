@@ -45,7 +45,8 @@ class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtocol>: SFF
         self.view = view
         super.init(
             title: title,
-            isItemEnabled: !filter.isFilterActive,
+            isItemEnabled: filter.isFilterActive,
+            isItemModified: filter.isFilterModified,
             isComposite: false
         )
     }
@@ -80,7 +81,8 @@ class SFFilterKeyWordsComponent<FilteredItem, CriteriaItem: StringProtocol>: SFF
     }
     
     override func updateState() {
-        self.isItemEnabled = !filter.isFilterActive
+        self.isItemEnabled = filter.isFilterActive
+        self.isItemModified = filter.isFilterModified
     }
     
     func updateKeywords(_ keywords: SFFilterKeywordsModel<CriteriaItem>) {

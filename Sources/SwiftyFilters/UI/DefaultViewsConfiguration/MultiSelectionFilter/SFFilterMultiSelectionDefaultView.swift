@@ -35,7 +35,9 @@ public struct SFFilterMultiSelectionDefaultView<FilteredItem>: View {
                                 child.isItemEnabled.toggle()
                             }
                     }
+                    .listRowSeparator(.hidden)
                 }
+                .listStyle(.inset)
             }
         }
     }

@@ -27,7 +27,8 @@ import Foundation
 
 // MARK: - Keywords filter container
 
-class SFFilterKeyWordsContainer<FilteredItem, CriteriaItem: StringProtocol>: SFFilterNullableContainer {
+class SFFilterKeyWordsContainer<FilteredItem, CriteriaItem: StringProtocol>: SFFilterContainer {
+    
     
     var keywordsModel = SFFilterKeywordsModel<CriteriaItem>()
     
@@ -35,6 +36,10 @@ class SFFilterKeyWordsContainer<FilteredItem, CriteriaItem: StringProtocol>: SFF
     var isNoneIncluded: Bool
     
     var isFilterActive: Bool {
+        return isFilterModified
+    }
+    
+    var isFilterModified: Bool {
         let isKeywordsEmpty = keywordsModel.isEmpty
         if isNoneIncluded {
             return !isKeywordsEmpty || !isNoneEnabled
@@ -64,7 +69,7 @@ class SFFilterKeyWordsContainer<FilteredItem, CriteriaItem: StringProtocol>: SFF
     }
     
     func filterItems(inputItems: [FilteredItem]) -> [FilteredItem] {
-        guard isFilterActive else { return inputItems }
+        guard isFilterModified else { return inputItems }
         return self.filterBehavior(inputItems, keywordsModel, isNoneEnabled)
     }
 }

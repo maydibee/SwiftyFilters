@@ -60,9 +60,14 @@ public class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     @Published public var isItemEnabled: Bool {
         didSet {
             component.isItemEnabled = isItemEnabled
+            self.isItemModified = !isItemEnabled
             parent?.updateState()
         }
     }
+    
+    /// A flag indicating whether the current node is modified.
+    ///
+    @Published public var isItemModified: Bool
     
     
     init(component: SFFilterComponent<FilteredItem>) {
@@ -70,6 +75,7 @@ public class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
         self.title = component.title
         self.isComposite = component.isComposite
         self.isItemEnabled = component.isItemEnabled
+        self.isItemModified = component.isItemModified
     }
     
     /// Resets the filter tree starting from the current node.
@@ -123,9 +129,29 @@ public class SFFilterNode<FilteredItem>: Identifiable, ObservableObject {
     func updateState() {
         self.component.updateState()
         self.isItemEnabled = component.isItemEnabled
+        self.isItemModified = component.isItemModified
     }
     
     func makeView() -> any View {
         Text("No view provided")
     }
 }
+
+//public class SFFilterMasterNode<FilteredItem>: SFFilterNode<FilteredItem> {
+//    lazy private var masterFilterComponent: SFFilterMasterComponent<FilteredItem>? = {
+//        component as? SFFilterMasterComponent<FilteredItem>
+//    }()
+//    
+//    private var isItemHighlighted: Bool
+//    
+//    init(component: SFFilterMasterComponent<FilteredItem>) {
+//        self.isItemHighlighted = component.isItemHighlighted
+//        super.init(component: component)
+//    }
+//    
+//    override func updateState() {
+//        super.updateState()
+//        self.isItemHighlighted = masterFilterComponent?.isItemHighlighted ?? true
+//        
+//    }
+//}
