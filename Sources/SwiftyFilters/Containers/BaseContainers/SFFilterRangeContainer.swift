@@ -35,7 +35,7 @@ class SFFilterRangeContainer<FilteredItem, CriteriaItem: Comparable>: SFFilterCo
     var isNoneIncluded: Bool
     
     var isFilterActive: Bool {
-        return isFilterModified
+        return true
     }
     
     var isFilterModified: Bool {
@@ -70,7 +70,7 @@ class SFFilterRangeContainer<FilteredItem, CriteriaItem: Comparable>: SFFilterCo
     }
     
     func filterItems(inputItems: [FilteredItem]) -> [FilteredItem] {
-        guard isFilterActive else { return inputItems }
+        guard isFilterModified else { return inputItems }
         return self.filterBehavior(inputItems, range, isNoneEnabled)
     }
 }

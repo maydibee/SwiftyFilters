@@ -36,7 +36,7 @@ class SFFilterKeyWordsContainer<FilteredItem, CriteriaItem: StringProtocol>: SFF
     var isNoneIncluded: Bool
     
     var isFilterActive: Bool {
-        return isFilterModified
+        return true
     }
     
     var isFilterModified: Bool {
